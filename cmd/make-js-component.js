@@ -10,13 +10,13 @@ var packageJson = require('../package.json');
 var configsProd = {
     INIT_PATH: dir,
     BASE_DIR: "./src",
-    STUBS_DIR: "stub",
+    STUBS_DIR: "stubs",
     COMPONENT_FOLDER: "/components",
 };
 var configTest = {
     INIT_PATH: process.env.INIT_CWD,
     BASE_DIR: "./src",
-    STUBS_DIR: "stub",
+    STUBS_DIR: "stubs",
     COMPONENT_FOLDER: "/components"
 };
 var configs = configTest;
@@ -44,13 +44,8 @@ if (usedFramework == "") {
     console.error("You must specify the framework [--vue, --react...]");
     process.exit();
 }
+var componentTemplate = options.c ? 'component-composition.vue' : 'component-options.vue';
 try {
-    var componentName_1 = process.argv[2];
-    if (componentName_1 === "") {
-        console.error("You must specify the component name");
-        process.exit();
-    }
-    var componentTemplate = process.argv.indexOf('-c') > -1 ? 'component-composition.vue' : 'component-options.vue';
     var folderArgIndex = process.argv.indexOf('--f');
     var customFolder_1 = folderArgIndex > -1 ? process.argv[folderArgIndex + 1] : '';
     customFolder_1 = customFolder_1.charAt(-1) == '/' ? customFolder_1 : "".concat(customFolder_1, "/");
@@ -58,12 +53,13 @@ try {
     if (!fs.existsSync("".concat(configs.BASE_DIR).concat(configs.COMPONENT_FOLDER))) {
         fs.mkdirSync("".concat(configs.BASE_DIR).concat(configs.COMPONENT_FOLDER));
     }
+    console.log(path.join(configs.INIT_PATH, 'src', configs.STUBS_DIR, usedFramework, componentTemplate));
     fs.readFile(path.join(configs.INIT_PATH, 'src', configs.STUBS_DIR, usedFramework, componentTemplate), 'utf8', function (err, data) {
-        data = data.replaceAll("Component", capitalizeFirstLetter(componentName_1));
+        data = data.replaceAll("Component", capitalizeFirstLetter(componentName));
         if (!fs.existsSync("".concat(configs.BASE_DIR).concat(configs.COMPONENT_FOLDER).concat(customFolder_1))) {
             fs.mkdirSync("".concat(configs.BASE_DIR).concat(configs.COMPONENT_FOLDER).concat(customFolder_1));
         }
-        fs.writeFile("".concat(configs.BASE_DIR).concat(configs.COMPONENT_FOLDER).concat(customFolder_1).concat(componentName_1, ".vue"), function (data, err) {
+        fs.writeFile("".concat(configs.BASE_DIR).concat(configs.COMPONENT_FOLDER).concat(customFolder_1).concat(componentName, ".vue"), data, function (err) {
             if (err) {
                 console.error(err);
             }

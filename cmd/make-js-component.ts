@@ -10,14 +10,14 @@ const packageJson = require('../package.json');
 const configsProd = {
     INIT_PATH: dir,
     BASE_DIR: "./src",
-    STUBS_DIR: "stub",
+    STUBS_DIR: "stubs",
     COMPONENT_FOLDER: "/components",
 }
 
 const configTest = {
     INIT_PATH: process.env.INIT_CWD,
     BASE_DIR: "./src",
-    STUBS_DIR: "stub",
+    STUBS_DIR: "stubs",
     COMPONENT_FOLDER: "/components"
 }
 
@@ -48,19 +48,10 @@ if(usedFramework == ""){
     process.exit();
 }
 
+const componentTemplate = options.c ? 'component-composition.vue' : 'component-options.vue'
 
 try {
-    
-    const componentName = process.argv[2]
-    if(componentName === ""){
-        console.error("You must specify the component name")
-        process.exit();
-    }
-    
-
-    
-    const componentTemplate = process.argv.indexOf('-c') > -1 ? 'component-composition.vue' : 'component-options.vue'
-    
+     
     const folderArgIndex = process.argv.indexOf('--f')
     let customFolder = folderArgIndex > -1 ? process.argv[folderArgIndex+1] : '';
     customFolder = customFolder.charAt(-1) == '/' ? customFolder : `${customFolder}/`
@@ -69,13 +60,13 @@ try {
     if(!fs.existsSync(`${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`)){
         fs.mkdirSync(`${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`);
     }
-    
+    console.log(path.join(configs.INIT_PATH,'src',configs.STUBS_DIR,usedFramework,componentTemplate))
     fs.readFile(path.join(configs.INIT_PATH,'src',configs.STUBS_DIR,usedFramework,componentTemplate), 'utf8', (err: Error,data: String)=>{
         data = data.replaceAll("Component",capitalizeFirstLetter(componentName))
         if(!fs.existsSync(`${configs.BASE_DIR}${configs.COMPONENT_FOLDER}${customFolder}`)){
             fs.mkdirSync(`${configs.BASE_DIR}${configs.COMPONENT_FOLDER}${customFolder}`);
         }
-        fs.writeFile(`${configs.BASE_DIR}${configs.COMPONENT_FOLDER}${customFolder}${componentName}.vue`,(data: String|Buffer,err: Error)=>{
+        fs.writeFile(`${configs.BASE_DIR}${configs.COMPONENT_FOLDER}${customFolder}${componentName}.vue`,data, (err: Error)=>{
             if(err){
                 console.error(err)
             }else{
