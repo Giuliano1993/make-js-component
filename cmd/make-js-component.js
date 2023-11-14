@@ -26,18 +26,20 @@ var enabledFramework;
     enabledFramework["Vue"] = "vue";
     enabledFramework["React"] = "react";
 })(enabledFramework || (enabledFramework = {}));
-program.name('make-js-component').version(packageJson.version);
-program.option("--vue", "creates a vue component");
-program.option("-c", "creates a vue component using composition API: use options API instea");
-program.requiredOption('-n, --name <component name>', "the name of the component");
+//program config and setup
+program.name('make-js-component')
+    .version(packageJson.version)
+    .option("--vue", "creates a vue component")
+    .option("-c", "creates a vue component using composition API: use options API instea")
+    .requiredOption('-n, --name <component name>', "the name of the component")
+    .option("-f, --folder <custom folder path>", "a custom folder inside components to save the component")
+    .parse(process.argv);
+var options = program.opts();
 var usedFramework = enabledFramework.Empty;
 var componentName = "";
-program.parse(process.argv);
-var options = program.opts();
-console.log(options);
 if (options.vue)
     usedFramework = enabledFramework.Vue;
-// add here more options
+// add here options for the framework
 if (options.name)
     componentName = options.name;
 if (usedFramework == "") {
@@ -46,20 +48,44 @@ if (usedFramework == "") {
 }
 var componentTemplate = options.c ? 'component-composition.vue' : 'component-options.vue';
 try {
-    var folderArgIndex = process.argv.indexOf('--f');
-    var customFolder_1 = folderArgIndex > -1 ? process.argv[folderArgIndex + 1] : '';
-    customFolder_1 = customFolder_1.charAt(-1) == '/' ? customFolder_1 : "".concat(customFolder_1, "/");
-    customFolder_1 = customFolder_1.charAt(0) == '/' ? customFolder_1 : "/".concat(customFolder_1);
+    var customFolder = options.folder || "";
+    createComponent(componentName, usedFramework, componentTemplate, customFolder);
+    /*if(!fs.existsSync(`${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`)){
+        fs.mkdirSync(`${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`);
+    }
+    fs.readFile(path.join(configs.INIT_PATH,'src',configs.STUBS_DIR,usedFramework,componentTemplate), 'utf8', (err: Error,data: String)=>{
+        data = data.replaceAll("Component",capitalizeFirstLetter(componentName))
+        if(!fs.existsSync(path.join(configs.BASE_DIR,configs.COMPONENT_FOLDER,customFolder))){
+            fs.mkdirSync(path.join(configs.BASE_DIR,configs.COMPONENT_FOLDER,customFolder));
+        }
+        const compFileName = componentName+'.vue';
+        fs.writeFile(path.join(configs.BASE_DIR,configs.COMPONENT_FOLDER,customFolder,compFileName),data, (err: Error)=>{
+            if(err){
+                console.error(err)
+            }else{
+                console.log('Done')
+            }
+        })
+    })*/
+}
+catch (error) {
+    console.error(error);
+}
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+function createComponent(componentName, framework, template, customFolder) {
+    if (customFolder === void 0) { customFolder = ""; }
     if (!fs.existsSync("".concat(configs.BASE_DIR).concat(configs.COMPONENT_FOLDER))) {
         fs.mkdirSync("".concat(configs.BASE_DIR).concat(configs.COMPONENT_FOLDER));
     }
-    console.log(path.join(configs.INIT_PATH, 'src', configs.STUBS_DIR, usedFramework, componentTemplate));
-    fs.readFile(path.join(configs.INIT_PATH, 'src', configs.STUBS_DIR, usedFramework, componentTemplate), 'utf8', function (err, data) {
+    fs.readFile(path.join(configs.INIT_PATH, 'src', configs.STUBS_DIR, framework, template), 'utf8', function (err, data) {
         data = data.replaceAll("Component", capitalizeFirstLetter(componentName));
-        if (!fs.existsSync("".concat(configs.BASE_DIR).concat(configs.COMPONENT_FOLDER).concat(customFolder_1))) {
-            fs.mkdirSync("".concat(configs.BASE_DIR).concat(configs.COMPONENT_FOLDER).concat(customFolder_1));
+        if (!fs.existsSync(path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder))) {
+            fs.mkdirSync(path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder));
         }
-        fs.writeFile("".concat(configs.BASE_DIR).concat(configs.COMPONENT_FOLDER).concat(customFolder_1).concat(componentName, ".vue"), data, function (err) {
+        var compFileName = componentName + '.vue';
+        fs.writeFile(path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder, compFileName), data, function (err) {
             if (err) {
                 console.error(err);
             }
@@ -68,10 +94,4 @@ try {
             }
         });
     });
-}
-catch (error) {
-    console.error(error);
-}
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
 }
