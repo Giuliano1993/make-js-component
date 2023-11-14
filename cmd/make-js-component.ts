@@ -7,21 +7,13 @@ const {createCommand} = require("commander");
 const program = createCommand();
 const packageJson = require('../package.json');
 
-const configsProd = {
+const configs = {
     INIT_PATH: dir,
     BASE_DIR: "./src",
     STUBS_DIR: "stubs",
     COMPONENT_FOLDER: "/components",
 }
 
-const configTest = {
-    INIT_PATH: process.env.INIT_CWD,
-    BASE_DIR: "./src",
-    STUBS_DIR: "stubs",
-    COMPONENT_FOLDER: "/components"
-}
-
-const configs = configTest
 
 enum enabledFramework {
     Empty = "",

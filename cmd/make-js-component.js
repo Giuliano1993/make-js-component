@@ -7,19 +7,12 @@ var dir = path.join(mainFilename, '..');
 var createCommand = require("commander").createCommand;
 var program = createCommand();
 var packageJson = require('../package.json');
-var configsProd = {
+var configs = {
     INIT_PATH: dir,
     BASE_DIR: "./src",
     STUBS_DIR: "stubs",
     COMPONENT_FOLDER: "/components",
 };
-var configTest = {
-    INIT_PATH: process.env.INIT_CWD,
-    BASE_DIR: "./src",
-    STUBS_DIR: "stubs",
-    COMPONENT_FOLDER: "/components"
-};
-var configs = configTest;
 var enabledFramework;
 (function (enabledFramework) {
     enabledFramework["Empty"] = "";
@@ -47,26 +40,9 @@ if (usedFramework == "") {
     process.exit();
 }
 var componentTemplate = options.c ? 'component-composition.vue' : 'component-options.vue';
+var customFolder = options.folder || "";
 try {
-    var customFolder = options.folder || "";
     createComponent(componentName, usedFramework, componentTemplate, customFolder);
-    /*if(!fs.existsSync(`${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`)){
-        fs.mkdirSync(`${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`);
-    }
-    fs.readFile(path.join(configs.INIT_PATH,'src',configs.STUBS_DIR,usedFramework,componentTemplate), 'utf8', (err: Error,data: String)=>{
-        data = data.replaceAll("Component",capitalizeFirstLetter(componentName))
-        if(!fs.existsSync(path.join(configs.BASE_DIR,configs.COMPONENT_FOLDER,customFolder))){
-            fs.mkdirSync(path.join(configs.BASE_DIR,configs.COMPONENT_FOLDER,customFolder));
-        }
-        const compFileName = componentName+'.vue';
-        fs.writeFile(path.join(configs.BASE_DIR,configs.COMPONENT_FOLDER,customFolder,compFileName),data, (err: Error)=>{
-            if(err){
-                console.error(err)
-            }else{
-                console.log('Done')
-            }
-        })
-    })*/
 }
 catch (error) {
     console.error(error);
