@@ -1,11 +1,15 @@
 #! /usr/bin/env node
+
 const fs = require('fs')
 const path = require('node:path');
-const mainFilename = path.dirname(require.main?.filename)
-const dir = path.join(mainFilename,'..');
 const {createCommand} = require("commander");
 const program = createCommand();
 const packageJson = require('../package.json');
+const wizard = require('../utils/wizard.js');
+
+const mainFilename = path.dirname(require.main?.filename||"")
+const dir = path.join(mainFilename,'..');
+
 
 const configs = {
     INIT_PATH: dir,
@@ -16,13 +20,16 @@ const configs = {
 
 
 enum enabledFramework {
-    Empty = "",
     Vue = "vue",
     React = "react"
 }
+wizard();
+
+
+process.abort();
 
 //program config and setup
-program.name('make-js-component')
+/*program.name('make-js-component')
         .version(packageJson.version)
         .option("--vue","creates a vue component")
         .option("-c","creates a vue component using composition API: use options API instea")
@@ -56,7 +63,7 @@ try {
 }
 
 
-
+*/
 
 function capitalizeFirstLetter(string: String) {
     return string.charAt(0).toUpperCase() + string.slice(1);
