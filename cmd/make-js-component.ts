@@ -15,45 +15,39 @@ const configs = {
 }
 
 
-enum enabledFramework {
-    Empty = "",
-    Vue = "vue",
-    React = "react"
-}
 
-//program config and setup
-program.name('make-js-component')
-        .version(packageJson.version)
-        .option("--vue","creates a vue component")
-        .option("-c","creates a vue component using composition API: use options API instea")
-        .requiredOption('-n, --name <component name>', "the name of the component")
-        .option("-f, --folder <custom folder path>", "a custom folder inside components to save the component")
-        .parse(process.argv)
+program
+    .command("vue")
+    .argument('<component name>','the component name')
+    .option("-f, --folder <path>", "a custom folder inside components to save the component")
+    .option("-c, --composition","creates a vue component using composition API: use options API instea")
+    .action((name:string, opts:{
+        folder: string,
+        composition: boolean
+    })=>{
+        const componentTemplate : String = opts.composition ? 'component-composition.vue' : 'component-options.vue'
+        const customFolder: String = opts.folder || "";
 
+        try {
+            createComponent(name,'vue',componentTemplate,customFolder);
+        } catch (error) {
+            console.error(error)
+        }
+    })
 
-const options = program.opts();
-let usedFramework : enabledFramework = enabledFramework.Empty;
-let componentName : String = "";
-
-
-
-if(options.vue) usedFramework = enabledFramework.Vue
-// add here options for the framework
-if(options.name) componentName = options.name
-
-if(usedFramework == ""){
-    console.error("You must specify the framework [--vue, --react...]")
-    process.exit();
-}
-
-const componentTemplate : String = options.c ? 'component-composition.vue' : 'component-options.vue'
-const customFolder: String = options.folder || "";
-
-try {
-    createComponent(componentName,usedFramework,componentTemplate,customFolder);
-} catch (error) {
-    console.error(error)
-}
+// To be added soon
+/*program
+    .command("react")
+    .argument('<component name>','the component name')
+    .option("-f, --folder <path>", "a custom folder inside components to save the component")
+    .option("-t, --typescript","uses typescript")
+    .action((message:string, opts:{
+        folder: string,
+        typescript: boolean
+    })=>{
+        console.log(message, opts)
+    })*/
+program.parse()
 
 
 
