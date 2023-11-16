@@ -3,10 +3,11 @@ This package is born from the idea to expand the previous [make-vue-component](h
 
 - [Make Js Component](#make-js-component)
   - [Basic Usage](#basic-usage)
-  - [Options](#options)
-      - [-n --name `REQUIRED`](#-n---name-required)
-      - [--\[frameworkname\] `REQUIRED`](#--frameworkname-required)
-      - [-c (Vue components Only)](#-c-vue-components-only)
+  - [Frameworks](#frameworks)
+  - [Vue](#vue)
+    - [Arguments \& Options](#arguments--options)
+      - [Component-name `REQUIRED`](#component-name-required)
+      - [-c](#-c)
       - [-f --folder](#-f---folder)
   - [Contributing](#contributing)
     - [Open issue](#open-issue)
@@ -16,37 +17,32 @@ This package is born from the idea to expand the previous [make-vue-component](h
 ## Basic Usage
 
 ```bash
-npx make-js-component --name <component-name> --[framework name]
+npx make-js-component [framework name] <component-name> 
 ```
 
 For example:
 
 ```bash
-npx make-js-component --name my-great-component --vue
+npx make-js-component vue my-great-component
 ```
 
+## Frameworks
+Many frameworks are going to be implemented; for each you'll have some options to generate the component how it suits you best
 
-## Options
+## Vue
+Creates a vue component
+  
+### Arguments & Options
 
-#### -n --name `REQUIRED`
-
+    
+#### Component-name `REQUIRED`
 The name of the component you want to create
 
 
-#### --[frameworkname] `REQUIRED`
-
-The framework you want to create the component for.
-
-For the moment we have: `--vue`
-More to come, any contribution is welcome
-
-
-#### -c (Vue components Only)
-
+#### -c 
 If creating a Vue Comonent, it will use the composition API, defaults on Option API
 
 #### -f --folder
-
 Select a custom nested folder inside src/components 
 
 
