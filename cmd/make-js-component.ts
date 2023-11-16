@@ -29,7 +29,7 @@ program
         const customFolder: String = opts.folder || "";
 
         try {
-            createComponent(name,'vue',componentTemplate,customFolder);
+            createComponent(name,'vue',componentTemplate,customFolder, Extension.vue);
         } catch (error) {
             console.error(error)
         }
@@ -56,8 +56,12 @@ function capitalizeFirstLetter(string: String) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-
-function createComponent(componentName : String, framework: String, template: String, customFolder : String = ""){
+enum Extension{
+    JS = 'js',
+    JSX = 'jsx',
+    vue = 'vue',
+}
+function createComponent(componentName : String, framework: String, template: String, customFolder : String = "", extension : Extension){
     if(!fs.existsSync(`${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`)){
         fs.mkdirSync(`${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`);
     }
@@ -66,7 +70,7 @@ function createComponent(componentName : String, framework: String, template: St
         if(!fs.existsSync(path.join(configs.BASE_DIR,configs.COMPONENT_FOLDER,customFolder))){
             fs.mkdirSync(path.join(configs.BASE_DIR,configs.COMPONENT_FOLDER,customFolder));
         }
-        const compFileName = componentName+'.vue';
+        const compFileName = `${componentName}.${extension}`;
         fs.writeFile(path.join(configs.BASE_DIR,configs.COMPONENT_FOLDER,customFolder,compFileName),data, (err: Error)=>{
             if(err){
                 console.error(err)
