@@ -5,6 +5,7 @@
   "repository": "https://github.com/Giuliano1993/make-js-component",
   "bin": "./cmd/make-js-component.js",
   "scripts": {
+    "dev": "npx tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -20,6 +21,7 @@
   "author": "Giuliano Gostinfini (Ghostylab)",
   "license": "ISC",
   "devDependencies": {
+    "@commander-js/extra-typings": "^11.1.0",
     "@types/node": "^20.9.0",
     "typescript": "^5.2.2"
   },
