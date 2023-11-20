@@ -6,7 +6,7 @@
   "bin": "./cmd/make-js-component.js",
   "scripts": {
     "dev": "npx tsc -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no  test specified\" && exit 1"
   },
   "keywords": [
     "node",
