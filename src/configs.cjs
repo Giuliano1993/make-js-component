@@ -1,6 +1,6 @@
-import * as path from "node:path";
-
-const mainFilename = path.dirname(require.main?.filename||'')
+//import * as path from "node:path";
+const path = require('node:path');
+const mainFilename = path.dirname(module?.filename||'')
 const dir = path.join(mainFilename,'..');
 
 
@@ -11,4 +11,4 @@ const configs = {
     COMPONENT_FOLDER: "/components",
 }
 
-export default configs;
+exports.configs = configs;

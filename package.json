@@ -5,9 +5,9 @@
   "repository": "https://github.com/Giuliano1993/make-js-component",
   "bin": "./cmd/make-js-component.js",
   "scripts": {
-    "dev": "npx tsc -w",
     "test": "echo \"Error: no  test specified\" && exit 1"
   },
+  "type": "module",
   "keywords": [
     "node",
     "js",
@@ -26,6 +26,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "commander": "^11.1.0"
+    "commander": "^11.1.0",
+    "inquirer": "^9.2.12"
   }
 }
