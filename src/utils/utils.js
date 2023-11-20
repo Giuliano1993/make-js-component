@@ -37,11 +37,11 @@ const createComponent = (componentName, framework, template, customFolder = "") 
         fs.mkdirSync(`${configs_1.default.BASE_DIR}${configs_1.default.COMPONENT_FOLDER}`);
     }
     fs.readFile(path.join(configs_1.default.INIT_PATH, 'src', configs_1.default.STUBS_DIR, framework, template), 'utf8', (err, data) => {
-        data = data.replaceAll("Component", capitalizeFirstLetter(componentName));
+        data = data.replaceAll("ComponentName", capitalizeFirstLetter(componentName));
         if (!fs.existsSync(path.join(configs_1.default.BASE_DIR, configs_1.default.COMPONENT_FOLDER, customFolder))) {
             fs.mkdirSync(path.join(configs_1.default.BASE_DIR, configs_1.default.COMPONENT_FOLDER, customFolder));
         }
-        const extension = path.extname(template);
+        const extension = template.substring(template.indexOf('.'));
         const compFileName = `${componentName}${extension}`;
         fs.writeFile(path.join(configs_1.default.BASE_DIR, configs_1.default.COMPONENT_FOLDER, customFolder, compFileName), data, (err) => {
             if (err) {

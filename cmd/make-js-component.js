@@ -6,6 +6,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const commander_1 = require("commander");
 const vue_1 = __importDefault(require("../src/programs/vue"));
+const angular_1 = __importDefault(require("../src/programs/angular"));
 const program = (0, commander_1.createCommand)();
 (0, vue_1.default)(program);
+(0, angular_1.default)(program);
 program.parse();

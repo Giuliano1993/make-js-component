@@ -1,6 +1,6 @@
 <script>
     export default{
-        name:"Component",
+        name:"ComponentName",
         props: {
 
         },
@@ -15,7 +15,7 @@
     }
 </script>
 <template>
-    Hello Component
+    Hello ComponentName
 </template>
 <style scoped>
 </style>

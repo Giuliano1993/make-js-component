@@ -7,7 +7,7 @@ defineEmits([])
 </script>
 
 <template>
-  Hello Component
+  Hello ComponentName
 </template>
 
 <style scoped>
