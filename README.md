@@ -9,6 +9,10 @@ This package is born from the idea to expand the previous [make-vue-component](h
       - [Component-name `REQUIRED`](#component-name-required)
       - [-c](#-c)
       - [-f --folder](#-f---folder)
+  - [Angular](#angular)
+    - [Arguments \& Options](#arguments--options-1)
+      - [Component-name `REQUIRED`](#component-name-required-1)
+      - [-c](#-c-1)
   - [Contributing](#contributing)
     - [Open issue](#open-issue)
     - [Pull Request](#pull-request)
@@ -44,6 +48,21 @@ If creating a Vue Comonent, it will use the composition API, defaults on Option 
 
 #### -f --folder
 Select a custom nested folder inside src/components 
+
+
+## Angular
+Creates a angular component
+  
+### Arguments & Options
+
+    
+#### Component-name `REQUIRED`
+The name of the component you want to create
+
+
+#### -c 
+If creating a Vue Comonent, it will use the composition API, defaults on Option API
+
 
 
 ## Contributing
