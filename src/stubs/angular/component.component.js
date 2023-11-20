@@ -1,5 +1,5 @@
 Component({
     selector: 'ComponentName',
-    template: `<img src="profile-photo.jpg" alt="Your profile photo">`,
+    template: `<div>Hello ComponentName</div>`,
 })
 export class ComponentName { }
