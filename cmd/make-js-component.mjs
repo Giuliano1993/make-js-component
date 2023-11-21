@@ -5,5 +5,4 @@ import createComponent from "../src/utils/utils.mjs";
 wizard().then((answers) => {
     const { componentName, framework, template, folder } = answers;
     createComponent(componentName, framework, template, folder);
-    console.log(answers);
 });

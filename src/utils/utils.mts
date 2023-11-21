@@ -17,7 +17,6 @@ const createComponent = (componentName : string, framework: string, template: st
     if(!fs.existsSync(`${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`)){
         fs.mkdirSync(`${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`);
     }
-    console.log(path.join(configs.INIT_PATH,'src',configs.STUBS_DIR,framework,template))
     fs.readFile(path.join(configs.INIT_PATH,'src',configs.STUBS_DIR,framework,template), 'utf8', (err: ErrnoException | null,data: string)=>{
         data = data.replaceAll("ComponentName",capitalizeFirstLetter(componentName))
         if(!fs.existsSync(path.join(configs.BASE_DIR,configs.COMPONENT_FOLDER,customFolder))){
@@ -29,7 +28,7 @@ const createComponent = (componentName : string, framework: string, template: st
             if(err){
                 console.error(err)
             }else{
-                console.log('Done')
+                console.log('Done ✅')
             }
         })
     })
