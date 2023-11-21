@@ -1,6 +1,6 @@
 {
   "name": "make-js-component",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Easily create your js framework component in one command",
   "repository": "https://github.com/Giuliano1993/make-js-component",
   "bin": "./cmd/make-js-component.mjs",
@@ -21,6 +21,7 @@
   "author": "Giuliano Gostinfini (Ghostylab)",
   "license": "ISC",
   "devDependencies": {
+    "@types/inquirer": "^9.0.7",
     "@types/node": "^20.9.0",
     "typescript": "^5.2.2"
   },
