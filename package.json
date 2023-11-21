@@ -21,11 +21,10 @@
   "author": "Giuliano Gostinfini (Ghostylab)",
   "license": "ISC",
   "devDependencies": {
-    "@commander-js/extra-typings": "^11.1.0",
     "@types/node": "^20.9.0",
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "commander": "^11.1.0"
+    "inquirer": "^9.2.12"
   }
 }
