@@ -1,9 +1,8 @@
 import inquirer from 'inquirer';
 
+const wizard = async()=>{
 
-export default function(){
-
-    inquirer.prompt([
+    return inquirer.prompt([
         {
             type: "input",
             name: "name",
@@ -13,7 +12,7 @@ export default function(){
             type: "list",
             name: "framework",
             message: "pick a framework to create the component for",
-            choices: ["vue","react"]
+            choices: ["vue","angular"]
         }
     ]).then((answers)=>{
         const componentName = answers.name;
@@ -24,14 +23,35 @@ export default function(){
                 name: "api",
                 message: "choose wich api to use",
                 choices: ["Composition API", "Options API"]
+            },{
+                type: 'input',
+                name: 'folder',
+                message: "custom path under the component folder for saving your component",
+                default: ""
             }]).then((answers)=>{
                 return {
                     componentName: componentName,
                     framework: framework,
-                    api: answers.api
+                    template: answers.api === "Composition API" ? "component-composition.vue" : "component-options.vue",
+                    folder: answers.folder
                 }
             })
-        }else{
+        }else if(framework === 'angular'){
+            return inquirer.prompt([{
+                type: 'input',
+                name: 'folder',
+                message: "custom path under the component folder for saving your component",
+                default: ""
+            }]).then((answers)=>{
+                return {
+                    componentName: componentName,
+                    framework: framework,
+                    template: "component.component.js",
+                    folder: answers.folder
+                }
+            })
+        }
+        else{
             return new Promise((resolve,reject)=>{
                 resolve({
                     componentName: componentName,
@@ -42,6 +62,7 @@ export default function(){
     
     
     }).then((values)=>{
-        console.log(values)
+        return values
     })
 }
+export default wizard;
