@@ -19,7 +19,7 @@ const wizard = async()=>{
             type: "list",
             name: "framework",
             message: "pick a framework to create the component for",
-            choices: ["vue","angular"]
+            choices: ["vue","angular","react"]
         }
     ]).then((answers: {
         name: string,
@@ -65,6 +65,35 @@ const wizard = async()=>{
                     folder: answers.folder
                 }
             })
+        }else if (framework === "react") {
+            return inquirer
+                .prompt([
+                    {
+                        type: "confirm",
+                        name: "typescript",
+                        message: "use typescript?",
+                        default: true,
+                    },
+                    {
+                        type: "input",
+                        name: "folder",
+                        message:
+                            "custom path under the component folder for saving your component",
+                        default: "",
+                    },
+                ])
+                .then(
+                    (answers: { typescript: boolean; folder: string }) => {
+                        return {
+                            componentName: componentName,
+                            framework: framework,
+                            template: answers.typescript
+                                ? "function-component.tsx"
+                                : "function-component.jsx",
+                            folder: answers.folder,
+                        };
+                    }
+                );
         }else{
             throw new Error("a framework must be selected");
         }

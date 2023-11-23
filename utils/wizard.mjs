@@ -10,7 +10,7 @@ const wizard = async () => {
             type: "list",
             name: "framework",
             message: "pick a framework to create the component for",
-            choices: ["vue", "angular"]
+            choices: ["vue", "angular", "react"]
         }
     ]).then((answers) => {
         const componentName = answers.name;
@@ -47,6 +47,33 @@ const wizard = async () => {
                     framework: framework,
                     template: "component.component.js",
                     folder: answers.folder
+                };
+            });
+        }
+        else if (framework === "react") {
+            return inquirer
+                .prompt([
+                {
+                    type: "confirm",
+                    name: "typescript",
+                    message: "use typescript?",
+                    default: true,
+                },
+                {
+                    type: "input",
+                    name: "folder",
+                    message: "custom path under the component folder for saving your component",
+                    default: "",
+                },
+            ])
+                .then((answers) => {
+                return {
+                    componentName: componentName,
+                    framework: framework,
+                    template: answers.typescript
+                        ? "function-component.tsx"
+                        : "function-component.jsx",
+                    folder: answers.folder,
                 };
             });
         }
