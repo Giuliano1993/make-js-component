@@ -6,6 +6,7 @@ This package is born from the idea to expand the previous [make-vue-component](h
   - [Available Frameworks](#available-frameworks)
   - [Vue](#vue)
   - [Angular](#angular)
+  - [React](#react)
   - [Contributing](#contributing)
 
 
@@ -23,6 +24,7 @@ This will run a short wizard so you can easily create your component in few step
 
 ## Angular
 
+## React
 
 ## Contributing
 Read the [Contributing guide](./CONTRIBUTING.md) for the contribution process
