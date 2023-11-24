@@ -3,8 +3,14 @@ const wizard = async () => {
     return inquirer.prompt([
         {
             type: "input",
-            name: "name",
+            name: "componentName",
             message: "give a name to your component"
+        },
+        {
+            type: 'input',
+            name: 'folder',
+            message: "custom path under the component folder for saving your component",
+            default: ""
         },
         {
             type: "list",
@@ -13,42 +19,29 @@ const wizard = async () => {
             choices: ["vue", "angular", "react"]
         }
     ]).then((answers) => {
-        const componentName = answers.name;
-        const framework = answers.framework;
+        const { componentName, framework, folder } = answers;
         if (framework === 'vue') {
             return inquirer.prompt([{
                     type: "list",
                     name: "api",
                     message: "choose wich api to use",
                     choices: ["Composition API", "Options API"]
-                }, {
-                    type: 'input',
-                    name: 'folder',
-                    message: "custom path under the component folder for saving your component",
-                    default: ""
                 }]).then((answers) => {
                 return {
                     componentName: componentName,
                     framework: framework,
                     template: answers.api === "Composition API" ? "component-composition.vue" : "component-options.vue",
-                    folder: answers.folder
+                    folder: folder
                 };
             });
         }
         else if (framework === 'angular') {
-            return inquirer.prompt([{
-                    type: 'input',
-                    name: 'folder',
-                    message: "custom path under the component folder for saving your component",
-                    default: ""
-                }]).then((answers) => {
-                return {
-                    componentName: componentName,
-                    framework: framework,
-                    template: "component.component.js",
-                    folder: answers.folder
-                };
-            });
+            return {
+                componentName: componentName,
+                framework: framework,
+                template: "component.component.js",
+                folder: answers.folder
+            };
         }
         else if (framework === "react") {
             return inquirer
@@ -59,12 +52,6 @@ const wizard = async () => {
                     message: "use typescript?",
                     default: true,
                 },
-                {
-                    type: "input",
-                    name: "folder",
-                    message: "custom path under the component folder for saving your component",
-                    default: "",
-                },
             ])
                 .then((answers) => {
                 return {
@@ -73,7 +60,7 @@ const wizard = async () => {
                     template: answers.typescript
                         ? "function-component.tsx"
                         : "function-component.jsx",
-                    folder: answers.folder,
+                    folder: folder,
                 };
             });
         }
