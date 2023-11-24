@@ -4,7 +4,10 @@ const wizard = async () => {
         {
             type: "input",
             name: "componentName",
-            message: "give a name to your component"
+            message: "give a name to your component",
+            validate: (input) => {
+                return input.trim() !== '' ? true : 'Component name cannot be empty';
+            }
         },
         {
             type: 'input',
