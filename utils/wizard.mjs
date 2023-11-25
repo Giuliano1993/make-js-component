@@ -29,6 +29,25 @@ const wizard = async () => {
                     name: "api",
                     message: "choose wich api to use",
                     choices: ["Composition API", "Options API"]
+                }, {
+                    type: "confirm",
+                    name: "advanced",
+                    message: "Do you want to check for advanced otpions?",
+                    default: false
+                }, {
+                    type: "checkbox",
+                    name: "advancedOpts",
+                    message: "Pick the parts you want in your component?",
+                    choices: [
+                        "data",
+                        "emit",
+                        "style",
+                        "computed"
+                    ],
+                    when: (answers) => {
+                        return answers.advanced;
+                    },
+                    default: false
                 }]).then((answers) => {
                 return {
                     componentName: componentName,
@@ -76,4 +95,24 @@ const wizard = async () => {
         throw new Error(e.message);
     });
 };
+function prepareAdvanced(options) {
+    const arr = [
+        {
+            type: "confirm",
+            name: "advanced",
+            message: "Do you want to check for advanced otpions?",
+            default: false
+        }, {
+            type: "checkbox",
+            name: "advancedOpts",
+            message: "Pick the parts you want in your component?",
+            choices: options,
+            when: (answers) => {
+                return answers.advanced;
+            },
+            default: false
+        }
+    ];
+    return [...arr];
+}
 export default wizard;

@@ -35,6 +35,9 @@ const wizard = async()=>{
         folder: string,
         framework: string
     })=>{
+
+        
+        
         const {componentName,framework, folder} = answers;
         if(framework === 'vue'){
             return inquirer.prompt([{
@@ -42,8 +45,29 @@ const wizard = async()=>{
                 name: "api",
                 message: "choose wich api to use",
                 choices: ["Composition API", "Options API"]
+            },{
+                type:"confirm",
+                name:"advanced",
+                message:"Do you want to check for advanced otpions?",
+                default:false
+            },{
+                type:"checkbox",
+                name:"advancedOpts",
+                message:"Pick the parts you want in your component?",
+                choices: [
+                    "data",
+                    "emit",
+                    "style",
+                    "computed"
+                ],
+                when: (answers: {advanced:boolean})=>{
+                    return answers.advanced;
+                },
+                default:false
             }]).then((answers: {
                 api: string,
+                advanced:boolean,
+                advancedOpts?: string[]
             })=>{
                 return { 
                     componentName: componentName,
@@ -93,5 +117,29 @@ const wizard = async()=>{
         throw new Error(e.message);
     })
     
+}
+
+
+
+function prepareAdvanced (options: string[]){
+    const arr = [
+        {
+            type:"confirm",
+            name:"advanced",
+            message:"Do you want to check for advanced otpions?",
+            default:false
+        },{
+            type:"checkbox",
+            name:"advancedOpts",
+            message:"Pick the parts you want in your component?",
+            choices: options,
+            when: (answers: {advanced:boolean})=>{
+                return answers.advanced;
+            },
+            default:false
+        }
+    ]
+
+    return [...arr];
 }
 export default wizard;
