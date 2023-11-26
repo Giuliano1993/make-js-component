@@ -62,13 +62,12 @@ const wizard = async()=>{
                     "style",
                     "computed"
                 ],
-                when: (answers: {advanced:boolean})=>{
+                when: (answers: {api: string, advanced:boolean})=>{
                     return answers.advanced;
                 },
             }]).then((answers: {
                 advanced:boolean,
-                //ust a workaround fr wht confirm type not working well, must PR or something
-                api?: string,
+                api: string,
                 advancedOpts?: string[]
             })=>{
                 console.log(answers)
