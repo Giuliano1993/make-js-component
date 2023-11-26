@@ -1,4 +1,9 @@
+<p align="center">
+   <img src="https://github.com/Giuliano1993/make-js-component/assets/12759050/bedcd81f-431b-4699-9771-ba5c237ec68f" />
+</p>
+
 # Make Js Component
+
 This package is born from the idea to expand the previous [make-vue-component](https://github.com/Giuliano1993/make-vue-component) command and to make it available also for other front-end frameworks, in order to improve the developer experience when writing your components.
 
 - [Make Js Component](#make-js-component)
