@@ -15,7 +15,13 @@ const wizard = async()=>{
             name: "componentName",
             message: "give a name to your component",
             validate: (input) => {
-                return input.trim() !== '' ? true : 'Component name cannot be empty';
+                const trimmedInput = input.trim();
+                if (trimmedInput === '') {
+                    return 'Component name cannot be empty';
+                }
+                // Use a regular expression to check for only alphanumeric characters
+                const isValid = /^[a-zA-Z0-9]+$/.test(trimmedInput);
+                return isValid ? true : 'Component name can only contain alphanumeric characters';
             }
         },
         {
