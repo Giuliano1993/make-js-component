@@ -29,12 +29,14 @@ const wizard = async () => {
                     name: "api",
                     message: "choose wich api to use",
                     choices: ["Composition API", "Options API"]
-                }, {
+                },
+                {
                     type: "confirm",
                     name: "advanced",
                     message: "Do you want to check for advanced otpions?",
                     default: false
-                }, {
+                },
+                {
                     type: "checkbox",
                     name: "advancedOpts",
                     message: "Pick the parts you want in your component?",
@@ -47,8 +49,8 @@ const wizard = async () => {
                     when: (answers) => {
                         return answers.advanced;
                     },
-                    default: false
                 }]).then((answers) => {
+                console.log(answers);
                 return {
                     componentName: componentName,
                     framework: framework,

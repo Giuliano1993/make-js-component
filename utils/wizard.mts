@@ -45,12 +45,14 @@ const wizard = async()=>{
                 name: "api",
                 message: "choose wich api to use",
                 choices: ["Composition API", "Options API"]
-            },{
+            },
+            {
                 type:"confirm",
                 name:"advanced",
                 message:"Do you want to check for advanced otpions?",
                 default:false
-            },{
+            },
+            {
                 type:"checkbox",
                 name:"advancedOpts",
                 message:"Pick the parts you want in your component?",
@@ -63,12 +65,13 @@ const wizard = async()=>{
                 when: (answers: {advanced:boolean})=>{
                     return answers.advanced;
                 },
-                default:false
             }]).then((answers: {
-                api: string,
                 advanced:boolean,
+                //ust a workaround fr wht confirm type not working well, must PR or something
+                api?: string,
                 advancedOpts?: string[]
             })=>{
+                console.log(answers)
                 return { 
                     componentName: componentName,
                     framework: framework,
