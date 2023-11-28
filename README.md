@@ -4,7 +4,14 @@
 
 # Make Js Component
 
-This package is born from the idea to expand the previous [make-vue-component](https://github.com/Giuliano1993/make-vue-component) command and to make it available also for other front-end frameworks, in order to improve the developer experience when writing your components.
+Make Js Component is an NPX command born with the purpose of streamline the process for developers of creating components with the many FE frameworks around here. 
+
+Since some frameworks have standard commands, some had them, some really don't, the quickest thing is usually copy pasting compononent after component and then edit it.
+
+MJC allows you to just call a command and have your JS component ready to use, and edit, with also a bunch of options available in order to start with the perfect boilerplate.
+
+You can't find the framework or the options you need? Checkout the [Contributing guide](./CONTRIBUTING.md) and open an issue to let us know and, if you wish, you can open a PR to have the feature inclued in the command!
+
 
 - [Make Js Component](#make-js-component)
   - [Basic Usage](#basic-usage)
