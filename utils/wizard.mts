@@ -12,7 +12,7 @@ const wizard = async () => {
       {
         type: "input",
         name: "componentName",
-        message: "give a name to your component",
+        message: "Give a name to your component",
         validate: (input) => {
           const trimmedInput = input.trim();
           if (trimmedInput === "") {
