@@ -1,20 +1,32 @@
 import inquirer from 'inquirer';
-
+import { Command } from 'commander';
+const program = new Command();
 
 type Answers = {
     componentName: string,
     framework: string,
     template: string,
     folder: string
-}
-const wizard = async()=>{
+};
 
-    return inquirer.prompt([
-        {
-            type: "input",
-            name: "componentName",
-            message: "give a name to your component",
-            validate: (input) => {
+const wizard = async () => {
+    // Parse command line arguments using commander
+    program
+        .option('--name <value>', 'Specify a name')
+        .parse(process.argv);
+
+    const options = program.opts();
+    const componentNameFromFlag = options.name || '';
+
+    const prompts = [];
+
+    // Only ask for componentName if --name argument is not provided
+    if (!componentNameFromFlag) {
+        prompts.push({
+            type: 'input',
+            name: 'componentName',
+            message: 'Give a name to your component',
+            validate: (input: string) => {
                 const trimmedInput = input.trim();
                 if (trimmedInput === '') {
                     return 'Component name cannot be empty';
@@ -22,8 +34,11 @@ const wizard = async()=>{
                 // Use a regular expression to check for only alphanumeric characters
                 const isValid = /^[a-zA-Z0-9]+$/.test(trimmedInput);
                 return isValid ? true : 'Component name can only contain alphanumeric characters';
-            }
-        },
+            },
+        });
+    }
+
+    prompts.push(
         {
             type: 'input',
             name: 'folder',
@@ -34,14 +49,17 @@ const wizard = async()=>{
             type: "list",
             name: "framework",
             message: "pick a framework to create the component for",
-            choices: ["vue","angular","react"]
+            choices: ["vue", "angular", "react"]
         }
-    ]).then((answers: {
+    );
+
+    return inquirer.prompt(prompts).then((answers: {
         componentName: string,
         folder: string,
         framework: string
     })=>{
-        const {componentName,framework, folder} = answers;
+        const {framework, folder} = answers;
+        const componentName = answers.componentName || componentNameFromFlag
         if(framework === 'vue'){
             return inquirer.prompt([{
                 type: "list",
