@@ -18,6 +18,7 @@ const wizard = async () => {
         prompts.push({
             type: 'input',
             name: 'componentName',
+            message: 'Give a name to your component',
             validate: (input) => {
                 const trimmedInput = input.trim();
                 if (trimmedInput === "") {
