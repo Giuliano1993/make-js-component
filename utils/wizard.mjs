@@ -28,7 +28,7 @@ const wizard = async () => {
             type: "list",
             name: "framework",
             message: "Pick a framework to create the component for",
-            choices: ["Vue", "Angular", "React"],
+            choices: ["Vue", "Angular", "React", "Qwik"],
         },
     ])
         .then((answers) => {
@@ -82,6 +82,14 @@ const wizard = async () => {
                     folder: folder,
                 };
             });
+        }
+        else if (framework === "Qwik") {
+            return {
+                componentName: componentName,
+                framework: framework,
+                template: "component.tsx",
+                folder: answers.folder,
+            };
         }
         else {
             throw new Error("a framework must be selected");
