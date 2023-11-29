@@ -40,15 +40,15 @@ const wizard = async () => {
         {
             type: "list",
             name: "framework",
-            message: "pick a framework to create the component for",
-            choices: ["vue", "angular", "react"]
+            message: "Pick a framework to create the component for",
+            choices: ["Vue", "Angular", "React"]
         }
     );
 
     return inquirer.prompt(prompts).then((answers) => {
         const { framework, folder } = answers;
         const componentName = answers.componentName || componentNameFromFlag
-        if (framework === 'vue') {
+        if (framework === 'Vue') {
             return inquirer.prompt([{
                     type: "list",
                     name: "api",
@@ -97,7 +97,7 @@ const wizard = async () => {
             });
         }
         else {
-            throw new Error("a framework must be selected");
+            throw new Error("A framework must be selected");
         }
     })
         .then((values) => {
