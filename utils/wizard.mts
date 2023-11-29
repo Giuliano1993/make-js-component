@@ -59,7 +59,7 @@ const wizard = async () => {
             .then((answers: { api: string }) => {
               return {
                 componentName: componentName,
-                framework: framework,
+                framework: framework.toLowerCase(),
                 template:
                   answers.api === "Composition API"
                     ? "component-composition.vue"
