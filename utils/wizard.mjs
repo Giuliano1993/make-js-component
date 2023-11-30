@@ -35,7 +35,7 @@ const wizard = async () => {
         type: "list",
         name: "framework",
         message: "Pick a framework to create the component for",
-        choices: ["Vue", "Angular", "React"]
+        choices: ["Vue", "Angular", "React", "Qwik"]
     });
     return inquirer.prompt(prompts).then((answers) => {
         const { framework, folder } = answers;
