@@ -6,7 +6,9 @@
   "bin": "./cmd/make-js-component.mjs",
   "scripts": {
     "dev": "npx tsc -w",
-    "test": "echo \"Error: no  test specified\" && exit 1"
+    "test": "echo \"Error: no  test specified\" && exit 1",
+    "format": "biome format ./src --write",
+    "lint": "biome lint ./src"
   },
   "keywords": [
     "node",
