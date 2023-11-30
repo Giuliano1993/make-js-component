@@ -27,6 +27,10 @@ You can't find the framework or the options you need? Checkout the [Contributing
 ```bash
 npx make-js-component
 ```
+OR
+```bash
+npx make-js-component --name <NAME>
+```
 
 This will run a short wizard so you can easily create your component in few steps
 
