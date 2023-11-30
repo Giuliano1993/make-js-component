@@ -93,7 +93,7 @@ const wizard = async () => {
                     type: "list",
                     name: "type",
                     message: "Choose wich type of component to create",
-                    choices: ["Hello World", "Stateless", "useStore", "useTask", "useStyle", "useVisibleTask"],
+                    choices: ["Hello World", "Stateless", "useStore", "useTask", "useVisibleTask", "useStyle", ],
                 },
             ])
                 .then((answers) => {
@@ -108,10 +108,10 @@ const wizard = async () => {
                     ? "usestore-component.tsx"
                     : answers.type === "useTask"
                     ? "usetask-component.tsx"
-                    : answers.type === "useStyles"
-                    ? "usestyle-component.tsx"
                     : answers.type === "useVisibleTask"
                     ? "usevisibletask-component.tsx"
+                    : answers.type === "useStyles"
+                    ? "usestyle-component.tsx"
                     : "hello-world-component.tsx", 
                     folder: folder,
                 };
