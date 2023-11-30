@@ -1,5 +1,13 @@
+import { CommonModule } from '@angular/common';
+
 Component({
-    selector: 'ComponentName',
-    template: `<div>Hello ComponentName</div>`,
+	standalone: true,
+	imports: [CommonModule],
+	selector: 'SelectorName',
+	template: `<div>Hello ComponentName</div>`,
 })
-export class ComponentName { }
+export class ComponentName {
+
+	constructor() { }
+
+}
