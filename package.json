@@ -21,6 +21,7 @@
   "author": "Giuliano Gostinfini (Ghostylab)",
   "license": "ISC",
   "devDependencies": {
+    "@biomejs/biome": "1.4.0",
     "@types/inquirer": "^9.0.7",
     "@types/node": "^20.9.0",
     "typescript": "^5.3.2"
