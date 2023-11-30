@@ -82,7 +82,7 @@ const wizard = async () => {
         } else if (framework === "Angular") {
           return {
             componentName: componentName,
-            framework: framework,
+            framework: framework.toLowerCase(),
             template: "component.component.js",
             folder: answers.folder,
           };
@@ -99,7 +99,7 @@ const wizard = async () => {
             .then((answers: { typescript: boolean }) => {
               return {
                 componentName: componentName,
-                framework: framework,
+                framework: framework.toLowerCase(),
                 template: answers.typescript
                   ? "function-component.tsx"
                   : "function-component.jsx",
