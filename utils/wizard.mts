@@ -43,15 +43,13 @@ function generateReactComponent(
 function generateAngularComponent(
   componentName: string,
   folder: string
-): Promise<Answers> {
-  return new Promise((resolve) => {
-    return {
-      componentName: componentName,
-      framework: AVAILABLE_CHOICES.ANGULAR.toLowerCase(),
-      template: "component.component.js",
-      folder: folder,
-    };
-  });
+): Answers {
+  return {
+    componentName: componentName,
+    framework: AVAILABLE_CHOICES.ANGULAR.toLowerCase(),
+    template: "component.component.js",
+    folder: folder,
+  };
 }
 
 function generateVueComponent(
