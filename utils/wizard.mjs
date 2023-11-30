@@ -88,13 +88,34 @@ const wizard = async () => {
                 };
             });
         }
-        else if (framework === "Qwik") {
-            return {
-                componentName: componentName,
-                framework: framework,
-                template: "component.tsx",
-                folder: answers.folder,
-            };
+        else if (framework === 'Qwik') {
+            return inquirer.prompt([{
+                    type: "list",
+                    name: "type",
+                    message: "Choose wich type of component to create",
+                    choices: ["Hello World", "Stateless", "useStore", "useTask", "useStyle", "useVisibleTask"],
+                },
+            ])
+                .then((answers) => {
+                return {
+                    componentName: componentName,
+                    framework: framework.toLowerCase(),
+                    template: answers.type === "Hello World"
+                    ? "hello-world-component.tsx"
+                    : answers.type === "Stateless"
+                    ? "stateless-component.tsx"
+                    : answers.type === "useStore"
+                    ? "usestore-component.tsx"
+                    : answers.type === "useTask"
+                    ? "usetask-component.tsx"
+                    : answers.type === "useStyles"
+                    ? "usestyle-component.tsx"
+                    : answers.type === "useVisibleTask"
+                    ? "usevisibletask-component.tsx"
+                    : "hello-world-component.tsx", 
+                    folder: folder,
+                };
+            });
         }
         else {
             throw new Error("A framework must be selected");
