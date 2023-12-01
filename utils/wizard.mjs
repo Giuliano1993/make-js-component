@@ -78,14 +78,39 @@ const wizard = async () => {
                 },
             ])
                 .then((answers) => {
-                return {
-                    componentName: componentName,
-                    framework: framework.toLowerCase(),
-                    template: answers.typescript
-                        ? "function-component.tsx"
-                        : "function-component.jsx",
-                    folder: folder,
-                };
+                const { typescript } = answers;
+                return inquirer.prompt([{
+                        type: "list",
+                        name: "css",
+                        message: "Do you want to use any CSS framework?",
+                        choices: ["Tailwind", "Styled Components", "No"],
+                    },
+                ]).then((answers) => {
+                    const { css } = answers;
+                    let template;
+                    if (typescript) {
+                        if (css === "Tailwind")
+                            template = "function-component-tailwind.tsx";
+                        else if (css === 'Styled Components')
+                            template = "function-component-styled-components.tsx";
+                        else
+                            template = "function-component.tsx";
+                    }
+                    else {
+                        if (css === "Tailwind")
+                            template = "function-component-tailwind.jsx";
+                        else if (css === 'Styled Components')
+                            template = "function-component-styled-components.jsx";
+                        else
+                            template = "function-component.jsx";
+                    }
+                    return {
+                        componentName: componentName,
+                        framework: framework.toLowerCase(),
+                        template,
+                        folder: folder,
+                    };
+                });
             });
         }
         else if (framework === "Svelte") {
