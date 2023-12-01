@@ -13,7 +13,7 @@ const wizard = async () => {
     // Parse command line arguments using commander
     program
         .option('--name <value>', 'Specify a name')
-        .option('-f, --framework <value>', 'Specify framework (Vue, Angular, React)')
+        .option('-f, --framework <value>', 'Specify framework (Vue, Angular, React, Svelte, Qwik)')
         .parse(process.argv);
 
     const options = program.opts();
@@ -35,7 +35,7 @@ const wizard = async () => {
                 }
                 // Use a regular expression to check for only alphanumeric characters
                 const isValid = /^[a-zA-Z0-9]+$/.test(trimmedInput);
-                return isValid ? true : 'Component name can only contain alphanumeric characters';
+                return isValid || 'Component name can only contain alphanumeric characters';
             },
         });
     }
@@ -54,7 +54,7 @@ const wizard = async () => {
           type: "list",
           name: "framework",
           message: "Pick a framework to create the component for",
-          choices: ["Vue", "Angular", "React"]
+          choices: ["Vue", "Angular", "React", "Svelte", "Qwik"]
         })
     }
 
@@ -89,10 +89,54 @@ const wizard = async () => {
           return {
             componentName: componentName,
             framework: framework.toLowerCase(),
-            template: "component.component.js",
+            template: "component.component.ts",
             folder: answers.folder,
           };
         } else if (framework === "React") {
+          return inquirer
+            .prompt([
+              {
+                type: "confirm",
+                name: "typescript",
+                message: "Do you want to use Typescript?",
+                default: true,
+              },
+            ])
+            .then((answers: { typescript: boolean }) => {
+              
+              const { typescript } = answers;
+
+              return inquirer.prompt([
+                {
+                  type: "list",
+                  name: "css",
+                  message: "Do you want to use any CSS framework?",
+                  choices: ["Tailwind", "Styled Components", "No"],
+                },
+              ]).then((answers: {css: string}) => {
+
+                const { css } = answers;
+                let template: string;
+
+                if(typescript){
+                  if(css === "Tailwind") template = "function-component-tailwind.tsx"
+                  else if(css === 'Styled Components') template = "function-component-styled-components.tsx"
+                  else template = "function-component.tsx"
+                }else{
+                  if(css === "Tailwind") template = "function-component-tailwind.jsx"
+                  else if(css === 'Styled Components') template = "function-component-styled-components.jsx"
+                  else template = "function-component.jsx"
+                }
+
+                return {
+                    componentName: componentName,
+                    framework: framework.toLowerCase(),
+                    template: template,
+                    folder: folder,
+                };
+              });
+            })
+        } else if (framework === "Svelte") {
           return inquirer
             .prompt([
               {
@@ -107,12 +151,36 @@ const wizard = async () => {
                 componentName: componentName,
                 framework: framework.toLowerCase(),
                 template: answers.typescript
-                  ? "function-component.tsx"
-                  : "function-component.jsx",
+                  ? "component-ts.svelte"
+                  : "component-js.svelte",
                 folder: folder,
               };
             });
-        } else {
+          
+
+        } else if (framework === 'Qwik') {
+          return inquirer.prompt([{
+                  type: "list",
+                  name: "type",
+                  message: "Choose wich type of component to create",
+                  choices: ["Hello World", "useStore", "useStyles"],
+              },
+          ])
+              .then((answers) => {
+              return {
+                  componentName: componentName,
+                  framework: framework.toLowerCase(),
+                  template: answers.type === "Hello World"
+                  ? "hello-world-component.tsx"
+                  : answers.type === "useStore"
+                  ? "usestore-component.tsx"
+                  : answers.type === "useStyles"
+                  ? "usestyles-component.tsx"
+                  : "hello-world-component.tsx", 
+                  folder: folder,
+              };
+          });
+      }else {
           throw new Error("A framework must be selected");
         }
       }
