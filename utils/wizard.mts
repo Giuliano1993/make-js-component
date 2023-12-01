@@ -100,34 +100,36 @@ const wizard = async () => {
               
               const { typescript } = answers;
 
-              return inquirer.prompt([{
-                type: "list",
-                name: "css",
-                message: "Do you want to use any CSS framework?",
-                choices: ["Tailwind", "Styled Components", "No"],
-              },
-            ]).then((answers: {css: string}) => {
+              return inquirer.prompt([
+                {
+                  type: "list",
+                  name: "css",
+                  message: "Do you want to use any CSS framework?",
+                  choices: ["Tailwind", "Styled Components", "No"],
+                },
+              ]).then((answers: {css: string}) => {
 
-              const { css } = answers;
-              let template: string;
+                const { css } = answers;
+                let template: string;
 
-              if(typescript){
-                if(css === "Tailwind") template = "function-component-tailwind.tsx"
-                else if(css === 'Styled Components') template = "function-component-styled-components.tsx"
-                else template = "function-component.tsx"
-              }else{
-                if(css === "Tailwind") template = "function-component-tailwind.jsx"
-                else if(css === 'Styled Components') template = "function-component-styled-components.jsx"
-                else template = "function-component.jsx"
-              }
+                if(typescript){
+                  if(css === "Tailwind") template = "function-component-tailwind.tsx"
+                  else if(css === 'Styled Components') template = "function-component-styled-components.tsx"
+                  else template = "function-component.tsx"
+                }else{
+                  if(css === "Tailwind") template = "function-component-tailwind.jsx"
+                  else if(css === 'Styled Components') template = "function-component-styled-components.jsx"
+                  else template = "function-component.jsx"
+                }
 
-              return {
-                  componentName: componentName,
-                  framework: framework.toLowerCase(),
-                  template,
-                  folder: folder,
-              };
-            });
+                return {
+                    componentName: componentName,
+                    framework: framework.toLowerCase(),
+                    template: template,
+                    folder: folder,
+                };
+              });
+            })
         } else if (framework === "Svelte") {
           return inquirer
             .prompt([
@@ -148,7 +150,7 @@ const wizard = async () => {
                 folder: folder,
               };
             });
-          })
+          
 
         } else {
           throw new Error("A framework must be selected");

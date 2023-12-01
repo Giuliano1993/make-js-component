@@ -79,7 +79,8 @@ const wizard = async () => {
             ])
                 .then((answers) => {
                 const { typescript } = answers;
-                return inquirer.prompt([{
+                return inquirer.prompt([
+                    {
                         type: "list",
                         name: "css",
                         message: "Do you want to use any CSS framework?",
@@ -107,7 +108,7 @@ const wizard = async () => {
                     return {
                         componentName: componentName,
                         framework: framework.toLowerCase(),
-                        template,
+                        template: template,
                         folder: folder,
                     };
                 });
