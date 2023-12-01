@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from "node:path";
 import { configs } from './configs.cjs';
-import { makeAngularComponent } from '../stubs/angular/make-angular-component.js';
+import { makeAngularComponent } from '../stubs/angular/make-angular-component.mjs';
 
 interface ErrnoException extends Error {
 	errno?: number | undefined;
@@ -33,11 +33,13 @@ const createComponent = (componentName: string, framework: string, template: str
 			fs.mkdirSync(customDestinationFolder);
 		}
 
+		const filePathDestination: string = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder, compFileName);
+
 		if (framework === 'angular') {
-			makeAngularComponent(templateFilePath, componentName, customFolder);
+			makeAngularComponent(filePathDestination, templateFilePath, componentName);
 		} else {
 			data = data.replaceAll("ComponentName", capitalizeFirstLetter(componentName));
-			writeFile(customFolder, compFileName, data);
+			writeFile(filePathDestination, data);
 		}
 
 	});
@@ -45,12 +47,12 @@ const createComponent = (componentName: string, framework: string, template: str
 
 export default createComponent;
 
-export function writeFile(customFolder: string, compFileName: string, data: string): void {
-	fs.writeFile(path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder, compFileName), data, (err: ErrnoException | null) => {
+export function writeFile(filePathDestination: string, data: string): void {
+	fs.writeFile(filePathDestination, data, (err: ErrnoException | null) => {
 		if (err) {
-			console.error(err)
+			console.error(err);
 		} else {
-			console.log('Done ✅')
+			console.log('✅ CREATE Component: ' + filePathDestination);
 		}
 	});
 }
