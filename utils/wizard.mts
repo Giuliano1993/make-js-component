@@ -83,7 +83,7 @@ const wizard = async () => {
           return {
             componentName: componentName,
             framework: framework.toLowerCase(),
-            template: "component.component.js",
+            template: "component.component.ts",
             folder: answers.folder,
           };
         } else if (framework === "React") {

@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from "node:path";
 import { configs } from './configs.cjs';
-import { makeAngularComponent } from '../stubs/angular/make-angular-component.mjs';
+import { makeAngularComponent } from '../stubs/angular/make-angular-component.js';
 
 interface ErrnoException extends Error {
 	errno?: number | undefined;
@@ -33,7 +33,7 @@ const createComponent = (componentName: string, framework: string, template: str
 			fs.mkdirSync(customDestinationFolder);
 		}
 
-		if (framework === 'Angular') {
+		if (framework === 'angular') {
 			makeAngularComponent(templateFilePath, componentName, customFolder);
 		} else {
 			data = data.replaceAll("ComponentName", capitalizeFirstLetter(componentName));
