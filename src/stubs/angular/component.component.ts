@@ -1,12 +1,15 @@
 import { CommonModule } from '@angular/common';
 
 Component({
+	selector: 'SelectorName',
 	standalone: true,
 	imports: [CommonModule],
-	selector: 'SelectorName',
-	template: `<div>Hello ComponentName</div>`,
+	template: `<div>{{title}}</div>`,
+	styleUrls: ` `
 })
 export class ComponentName {
+
+	public title: string = 'ComponentName';
 
 	constructor() { }
 
