@@ -13,10 +13,12 @@ const wizard = async () => {
     // Parse command line arguments using commander
     program
         .option('--name <value>', 'Specify a name')
+        .option('-f, --framework <value>', 'Specify framework (Vue, Angular, React, Svelte, Qwik)')
         .parse(process.argv);
 
     const options = program.opts();
     const componentNameFromFlag = options.name || '';
+    const frameworkFromFlag = options.framework || '';
 
     const prompts = [];
 
@@ -44,21 +46,25 @@ const wizard = async () => {
             name: 'folder',
             message: "Custom path under the component folder for saving your component",
             default: ""
-        },
-        {
-            type: "list",
-            name: "framework",
-            message: "Pick a framework to create the component for",
-            choices: ["Vue", "Angular", "React", "Svelte", "Qwik"]
         }
     );
+
+    if (!frameworkFromFlag) {
+      prompts.push({
+          type: "list",
+          name: "framework",
+          message: "Pick a framework to create the component for",
+          choices: ["Vue", "Angular", "React", "Svelte", "Qwik"]
+        })
+    }
 
     return inquirer.prompt(prompts).then((answers: {
         componentName: string,
         folder: string,
         framework: string
     })=>{
-        const {framework, folder} = answers;
+        const {folder} = answers;
+        const framework = answers.framework || frameworkFromFlag;
         const componentName = answers.componentName || componentNameFromFlag
         if(framework === 'Vue'){
             return inquirer.prompt([{
