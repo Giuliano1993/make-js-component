@@ -90,7 +90,7 @@ const wizard = async () => {
                         type: "list",
                         name: "css",
                         message: "Do you want to use any CSS framework?",
-                        choices: ["Tailwind", "Styled Components", "No"],
+                        choices: ["Tailwind", "Styled Components", "CSS Module", "No"],
                     },
                 ]).then((answers) => {
                     const { css } = answers;
@@ -100,6 +100,8 @@ const wizard = async () => {
                             template = "function-component-tailwind.tsx";
                         else if (css === 'Styled Components')
                             template = "function-component-styled-components.tsx";
+                        else if (css === 'CSS Module')
+                            template = "function-component-css-module.tsx";
                         else
                             template = "function-component.tsx";
                     }
@@ -108,6 +110,8 @@ const wizard = async () => {
                             template = "function-component-tailwind.jsx";
                         else if (css === 'Styled Components')
                             template = "function-component-styled-components.jsx";
+                        else if (css === 'CSS Module')
+                            template = "function-component-css-module.jsx";
                         else
                             template = "function-component.jsx";
                     }
