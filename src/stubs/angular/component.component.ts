@@ -4,7 +4,10 @@ Component({
 	selector: 'SelectorName',
 	standalone: true,
 	imports: [CommonModule],
-	template: `<div>{{title}}</div>`,
+	template: `
+		<h2>Hello, {{ title }}</h2>
+		<p>Congratulations! Your component has been created. 🎉</p>
+	`,
 	styleUrls: ` `
 })
 export class ComponentName {

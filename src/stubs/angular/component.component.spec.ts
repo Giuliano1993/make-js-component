@@ -17,13 +17,13 @@ describe('ComponentName', () => {
   it(`should have the 'ComponentName' title`, () => {
     const fixture = TestBed.createComponent(ComponentName);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-v17');
+    expect(app.title).toEqual('ComponentName');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(ComponentName);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, angular-v17');
+    expect(compiled.querySelector('h2')?.textContent).toContain('Hello, ComponentName');
   });
 });
