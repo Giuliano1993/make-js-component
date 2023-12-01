@@ -1,9 +1,16 @@
 #! /usr/bin/env node
 
 
-import wizard from "../utils/wizard/wizard.mjs";
+//const wizard = require('../utils/wizard.mjs');
+import wizard from "../utils/wizard.mjs";
 import createComponent from "../src/utils/utils.mjs";
-import { Answers } from "../types/index.mjs";
+
+type Answers = {
+    componentName: string,
+    framework: string,
+    template : string,
+    folder ?: string
+}
 
 wizard().then((answers: Answers)=>{
     const {componentName, framework, template, folder} = answers;
