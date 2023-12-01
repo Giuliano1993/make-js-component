@@ -110,7 +110,7 @@
   },
   "exclude": [
 		"src/**/*.tsx",
-		"src/components/*.ts",
 		"src/stubs/angular/component.component.ts",
+		"src/stubs/angular/component.component.spec.ts"
 	]
 }

@@ -3,7 +3,7 @@ import * as path from "node:path";
 import { configs } from './configs.cjs';
 import { makeAngularComponent } from '../stubs/angular/make-angular-component.mjs';
 
-interface ErrnoException extends Error {
+export interface ErrnoException extends Error {
 	errno?: number | undefined;
 	code?: string | undefined;
 	path?: string | undefined;
