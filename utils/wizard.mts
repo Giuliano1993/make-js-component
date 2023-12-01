@@ -33,7 +33,7 @@ const wizard = async () => {
                 }
                 // Use a regular expression to check for only alphanumeric characters
                 const isValid = /^[a-zA-Z0-9]+$/.test(trimmedInput);
-                return isValid ? true : 'Component name can only contain alphanumeric characters';
+                return isValid || 'Component name can only contain alphanumeric characters';
             },
         });
     }
@@ -49,7 +49,7 @@ const wizard = async () => {
             type: "list",
             name: "framework",
             message: "Pick a framework to create the component for",
-            choices: ["Vue", "Angular", "React"]
+            choices: ["Vue", "Angular", "React", "Svelte"]
         }
     );
 
@@ -126,9 +126,30 @@ const wizard = async () => {
                   framework: framework.toLowerCase(),
                   template,
                   folder: folder,
-                };
-              });
+              };
+            });
+        } else if (framework === "Svelte") {
+          return inquirer
+            .prompt([
+              {
+                type: "confirm",
+                name: "typescript",
+                message: "Do you want to use Typescript?",
+                default: true,
+              },
+            ])
+            .then((answers: { typescript: boolean }) => {
+              return {
+                componentName: componentName,
+                framework: framework.toLowerCase(),
+                template: answers.typescript
+                  ? "component-ts.svelte"
+                  : "component-js.svelte",
+                folder: folder,
+              };
+            });
           })
+
         } else {
           throw new Error("A framework must be selected");
         }
