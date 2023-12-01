@@ -26,6 +26,12 @@ const createComponent = (componentName, framework, template, customFolder = '') 
             data = data.replaceAll("ComponentName", capitalizeFirstLetter(componentName));
             writeFile(filePathDestination, data);
         }
+        if (template == 'function-component-css-module.jsx'
+            || template == 'function-component-css-module.tsx') {
+            const styleFileName = `${componentName}.module.css`;
+            const styleFilePathDestination = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder, styleFileName);
+            writeFile(styleFilePathDestination, `.${componentName} {\n\tfont-size: 1.125rem; /* 18px */\n\tline-height: 1.75rem; /* 28px */\n\tfont-weight: bold;\n}\n`);
+        }
     });
 };
 export default createComponent;
