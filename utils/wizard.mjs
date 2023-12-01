@@ -22,7 +22,7 @@ const wizard = async () => {
                 }
                 // Use a regular expression to check for only alphanumeric characters
                 const isValid = /^[a-zA-Z0-9]+$/.test(trimmedInput);
-                return isValid ? true : 'Component name can only contain alphanumeric characters';
+                return isValid || 'Component name can only contain alphanumeric characters';
             },
         });
     }
@@ -35,7 +35,7 @@ const wizard = async () => {
         type: "list",
         name: "framework",
         message: "Pick a framework to create the component for",
-        choices: ["Vue", "Angular", "React"]
+        choices: ["Vue", "Angular", "React", "Svelte"]
     });
     return inquirer.prompt(prompts).then((answers) => {
         const { framework, folder } = answers;
@@ -78,12 +78,59 @@ const wizard = async () => {
                 },
             ])
                 .then((answers) => {
+                const { typescript } = answers;
+                return inquirer.prompt([
+                    {
+                        type: "list",
+                        name: "css",
+                        message: "Do you want to use any CSS framework?",
+                        choices: ["Tailwind", "Styled Components", "No"],
+                    },
+                ]).then((answers) => {
+                    const { css } = answers;
+                    let template;
+                    if (typescript) {
+                        if (css === "Tailwind")
+                            template = "function-component-tailwind.tsx";
+                        else if (css === 'Styled Components')
+                            template = "function-component-styled-components.tsx";
+                        else
+                            template = "function-component.tsx";
+                    }
+                    else {
+                        if (css === "Tailwind")
+                            template = "function-component-tailwind.jsx";
+                        else if (css === 'Styled Components')
+                            template = "function-component-styled-components.jsx";
+                        else
+                            template = "function-component.jsx";
+                    }
+                    return {
+                        componentName: componentName,
+                        framework: framework.toLowerCase(),
+                        template: template,
+                        folder: folder,
+                    };
+                });
+            });
+        }
+        else if (framework === "Svelte") {
+            return inquirer
+                .prompt([
+                {
+                    type: "confirm",
+                    name: "typescript",
+                    message: "Do you want to use Typescript?",
+                    default: true,
+                },
+            ])
+                .then((answers) => {
                 return {
                     componentName: componentName,
                     framework: framework.toLowerCase(),
                     template: answers.typescript
-                        ? "function-component.tsx"
-                        : "function-component.jsx",
+                        ? "component-ts.svelte"
+                        : "component-js.svelte",
                     folder: folder,
                 };
             });
