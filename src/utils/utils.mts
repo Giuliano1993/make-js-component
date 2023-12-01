@@ -36,7 +36,7 @@ const createComponent = (componentName: string, framework: string, template: str
 		const filePathDestination: string = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder, compFileName);
 
 		if (framework === 'angular') {
-			makeAngularComponent(filePathDestination, templateFilePath, componentName);
+			makeAngularComponent(filePathDestination, data, componentName);
 		} else {
 			data = data.replaceAll("ComponentName", capitalizeFirstLetter(componentName));
 			writeFile(filePathDestination, data);

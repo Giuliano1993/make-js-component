@@ -1,15 +1,9 @@
-import * as fs from 'fs';
 import { writeFile } from '../../utils/utils.mjs';
 
-export function makeAngularComponent(filePathDestination: string, templateFilePath: string, componentName: string): void {
-	fs.readFile(templateFilePath, 'utf8', (err, component) => {
-
-		component = component.replace(/selector: 'SelectorName'/, `selector: 'app-${convertFromCamelCase(componentName)}'`);
-		component = component.replace(/ComponentName/g, `${convertToCamelCase(componentName)}Component`);
-		writeFile(filePathDestination, component);
-
-	});
-
+export function makeAngularComponent(filePathDestination: string, component: string, componentName: string): void {
+	component = component.replace(/selector: 'SelectorName'/, `selector: 'app-${convertFromCamelCase(componentName)}'`);
+	component = component.replace(/ComponentName/g, `${convertToCamelCase(componentName)}Component`);
+	writeFile(filePathDestination, component);
 }
 
 function convertToCamelCase(string: string): string {
