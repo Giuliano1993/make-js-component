@@ -14,7 +14,7 @@ export default component$(() => {
 
   return (
     <div>
-      <p className="custom-style">This is a styled paragraph!</p>
+      <p className="custom-style">ComponentName</p>
     </div>
   );
 });
