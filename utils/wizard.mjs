@@ -63,7 +63,7 @@ const wizard = async () => {
             return {
                 componentName: componentName,
                 framework: framework.toLowerCase(),
-                template: "component.component.js",
+                template: "component.component.ts",
                 folder: answers.folder,
             };
         }
@@ -148,12 +148,12 @@ const wizard = async () => {
                     componentName: componentName,
                     framework: framework.toLowerCase(),
                     template: answers.type === "Hello World"
-                    ? "hello-world-component.tsx"
-                    : answers.type === "useStore"
-                    ? "usestore-component.tsx"
-                    : answers.type === "useStyles"
-                    ? "usestyles-component.tsx"
-                    : "hello-world-component.tsx", 
+                        ? "hello-world-component.tsx"
+                        : answers.type === "useStore"
+                            ? "usestore-component.tsx"
+                            : answers.type === "useStyles"
+                                ? "usestyles-component.tsx"
+                                : "hello-world-component.tsx",
                     folder: folder,
                 };
             });
