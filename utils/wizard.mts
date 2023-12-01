@@ -13,10 +13,12 @@ const wizard = async () => {
     // Parse command line arguments using commander
     program
         .option('--name <value>', 'Specify a name')
+        .option('-f, --framework <value>', 'Specify framework (Vue, Angular, React, Svelte, Qwik)')
         .parse(process.argv);
 
     const options = program.opts();
     const componentNameFromFlag = options.name || '';
+    const frameworkFromFlag = options.framework || '';
 
     const prompts = [];
 
@@ -44,21 +46,25 @@ const wizard = async () => {
             name: 'folder',
             message: "Custom path under the component folder for saving your component",
             default: ""
-        },
-        {
-            type: "list",
-            name: "framework",
-            message: "Pick a framework to create the component for",
-            choices: ["Vue", "Angular", "React", "Svelte"]
         }
     );
+
+    if (!frameworkFromFlag) {
+      prompts.push({
+          type: "list",
+          name: "framework",
+          message: "Pick a framework to create the component for",
+          choices: ["Vue", "Angular", "React", "Svelte", "Qwik"]
+        })
+    }
 
     return inquirer.prompt(prompts).then((answers: {
         componentName: string,
         folder: string,
         framework: string
     })=>{
-        const {framework, folder} = answers;
+        const {folder} = answers;
+        const framework = answers.framework || frameworkFromFlag;
         const componentName = answers.componentName || componentNameFromFlag
         if(framework === 'Vue'){
             return inquirer.prompt([{
@@ -152,7 +158,29 @@ const wizard = async () => {
             });
           
 
-        } else {
+        } else if (framework === 'Qwik') {
+          return inquirer.prompt([{
+                  type: "list",
+                  name: "type",
+                  message: "Choose wich type of component to create",
+                  choices: ["Hello World", "useStore", "useStyles"],
+              },
+          ])
+              .then((answers) => {
+              return {
+                  componentName: componentName,
+                  framework: framework.toLowerCase(),
+                  template: answers.type === "Hello World"
+                  ? "hello-world-component.tsx"
+                  : answers.type === "useStore"
+                  ? "usestore-component.tsx"
+                  : answers.type === "useStyles"
+                  ? "usestyles-component.tsx"
+                  : "hello-world-component.tsx", 
+                  folder: folder,
+              };
+          });
+      }else {
           throw new Error("A framework must be selected");
         }
       }

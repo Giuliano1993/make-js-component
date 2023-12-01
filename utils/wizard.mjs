@@ -5,9 +5,11 @@ const wizard = async () => {
     // Parse command line arguments using commander
     program
         .option('--name <value>', 'Specify a name')
+        .option('-f, --framework <value>', 'Specify framework (Vue, Angular, React, Svelte, Qwik)')
         .parse(process.argv);
     const options = program.opts();
     const componentNameFromFlag = options.name || '';
+    const frameworkFromFlag = options.framework || '';
     const prompts = [];
     // Only ask for componentName if --name argument is not provided
     if (!componentNameFromFlag) {
@@ -31,14 +33,18 @@ const wizard = async () => {
         name: 'folder',
         message: "Custom path under the component folder for saving your component",
         default: ""
-    }, {
-        type: "list",
-        name: "framework",
-        message: "Pick a framework to create the component for",
-        choices: ["Vue", "Angular", "React", "Svelte", "Qwik"]
     });
+    if (!frameworkFromFlag) {
+        prompts.push({
+            type: "list",
+            name: "framework",
+            message: "Pick a framework to create the component for",
+            choices: ["Vue", "Angular", "React", "Svelte", "Qwik"]
+        });
+    }
     return inquirer.prompt(prompts).then((answers) => {
-        const { framework, folder } = answers;
+        const { folder } = answers;
+        const framework = answers.framework || frameworkFromFlag;
         const componentName = answers.componentName || componentNameFromFlag;
         if (framework === 'Vue') {
             return inquirer.prompt([{
@@ -63,7 +69,7 @@ const wizard = async () => {
             return {
                 componentName: componentName,
                 framework: framework.toLowerCase(),
-                template: "component.component.js",
+                template: "component.component.ts",
                 folder: answers.folder,
             };
         }
@@ -148,12 +154,12 @@ const wizard = async () => {
                     componentName: componentName,
                     framework: framework.toLowerCase(),
                     template: answers.type === "Hello World"
-                    ? "hello-world-component.tsx"
-                    : answers.type === "useStore"
-                    ? "usestore-component.tsx"
-                    : answers.type === "useStyles"
-                    ? "usestyles-component.tsx"
-                    : "hello-world-component.tsx", 
+                        ? "hello-world-component.tsx"
+                        : answers.type === "useStore"
+                            ? "usestore-component.tsx"
+                            : answers.type === "useStyles"
+                                ? "usestyles-component.tsx"
+                                : "hello-world-component.tsx",
                     folder: folder,
                 };
             });
