@@ -1,5 +1,6 @@
 import inquirer from 'inquirer';
 import { Command } from 'commander';
+import { capitalizeFirstLetter } from '../src/utils/utils.mjs';
 const program = new Command();
 
 type Answers = {
@@ -18,7 +19,7 @@ const wizard = async () => {
 
     const options = program.opts();
     const componentNameFromFlag = options.name || '';
-    const frameworkFromFlag = options.framework || '';
+    const frameworkFromFlag = capitalizeFirstLetter(options.framework) || '';
 
     const prompts = [];
 

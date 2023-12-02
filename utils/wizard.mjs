@@ -1,5 +1,6 @@
 import inquirer from 'inquirer';
 import { Command } from 'commander';
+import { capitalizeFirstLetter } from '../src/utils/utils.mjs';
 const program = new Command();
 const wizard = async () => {
     // Parse command line arguments using commander
@@ -9,7 +10,7 @@ const wizard = async () => {
         .parse(process.argv);
     const options = program.opts();
     const componentNameFromFlag = options.name || '';
-    const frameworkFromFlag = options.framework || '';
+    const frameworkFromFlag = capitalizeFirstLetter(options.framework) || '';
     const prompts = [];
     // Only ask for componentName if --name argument is not provided
     if (!componentNameFromFlag) {

@@ -16,8 +16,10 @@ You can't find the framework or the options you need? Checkout the [Contributing
   - [Basic Usage](#basic-usage)
   - [Available Frameworks](#available-frameworks)
   - [Vue](#vue)
-  - [Angular](#angular)
   - [React](#react)
+  - [Angular](#angular)
+  - [Qwik](#qwik)
+  - [Svelte](#svelte)
   - [Contributing](#contributing)
 
 ## Basic Usage
@@ -40,11 +42,17 @@ This will run a short wizard so you can easily create your component in few step
 
 When choosing Vue, the wizard will ask you whether you prefer to use the **Options API** or the **Composition API**, and you can make your selection using the arrow keys.
 
-## Angular
-
 ## React
 
 When choosing React, the wizard will ask you if you want to use **TypeScript** or not, and you can make your selection using the arrow keys.
+
+## Angular
+
+
+## Qwik
+
+
+## Svelte
 
 ## Contributing
 

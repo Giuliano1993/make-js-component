@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from "node:path";
 import { configs } from './configs.cjs';
 import { makeAngularComponent } from '../stubs/angular/make-angular-component.mjs';
-function capitalizeFirstLetter(string) {
+export function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 const createComponent = (componentName, framework, template, customFolder = '') => {
