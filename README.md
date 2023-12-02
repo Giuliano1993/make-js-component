@@ -21,6 +21,7 @@ You can't find the framework or the options you need? Checkout the [Contributing
   - [Qwik](#qwik)
   - [Svelte](#svelte)
   - [Contributing](#contributing)
+  - [Getting started locally](#getting-started-locally)
 
 ## Basic Usage
 
@@ -57,3 +58,19 @@ When choosing React, the wizard will ask you if you want to use **TypeScript** o
 ## Contributing
 
 Read the [Contributing guide](./CONTRIBUTING.md) for the contribution process
+
+## Getting started locally
+
+If you're cloning the repo, both for contributing or just to start taking confidence with the code you just need to launch:
+
+```bash
+npm run dev
+```
+
+this will compile and watch the ts files into js, ready to be run
+
+To run your local version of the package, simply run 
+
+```bash
+npx .
+```
