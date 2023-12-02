@@ -1,5 +1,12 @@
 import inquirer from 'inquirer';
 import { Command } from 'commander';
+import { capitalizeFirstLetter } from '../src/utils/utils.mjs';
+import vueWizard from './frameworks-wizard/vue.mjs';
+import angularWizard from './frameworks-wizard/angular.mjs';
+import reactWizard from './frameworks-wizard/react.mjs';
+import svelteWizard from './frameworks-wizard/svelte.mjs';
+import qwikWizard from './frameworks-wizard/qwik.mjs';
+
 const program = new Command();
 
 type Answers = {
@@ -64,124 +71,21 @@ const wizard = async () => {
         framework: string
     })=>{
         const {folder} = answers;
-        const framework = answers.framework || frameworkFromFlag;
-        const componentName = answers.componentName || componentNameFromFlag
-        if(framework === 'Vue'){
-            return inquirer.prompt([{
-                type: "list",
-                name: "api",
-                message: "Choose wich api to use",
-                choices: ["Composition API", "Options API"],
-              },
-            ])
-            .then((answers: { api: string }) => {
-              return {
-                componentName: componentName,
-                framework: framework.toLowerCase(),
-                template:
-                  answers.api === "Composition API"
-                    ? "component-composition.vue"
-                    : "component-options.vue",
-                folder: folder,
-              };
-            });
-        } else if (framework === "Angular") {
-          return {
-            componentName: componentName,
-            framework: framework.toLowerCase(),
-            template: "component.component.ts",
-            folder: answers.folder,
-          };
-        } else if (framework === "React") {
-          return inquirer
-            .prompt([
-              {
-                type: "confirm",
-                name: "typescript",
-                message: "Do you want to use Typescript?",
-                default: true,
-              },
-            ])
-            .then((answers: { typescript: boolean }) => {
-              
-              const { typescript } = answers;
-
-              return inquirer.prompt([
-                {
-                  type: "list",
-                  name: "css",
-                  message: "Do you want to use any CSS framework?",
-                  choices: ["Tailwind", "Styled Components", "No"],
-                },
-              ]).then((answers: {css: string}) => {
-
-                const { css } = answers;
-                let template: string;
-
-                if(typescript){
-                  if(css === "Tailwind") template = "function-component-tailwind.tsx"
-                  else if(css === 'Styled Components') template = "function-component-styled-components.tsx"
-                  else template = "function-component.tsx"
-                }else{
-                  if(css === "Tailwind") template = "function-component-tailwind.jsx"
-                  else if(css === 'Styled Components') template = "function-component-styled-components.jsx"
-                  else template = "function-component.jsx"
-                }
-
-                return {
-                    componentName: componentName,
-                    framework: framework.toLowerCase(),
-                    template: template,
-                    folder: folder,
-                };
-              });
-            })
-        } else if (framework === "Svelte") {
-          return inquirer
-            .prompt([
-              {
-                type: "confirm",
-                name: "typescript",
-                message: "Do you want to use Typescript?",
-                default: true,
-              },
-            ])
-            .then((answers: { typescript: boolean }) => {
-              return {
-                componentName: componentName,
-                framework: framework.toLowerCase(),
-                template: answers.typescript
-                  ? "component-ts.svelte"
-                  : "component-js.svelte",
-                folder: folder,
-              };
-            });
-          
-
-        } else if (framework === 'Qwik') {
-          return inquirer.prompt([{
-                  type: "list",
-                  name: "type",
-                  message: "Choose wich type of component to create",
-                  choices: ["Hello World", "useStore", "useStyles"],
-              },
-          ])
-              .then((answers) => {
-              return {
-                  componentName: componentName,
-                  framework: framework.toLowerCase(),
-                  template: answers.type === "Hello World"
-                  ? "hello-world-component.tsx"
-                  : answers.type === "useStore"
-                  ? "usestore-component.tsx"
-                  : answers.type === "useStyles"
-                  ? "usestyles-component.tsx"
-                  : "hello-world-component.tsx", 
-                  folder: folder,
-              };
-          });
-      }else {
-          throw new Error("A framework must be selected");
+        const framework = answers.framework || capitalizeFirstLetter(frameworkFromFlag);
+        const componentName = answers.componentName || componentNameFromFlag;
+        switch (framework) {
+          case 'Vue':
+            return vueWizard(componentName,folder);
+          case 'Angular':
+            return angularWizard(componentName,folder);
+          case 'React':
+            return reactWizard(componentName,folder);
+          case 'Svelte':
+            return svelteWizard(componentName,folder);
+          case 'Qwik':
+            return qwikWizard(componentName,folder);  
+          default:
+            throw new Error("A framework must be selected");
         }
       }
     )
