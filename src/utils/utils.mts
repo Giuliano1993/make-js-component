@@ -10,10 +10,6 @@ export interface ErrnoException extends Error {
 	syscall?: string | undefined;
 }
 
-export function capitalizeFirstLetter(string: string): string {
-	return string.length > 0 ? string.charAt(0).toUpperCase() + string.slice(1) : '';
-}
-
 const createComponent = (componentName: string, framework: string, template: string, customFolder: string = '') => {
 
 	const destinationFolder: string = `${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`;
@@ -41,10 +37,7 @@ const createComponent = (componentName: string, framework: string, template: str
 			data = data.replaceAll("ComponentName", capitalizeFirstLetter(componentName));
 			writeFile(filePathDestination, data);
 		}
-		if (
-            template == 'function-component-css-module.jsx'
-            || template == 'function-component-css-module.tsx'
-        ) {
+		if (path.parse(template).name === 'function-component-css-module' ) {
             const styleFileName: string = `${componentName}.module.css`;
             const styleFilePathDestination: string = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder, styleFileName);
             writeFile(styleFilePathDestination, `.${componentName} {\n\tfont-size: 1.125rem; /* 18px */\n\tline-height: 1.75rem; /* 28px */\n\tfont-weight: bold;\n}\n`);
@@ -62,4 +55,8 @@ export function writeFile(filePathDestination: string, data: string): void {
 			console.log('✅ CREATE Component: ' + filePathDestination);
 		}
 	});
+}
+
+export function capitalizeFirstLetter(string: string): string {
+	return string.charAt(0).toUpperCase() + string.slice(1);
 }
