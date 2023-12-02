@@ -11,7 +11,7 @@ export interface ErrnoException extends Error {
 }
 
 export function capitalizeFirstLetter(string: string): string {
-	return string.charAt(0).toUpperCase() + string.slice(1);
+	return string.length > 0 ? string.charAt(0).toUpperCase() + string.slice(1) : '';
 }
 
 const createComponent = (componentName: string, framework: string, template: string, customFolder: string = '') => {

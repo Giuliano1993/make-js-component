@@ -2,3 +2,4 @@
 node_modules
 components
 src/stubs/angular/*.js
+*/**/*.*js
