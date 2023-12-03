@@ -9,7 +9,7 @@ import qwikWizard from './frameworks-wizard/qwik.mjs';
 
 const program = new Command();
 
-type Answers = {
+export type Answers = {
     componentName: string,
     framework: string,
     template: string,
