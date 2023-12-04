@@ -60,3 +60,26 @@ export function writeFile(filePathDestination: string, data: string): void {
 export function capitalizeFirstLetter(string: string): string {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+
+export function prepareAdvanced (options: string[]){
+  const arr = [
+      {
+          type:"confirm",
+          name:"advanced",
+          message:"Do you want to check for advanced otpions?",
+          default:false
+      },{
+          type:"checkbox",
+          name:"advancedOpts",
+          message:"Pick the parts you want in your component?",
+          choices: options,
+          when: (answers: {api:string, advanced:boolean})=>{
+              return answers.advanced;
+          },
+          default:false
+      }
+  ]
+
+  return [...arr];
+}

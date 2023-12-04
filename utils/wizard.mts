@@ -14,7 +14,10 @@ export type Answers = {
     componentName: string,
     framework: string,
     template: string,
-    folder: string
+    folder: string,
+    advanced ?: boolean,
+    advancedOpts ?: string[]
+
 };
 
 const wizard = async () => {
