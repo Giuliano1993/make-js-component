@@ -15,11 +15,11 @@ You can't find the framework or the options you need? Checkout the [Contributing
 - [Make Js Component](#make-js-component)
   - [Basic Usage](#basic-usage)
   - [Available Frameworks](#available-frameworks)
-  - [Vue](#vue)
-  - [React](#react)
-  - [Angular](#angular)
-  - [Qwik](#qwik)
-  - [Svelte](#svelte)
+    - [Vue](#vue)
+    - [React](#react)
+    - [Angular](#angular)
+    - [Qwik](#qwik)
+    - [Svelte](#svelte)
   - [Contributing](#contributing)
   - [Getting started locally](#getting-started-locally)
 
@@ -39,21 +39,21 @@ This will run a short wizard so you can easily create your component in few step
 
 ## Available Frameworks
 
-## Vue
+### Vue
 
 When choosing Vue, the wizard will ask you whether you prefer to use the **Options API** or the **Composition API**, and you can make your selection using the arrow keys.
 
-## React
+### React
 
 When choosing React, the wizard will ask you if you want to use **TypeScript** or not, and you can make your selection using the arrow keys.
 
-## Angular
+### Angular
 
 
-## Qwik
+### Qwik
 
 
-## Svelte
+### Svelte
 
 ## Contributing
 
