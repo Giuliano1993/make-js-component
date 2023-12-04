@@ -6,6 +6,7 @@ import angularWizard from './frameworks-wizard/angular.mjs';
 import reactWizard from './frameworks-wizard/react.mjs';
 import svelteWizard from './frameworks-wizard/svelte.mjs';
 import qwikWizard from './frameworks-wizard/qwik.mjs';
+import astroWizard from './frameworks-wizard/astro.mjs';
 
 const program = new Command();
 
@@ -61,7 +62,7 @@ const wizard = async () => {
           type: "list",
           name: "framework",
           message: "Pick a framework to create the component for",
-          choices: ["Vue", "Angular", "React", "Svelte", "Qwik"]
+          choices: ["Vue", "Angular", "React", "Svelte", "Qwik", "Astro"]
         })
     }
 
@@ -84,6 +85,8 @@ const wizard = async () => {
             return svelteWizard(componentName,folder);
           case 'Qwik':
             return qwikWizard(componentName,folder);  
+          case 'Astro':
+            return astroWizard(componentName,folder);  
           default:
             throw new Error("A framework must be selected");
         }
