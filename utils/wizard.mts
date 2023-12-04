@@ -19,9 +19,11 @@ export type Answers = {
 
 const wizard = async () => {
     // Parse command line arguments using commander
+    const frameworks = ["Vue", "Angular", "React", "Svelte", "Qwik", "Astro"];
+
     program
         .option('--name <value>', 'Specify a name')
-        .option('-f, --framework <value>', 'Specify framework (Vue, Angular, React, Svelte, Qwik)')
+        .option('-f, --framework <value>', `Specify framework [${frameworks.join("|")}]`)
         .parse(process.argv);
 
     const options = program.opts();
@@ -29,6 +31,8 @@ const wizard = async () => {
     const frameworkFromFlag = options.framework || '';
 
     const prompts = [];
+
+    
 
     // Only ask for componentName if --name argument is not provided
     if (!componentNameFromFlag) {
@@ -62,7 +66,7 @@ const wizard = async () => {
           type: "list",
           name: "framework",
           message: "Pick a framework to create the component for",
-          choices: ["Vue", "Angular", "React", "Svelte", "Qwik", "Astro"]
+          choices: frameworks
         })
     }
 
@@ -88,7 +92,7 @@ const wizard = async () => {
           case 'Astro':
             return astroWizard(componentName,folder);  
           default:
-            throw new Error("A framework must be selected");
+            throw new Error("A valid framework must be selected");
         }
       }
     )
