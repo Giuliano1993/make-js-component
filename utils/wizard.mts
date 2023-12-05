@@ -24,11 +24,13 @@ const wizard = async () => {
     program
         .option('--name <value>', 'Specify a name')
         .option('-f, --framework <value>', `Specify framework [${frameworks.join("|")}]`)
+        .option('--folder <value>', 'Specify the subfolder')
         .parse(process.argv);
 
     const options = program.opts();
     const componentNameFromFlag = options.name || '';
     const frameworkFromFlag = options.framework || '';
+    const folderFromFlag = options.folder || '';
 
     const prompts = [];
 
@@ -52,14 +54,16 @@ const wizard = async () => {
         });
     }
 
-    prompts.push(
+    if (!folderFromFlag) {
+      prompts.push(
         {
             type: 'input',
             name: 'folder',
             message: "Custom path under the component folder for saving your component",
             default: ""
         }
-    );
+      );
+    }
 
     if (!frameworkFromFlag) {
       prompts.push({
@@ -75,7 +79,7 @@ const wizard = async () => {
         folder: string,
         framework: string
     })=>{
-        const {folder} = answers;
+        const folder = answers.folder || folderFromFlag;
         const framework = answers.framework || capitalizeFirstLetter(frameworkFromFlag);
         const componentName = answers.componentName || componentNameFromFlag;
         switch (framework) {
