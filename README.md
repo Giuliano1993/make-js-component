@@ -59,17 +59,15 @@ When choosing React, the wizard will ask you if you want to use **TypeScript** o
 
 Read the [Contributing guide](./CONTRIBUTING.md) for the contribution process
 
-## Getting started locally
+## Setup locally
 
-If you're cloning the repo, both for contributing or just to start taking confidence with the code you just need to launch:
+If you're cloning the repo, both for contributing or just to start taking confidence with the code just follow these steps:
 
-```bash
-npm run dev
-```
+1. clone the repo with `git clone https://github.com/Giuliano1993/make-js-component`
+2. inside the folder run `npm install`
+3. then to transpile ts files into js and watch them,  run `npm run dev`
 
-this will compile and watch the ts files into js, ready to be run
-
-To run your local version of the package, simply run 
+To run your local version of the package and test it, run 
 
 ```bash
 npx .
