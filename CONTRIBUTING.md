@@ -62,6 +62,5 @@ Missing your favorite js framework? You can add it!
    - Run the command with the new framework to ensure that it works as expected.
 
 4. **Update Documentation:**
-
-- Add a new section in the README.md file under "Available Frameworks" to provide information about the newly added framework.
-- Include any specific instructions or choices related to the new framework or open an issue for this purpouse.
+   - Add a new section in the README.md file under "Available Frameworks" to provide information about the newly added framework.
+   - Include any specific instructions or choices related to the new framework or open an issue for this purpouse.
