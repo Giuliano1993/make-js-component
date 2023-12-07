@@ -82,18 +82,19 @@ function advancedVueBuilder(data: string, componentType: vueApi,  advancedOpts: 
 			data: '',
 			components: ''
 		}
-
-		
 		const importsFunctions : string[] = [] 
-		advancedOpts.forEach((o)=>{
-			const replacePattern = `__${o}__`
-			data = data.replaceAll(replacePattern,replacable[o as keyof typeof replacable])
-			if(o === 'refs'){
-				importsFunctions.push('ref');
-			}else if(o === 'mounted'){
-				importsFunctions.push('onMounted');
-			}
-		})
+		for (const key in replacable) {
+				const codeInject = advancedOpts.indexOf(key) !== -1 ? replacable[key as keyof typeof replacable] : '';
+				const replacePattern = `__${key}__`	
+				data = data.replaceAll(replacePattern,codeInject)
+				if(key === 'refs'){
+					importsFunctions.push('ref');
+				}else if(key === 'mounted'){
+					importsFunctions.push('onMounted');
+				}
+		}
+		
+		
 		let imports = '';
 		if(importsFunctions.length > 0){
 			imports = "import { "+ importsFunctions.join(', ') + " } from 'vue'"
@@ -118,13 +119,11 @@ function advancedVueBuilder(data: string, componentType: vueApi,  advancedOpts: 
 			refs: "",
 			components: 'components: {},'
 		}
-
-		
-		advancedOpts.forEach((o)=>{
-			const replacePattern = `__${o}__`			
-			data = data.replaceAll(replacePattern,replacable[o as keyof typeof replacable])
-		})
-
+		for (const key in replacable) {
+			const codeInject = advancedOpts.indexOf(key) !== -1 ? replacable[key as keyof typeof replacable] : '';
+			const replacePattern = `__${key}__`	
+			data = data.replaceAll(replacePattern,codeInject)
+		}
 		data = data
 				.replace('__optionsstart__','')
 				.replace('__optionsend__','')

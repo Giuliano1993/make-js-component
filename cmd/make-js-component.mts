@@ -2,7 +2,7 @@
 
 
 import wizard, { Answers } from "../utils/wizard.mjs";
-import createComponent, {createComponentAdvanced} from "../src/utils/utils.mjs";
+import createComponent from "../src/utils/utils.mjs";
 
 enum vueApi  {
 	Composition = "composition",
