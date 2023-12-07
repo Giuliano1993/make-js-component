@@ -99,15 +99,8 @@ function advancedVueBuilder(data: string, componentType: vueApi,  advancedOpts: 
 		if(importsFunctions.length > 0){
 			imports = "import { "+ importsFunctions.join(', ') + " } from 'vue'"
 		}
-
-		data = data
-				.replace('__refimport__',imports)
-				.replace('__compositionstart__','')
-				.replace('__compositionend__','')
-
-		start = data.indexOf('__optionsstart__')
-		endString = '__optionsend__'
-		end = data.indexOf(endString)
+		data = data.replace('__refimport__',imports)
+	
 
 	}else if(componentType === vueApi.Option){
 
@@ -124,23 +117,31 @@ function advancedVueBuilder(data: string, componentType: vueApi,  advancedOpts: 
 			const replacePattern = `__${key}__`	
 			data = data.replaceAll(replacePattern,codeInject)
 		}
-		data = data
-				.replace('__optionsstart__','')
-				.replace('__optionsend__','')
-
-
-		start = data.indexOf('__compositionstart__')
-		endString = '__compositionend__'
-		end = data.indexOf(endString)
-
+		
 	}
-
-	data = data.slice(0,start) + data.slice(end+endString.length)
-
+	data = cleanVueData(data,componentType)
 
 	return data
 }
 
+
+function cleanVueData(data: string, api:vueApi):string{
+
+	const apiStart = api == vueApi.Composition ? '__compositionstart__' : '__optionsstart__'
+	const apiEnd = api == vueApi.Composition ? '__compositionend__' : '__optionsend__'
+	const deleteStart = api == vueApi.Composition ? '__optionsstart__' : '__compositionstart__'
+	const deleteEnd = api == vueApi.Composition ? '__optionsend__' : '__compositionend__'
+
+
+	data = data
+				.replace(apiStart,'')
+				.replace(apiEnd,'')
+
+
+	const start = data.indexOf(deleteStart)
+	const end = data.indexOf(deleteEnd)
+	return data.slice(0,start) + data.slice(end+deleteEnd.length)
+}
 
 export default createComponent;
 
