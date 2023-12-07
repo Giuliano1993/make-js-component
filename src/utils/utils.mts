@@ -10,7 +10,7 @@ export interface ErrnoException extends Error {
 	syscall?: string | undefined;
 }
 
-const createComponent = (componentName: string, framework: string, template: string, customFolder: string = '') => {
+const createComponent = (componentName: string, framework: string, template: string, customFolder: string = '', api:vueApi, advancedOpts: string[]|undefined ) => {
 
 	const destinationFolder: string = `${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`;
 
@@ -34,6 +34,15 @@ const createComponent = (componentName: string, framework: string, template: str
 		if (framework === 'angular') {
 			makeAngularComponent(filePathDestination, data, componentName);
 		} else {
+			if(template.indexOf('advanced') !== -1){
+				switch (framework) {
+					case 'vue':
+						data = advancedVueBuilder(data,api,advancedOpts);
+						break;
+					default:
+						break;
+				}
+			}
 			data = data.replaceAll("ComponentName", capitalizeFirstLetter(componentName));
 			writeFile(filePathDestination, data);
 		}
@@ -44,41 +53,8 @@ const createComponent = (componentName: string, framework: string, template: str
         }
 	});
 }
-export const createComponentAdvanced = (componentName: string, framework: string, template: string, customFolder: string = '', api:vueApi, advancedOpts: string[] | undefined) => {
-	if(typeof advancedOpts === 'undefined') return;
-	const destinationFolder: string = `${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`;
 
-	if (!fs.existsSync(destinationFolder)) {
-		fs.mkdirSync(destinationFolder);
-	}
 
-	const templateFilePath: string = path.join(configs.INIT_PATH, 'src', configs.STUBS_DIR, framework, template);
-	fs.readFile(templateFilePath, 'utf8', (err: ErrnoException | null, data: string) => {
-
-		const customDestinationFolder: string = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder);
-		const extension = template.substring(template.indexOf('.'));
-		const compFileName = `${componentName}${extension}`;
-
-		if (!fs.existsSync(customDestinationFolder)) {
-			fs.mkdirSync(customDestinationFolder);
-		}
-
-		const filePathDestination: string = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder, compFileName);
-
-		if (framework === 'angular') {
-			makeAngularComponent(filePathDestination, data, componentName);
-		} else {
-			data = advancedVueBuilder(data,api,advancedOpts);
-			data = data.replaceAll("ComponentName", capitalizeFirstLetter(componentName));
-			writeFile(filePathDestination, data);
-		}
-		if (path.parse(template).name === 'function-component-css-module' ) {
-            const styleFileName: string = `${componentName}.module.css`;
-            const styleFilePathDestination: string = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder, styleFileName);
-            writeFile(styleFilePathDestination, `.${componentName} {\n\tfont-size: 1.125rem; /* 18px */\n\tline-height: 1.75rem; /* 28px */\n\tfont-weight: bold;\n}\n`);
-        }
-	});
-}
 
 
 enum vueApi  {
@@ -89,7 +65,8 @@ enum vueApi  {
 
 
 
-function advancedVueBuilder(data: string, componentType: vueApi,  advancedOpts: string[]) : string{
+function advancedVueBuilder(data: string, componentType: vueApi,  advancedOpts: string[]|undefined) : string{
+	if(typeof advancedOpts === 'undefined') return ''
 	let start = 0;
 	let end = 0;
 	let endString = '';
