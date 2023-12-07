@@ -67,9 +67,6 @@ enum vueApi  {
 
 function advancedVueBuilder(data: string, componentType: vueApi,  advancedOpts: string[]|undefined) : string{
 	if(typeof advancedOpts === 'undefined') return ''
-	let start = 0;
-	let end = 0;
-	let endString = '';
 	if(componentType === vueApi.Composition ){
 		
 		const replacable = {
@@ -134,8 +131,8 @@ function cleanVueData(data: string, api:vueApi):string{
 
 
 	data = data
-				.replace(apiStart,'')
-				.replace(apiEnd,'')
+			.replace(apiStart,'')
+			.replace(apiEnd,'')
 
 
 	const start = data.indexOf(deleteStart)
