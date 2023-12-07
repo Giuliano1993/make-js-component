@@ -1,20 +1,18 @@
 #! /usr/bin/env node
 
 
-//const wizard = require('../utils/wizard.mjs');
-import wizard from "../utils/wizard.mjs";
+import wizard, { Answers } from "../utils/wizard.mjs";
 import createComponent from "../src/utils/utils.mjs";
 
-type Answers = {
-	componentName: string,
-	framework: string,
-	template: string,
-	folder?: string
+enum vueApi  {
+	Composition = "composition",
+	Option = "option"
 }
-
 wizard().then((answers: Answers) => {
-	const { componentName, framework, template, folder } = answers;
-	createComponent(componentName, framework, template, folder)
+	const { componentName, framework, template, folder, advancedOpts, advanced } = answers;
+	const api = template.indexOf('composition') !== -1 ? vueApi.Composition : vueApi.Option;
+	const t = advanced ? "advanced-component.vue" : template
+	createComponent(componentName, framework, t, folder, api, advancedOpts)
 }).catch((e: Error) => {
 	console.error(e.message)
 })

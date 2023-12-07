@@ -3,6 +3,8 @@ import * as path from "node:path";
 import { configs } from './configs.cjs';
 import { makeAngularComponent } from '../stubs/angular/make-angular-component.mjs';
 
+import advancedVueBuilder, { vueApi } from './frameworks/vue/helper.mjs'
+
 export interface ErrnoException extends Error {
 	errno?: number | undefined;
 	code?: string | undefined;
@@ -10,7 +12,7 @@ export interface ErrnoException extends Error {
 	syscall?: string | undefined;
 }
 
-const createComponent = (componentName: string, framework: string, template: string, customFolder: string = '') => {
+const createComponent = (componentName: string, framework: string, template: string, customFolder: string = '', api:vueApi, advancedOpts: string[]|undefined ) => {
 
 	const destinationFolder: string = `${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`;
 
@@ -34,6 +36,15 @@ const createComponent = (componentName: string, framework: string, template: str
 		if (framework === 'angular') {
 			makeAngularComponent(filePathDestination, data, componentName);
 		} else {
+			if(template.indexOf('advanced') !== -1){
+				switch (framework) {
+					case 'vue':
+						data = advancedVueBuilder(data,api,advancedOpts);
+						break;
+					default:
+						break;
+				}
+			}
 			data = data.replaceAll("ComponentName", capitalizeFirstLetter(componentName));
 			writeFile(filePathDestination, data);
 		}
@@ -44,6 +55,7 @@ const createComponent = (componentName: string, framework: string, template: str
         }
 	});
 }
+
 
 export default createComponent;
 
@@ -59,4 +71,27 @@ export function writeFile(filePathDestination: string, data: string): void {
 
 export function capitalizeFirstLetter(string: string): string {
 	return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
+export function prepareAdvanced (options: string[]){
+  const arr = [
+      {
+          type:"confirm",
+          name:"advanced",
+          message:"Do you want to check for advanced otpions?",
+          default:false
+      },{
+          type:"checkbox",
+          name:"advancedOpts",
+          message:"Pick the parts you want in your component?",
+          choices: options,
+          when: (answers: {api:string, advanced:boolean})=>{
+              return answers.advanced;
+          },
+          default:false
+      }
+  ]
+
+  return [...arr];
 }
