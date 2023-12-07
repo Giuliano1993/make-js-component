@@ -10,13 +10,23 @@ import astroWizard from './frameworks-wizard/astro.mjs';
 
 const program = new Command();
 
+enum advancedOptsEnum {
+	props = 'props',
+	data = 'data',
+	refs = 'refs',
+	mounted = 'mounted',
+	emits = 'emits',
+  components = 'components'
+}
+
 export type Answers = {
     componentName: string,
     framework: string,
     template: string,
     folder: string,
     advanced ?: boolean,
-    advancedOpts ?: string[]
+    advancedOpts ?: advancedOptsEnum[],
+    api ?: string
 
 };
 

@@ -7,9 +7,9 @@ export default function(componentName:string, folder:string){
         type: "list",
         name: "api",
         message: "Choose wich api to use",
-        choices: ["Composition API", "Options API"],
+        choices: ["Composition", "Options"],
       },
-      ...prepareAdvanced(['state','robe'])
+      ...prepareAdvanced(['props','refs','data','mounted','emits', 'components'])
     ])
     .then((answers: { 
       api: string,
@@ -20,11 +20,12 @@ export default function(componentName:string, folder:string){
         componentName: componentName,
         framework: framework,
         template:
-          answers.api === "Composition API"
-            ? "component-composition.vue"
-            : "component-options.vue",
+          answers.api === "Composition"
+              ? "component-composition.vue"
+              : "component-options.vue",
         folder: folder,
         advanced : answers.advanced,
+        api: answers.api.toLocaleLowerCase(),
         advancedOpts : answers.advancedOpts || []
       };
     });

@@ -44,6 +44,134 @@ const createComponent = (componentName: string, framework: string, template: str
         }
 	});
 }
+export const createComponentAdvanced = (componentName: string, framework: string, template: string, customFolder: string = '', api:vueApi, advancedOpts: advancedOptsEnum[] | undefined) => {
+	if(typeof advancedOpts === 'undefined') return;
+	const destinationFolder: string = `${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`;
+
+	if (!fs.existsSync(destinationFolder)) {
+		fs.mkdirSync(destinationFolder);
+	}
+
+	const templateFilePath: string = path.join(configs.INIT_PATH, 'src', configs.STUBS_DIR, framework, template);
+	fs.readFile(templateFilePath, 'utf8', (err: ErrnoException | null, data: string) => {
+
+		const customDestinationFolder: string = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder);
+		const extension = template.substring(template.indexOf('.'));
+		const compFileName = `${componentName}${extension}`;
+
+		if (!fs.existsSync(customDestinationFolder)) {
+			fs.mkdirSync(customDestinationFolder);
+		}
+
+		const filePathDestination: string = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder, compFileName);
+
+		if (framework === 'angular') {
+			makeAngularComponent(filePathDestination, data, componentName);
+		} else {
+			data = advancedVueBuilder(data,api,advancedOpts);
+			data = data.replaceAll("ComponentName", capitalizeFirstLetter(componentName));
+			writeFile(filePathDestination, data);
+		}
+		if (path.parse(template).name === 'function-component-css-module' ) {
+            const styleFileName: string = `${componentName}.module.css`;
+            const styleFilePathDestination: string = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder, styleFileName);
+            writeFile(styleFilePathDestination, `.${componentName} {\n\tfont-size: 1.125rem; /* 18px */\n\tline-height: 1.75rem; /* 28px */\n\tfont-weight: bold;\n}\n`);
+        }
+	});
+}
+
+
+enum vueApi  {
+	Composition = "composition",
+	Option = "option"
+}
+
+
+
+enum advancedOptsEnum {
+	props = 'props',
+	data = 'data',
+	refs = 'refs',
+	mounted = 'mounted',
+	emits = 'emits',
+	components = 'components'
+}
+function advancedVueBuilder(data: string, componentType: vueApi,  advancedOpts: advancedOptsEnum[]) : string{
+	let start = 0;
+	let end = 0;
+	let endString = '';
+	if(componentType === vueApi.Composition ){
+		
+		const replacable = {
+			props: "const props = defineProps(['foo'])",
+			emits: "const emit = defineEmits(['inFocus', 'submit'])",
+			refs : "const element = ref(null)",
+			mounted: `onMounted(() => {
+				console.log("the component is now mounted.")
+			  })`,
+			data: '',
+			components: ''
+		}
+
+		type ObjKeys = keyof typeof advancedOptsEnum;
+		const importsFunctions : string[] = [] 
+		advancedOpts.forEach((o: ObjKeys)=>{
+			const replacePattern = `__${o}__`
+			data = data.replaceAll(replacePattern,replacable[o])
+			if(o === 'refs'){
+				importsFunctions.push('ref');
+			}else if(o === 'mounted'){
+				importsFunctions.push('onMounted');
+			}
+		})
+		let imports = '';
+		if(importsFunctions.length > 0){
+			imports = "import { "+ importsFunctions.join(', ') + " } from 'vue'"
+		}
+
+		data = data
+				.replace('__refimport__',imports)
+				.replace('__compositionstart__','')
+				.replace('__compositionend__','')
+
+		start = data.indexOf('__optionsstart__')
+		endString = '__optionsend__'
+		end = data.indexOf(endString)
+
+	}else if(componentType === vueApi.Option){
+
+		const replacable = {
+			props: "props: ['foo'],",
+			emits: "emits: ['inFocus', 'submit']," ,
+			data: "data:{},",
+			mounted: "mounted(){},",
+			refs: "",
+			components: 'components: {},'
+		}
+
+		type ObjKeys = keyof typeof advancedOptsEnum;
+		advancedOpts.forEach((o: ObjKeys)=>{
+			const replacePattern = `__${o}__`
+			data = data.replaceAll(replacePattern,replacable[o])
+		})
+
+		data = data
+				.replace('__optionsstart__','')
+				.replace('__optionsend__','')
+
+
+		start = data.indexOf('__compositionstart__')
+		endString = '__compositionend__'
+		end = data.indexOf(endString)
+
+	}
+
+	data = data.slice(0,start) + data.slice(end+endString.length)
+
+
+	return data
+}
+
 
 export default createComponent;
 
