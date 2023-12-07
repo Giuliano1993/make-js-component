@@ -44,7 +44,7 @@ const createComponent = (componentName: string, framework: string, template: str
         }
 	});
 }
-export const createComponentAdvanced = (componentName: string, framework: string, template: string, customFolder: string = '', api:vueApi, advancedOpts: advancedOptsEnum[] | undefined) => {
+export const createComponentAdvanced = (componentName: string, framework: string, template: string, customFolder: string = '', api:vueApi, advancedOpts: string[] | undefined) => {
 	if(typeof advancedOpts === 'undefined') return;
 	const destinationFolder: string = `${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`;
 
@@ -88,15 +88,8 @@ enum vueApi  {
 
 
 
-enum advancedOptsEnum {
-	props = 'props',
-	data = 'data',
-	refs = 'refs',
-	mounted = 'mounted',
-	emits = 'emits',
-	components = 'components'
-}
-function advancedVueBuilder(data: string, componentType: vueApi,  advancedOpts: advancedOptsEnum[]) : string{
+
+function advancedVueBuilder(data: string, componentType: vueApi,  advancedOpts: string[]) : string{
 	let start = 0;
 	let end = 0;
 	let endString = '';
@@ -113,11 +106,11 @@ function advancedVueBuilder(data: string, componentType: vueApi,  advancedOpts: 
 			components: ''
 		}
 
-		type ObjKeys = keyof typeof advancedOptsEnum;
+		
 		const importsFunctions : string[] = [] 
-		advancedOpts.forEach((o: ObjKeys)=>{
+		advancedOpts.forEach((o)=>{
 			const replacePattern = `__${o}__`
-			data = data.replaceAll(replacePattern,replacable[o])
+			data = data.replaceAll(replacePattern,replacable[o as keyof typeof replacable])
 			if(o === 'refs'){
 				importsFunctions.push('ref');
 			}else if(o === 'mounted'){
@@ -149,10 +142,10 @@ function advancedVueBuilder(data: string, componentType: vueApi,  advancedOpts: 
 			components: 'components: {},'
 		}
 
-		type ObjKeys = keyof typeof advancedOptsEnum;
-		advancedOpts.forEach((o: ObjKeys)=>{
-			const replacePattern = `__${o}__`
-			data = data.replaceAll(replacePattern,replacable[o])
+		
+		advancedOpts.forEach((o)=>{
+			const replacePattern = `__${o}__`			
+			data = data.replaceAll(replacePattern,replacable[o as keyof typeof replacable])
 		})
 
 		data = data

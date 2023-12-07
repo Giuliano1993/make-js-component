@@ -25,7 +25,7 @@ export type Answers = {
     template: string,
     folder: string,
     advanced ?: boolean,
-    advancedOpts ?: advancedOptsEnum[],
+    advancedOpts ?: string[],
     api ?: string
 
 };
