@@ -28,7 +28,7 @@ const createComponent = (componentName: string, framework: string, template: str
 		const compFileName = `${componentName}${extension}`;
 
 		if (!fs.existsSync(customDestinationFolder)) {
-			fs.mkdirSync(customDestinationFolder);
+			fs.mkdirSync(customDestinationFolder, { recursive: true });
 		}
 
 		const filePathDestination: string = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder, compFileName);
