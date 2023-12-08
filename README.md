@@ -41,24 +41,26 @@ This will run a short wizard so you can easily create your component in few step
 ## Available Frameworks
 
 ### Vue
+> Want to help with vue components? Check out [Vue related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3AVue)
 
 When choosing Vue, the wizard will ask you whether you prefer to use the **Options API** or the **Composition API**, and you can make your selection using the arrow keys.
 
 ### React
+> Want to help with React components? Check out [React related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3AReact)
 
 When choosing React, the wizard will ask you if you want to use **TypeScript** or not, and you can make your selection using the arrow keys.
 
 ### Angular
-
+> Want to help with Angular components? Check out [Angular related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3AAngular)
 
 ### Qwik
-
+> Want to help with Qwik components? Check out [Qwik related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3AQwik)
 
 ### Svelte
-
+> Want to help with Svelte components? Check out [Svelte related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3ASvelte)
 
 ### Astro
-
+> Want to help with Astro components? Check out [Astro related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3AAstro)
 
 ## Contributing
 
