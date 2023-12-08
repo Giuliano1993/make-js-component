@@ -37,13 +37,13 @@ Before working on an existing Issue please follow these steps:
 Remember, before opening a PR, to have an issue assigned to work on! If you have an idea but you don't find any issue for it, first open an issue and ask to have it assigned! This way you don't risk to work on something which is already being worked on or that isn't needed right now!
 When the issue is assigned to you, you're welcome to start working on it, I'll be glad to merge it!
 
-### Adding a New Framework
+## Adding a New Framework
 
 Missing your favorite js framework? You can add it!
 
 1. **Modify the Wizard:**
 
-   - Create a file `.mts` for the framework inside the `utils/frameworks-wizard` folder.
+   - Create a file `.mts` for the framework inside the `src/utils/frameworks/{frameworkname}` folder.
      It should import `inquirer` and export a function that take `componentName` and `folder` as parameters.
      Here you can add some eventual extra questions specifics to this framework. Check the existing framework files as an example
    - Open the `wizard.mts`.
