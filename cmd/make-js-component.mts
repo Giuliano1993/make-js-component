@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 
-import wizard, { Answers } from "../utils/wizard.mjs";
+import wizard, { Answers } from "../src/utils/wizard.mjs";
 import createComponent from "../src/utils/utils.mjs";
 
 enum vueApi  {
