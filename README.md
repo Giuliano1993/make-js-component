@@ -20,8 +20,9 @@ You can't find the framework or the options you need? Checkout the [Contributing
     - [Angular](#angular)
     - [Qwik](#qwik)
     - [Svelte](#svelte)
+    - [Astro](#astro)
   - [Contributing](#contributing)
-  - [Getting started locally](#getting-started-locally)
+  - [Setup locally](#setup-locally)
 
 ## Basic Usage
 
@@ -54,6 +55,10 @@ When choosing React, the wizard will ask you if you want to use **TypeScript** o
 
 
 ### Svelte
+
+
+### Astro
+
 
 ## Contributing
 
