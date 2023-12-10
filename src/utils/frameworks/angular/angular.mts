@@ -1,4 +1,4 @@
-import { Answers } from "../../wizard.mjs";
+import {Answers} from "../../wizard.mjs";
 
 const framework = "angular";
 

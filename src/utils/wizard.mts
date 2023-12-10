@@ -1,6 +1,6 @@
-import { Command } from "commander";
+import {Command} from "commander";
 import inquirer from "inquirer";
-import { capitalizeFirstLetter } from "./utils.mjs";
+import {capitalizeFirstLetter} from "./utils.mjs";
 import angularWizard from "./frameworks/angular/angular.mjs";
 import astroWizard from "./frameworks/astro/astro.mjs";
 import qwikWizard from "./frameworks/qwik/qwik.mjs";
@@ -11,22 +11,22 @@ import vueWizard from "./frameworks/vue/vue.mjs";
 const program = new Command();
 
 enum advancedOptsEnum {
-	props = 'props',
-	data = 'data',
-	refs = 'refs',
-	mounted = 'mounted',
-	emits = 'emits',
-  components = 'components'
+	props = "props",
+	data = "data",
+	refs = "refs",
+	mounted = "mounted",
+	emits = "emits",
+	components = "components",
 }
 
 export type Answers = {
-    componentName: string,
-    framework: string,
-    template: string,
-    folder: string,
-    advanced ?: boolean,
-    advancedOpts ?: string[],
-    api ?: string
+	componentName: string;
+	framework: string;
+	template: string;
+	folder: string;
+	advanced?: boolean;
+	advancedOpts?: string[];
+	api?: string;
 };
 
 const wizard = async () => {
@@ -35,10 +35,7 @@ const wizard = async () => {
 
 	program
 		.option("--name <value>", "Specify a name")
-		.option(
-			"-f, --framework <value>",
-			`Specify framework [${frameworks.join("|")}]`
-		)
+		.option("-f, --framework <value>", `Specify framework [${frameworks.join("|")}]`)
 		.option("--folder <value>", "Specify the subfolder")
 		.parse(process.argv);
 
@@ -62,9 +59,7 @@ const wizard = async () => {
 				}
 				// Use a regular expression to check for only alphanumeric characters
 				const isValid = /^[A-Za-z0-9]+(-[A-Za-z0-9]+)*$/.test(trimmedInput);
-				return (
-					isValid || "Component name can only contain alphanumeric characters"
-				);
+				return isValid || "Component name can only contain alphanumeric characters";
 			},
 		});
 	}
@@ -96,8 +91,7 @@ const wizard = async () => {
 				framework: string;
 			}) => {
 				const folder = answers.folder || folderFromFlag;
-				const framework =
-					answers.framework || capitalizeFirstLetter(frameworkFromFlag);
+				const framework = answers.framework || capitalizeFirstLetter(frameworkFromFlag);
 				const componentName = answers.componentName || componentNameFromFlag;
 				switch (framework) {
 					case "Vue":
