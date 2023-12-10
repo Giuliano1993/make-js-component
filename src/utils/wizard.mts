@@ -1,12 +1,12 @@
 import { Command } from "commander";
 import inquirer from "inquirer";
-import { capitalizeFirstLetter } from "./utils.mjs";
 import angularWizard from "./frameworks/angular/angular.mjs";
 import astroWizard from "./frameworks/astro/astro.mjs";
 import qwikWizard from "./frameworks/qwik/qwik.mjs";
 import reactWizard from "./frameworks/react/react.mjs";
 import svelteWizard from "./frameworks/svelte/svelte.mjs";
 import vueWizard from "./frameworks/vue/vue.mjs";
+import { capitalizeFirstLetter } from "./utils.mjs";
 
 const program = new Command();
 

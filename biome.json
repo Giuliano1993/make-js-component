@@ -3,26 +3,25 @@
 	"organizeImports": {
 		"enabled": true
 	},
+	"files": {
+		"ignore": ["src/stubs/*", "*.js", "*.cjs", "*.mjs"]
+	},
 	"linter": {
 		"enabled": true,
-		"ignore": ["*.js","*.mjs","*.cjs"],
 		"rules": {
 			"recommended": true
 		}
 	},
-	"formatter":{
-		"ignore": ["*.js","*.cjs","*.mjs"]
-	},
 	"javascript": {
 		"formatter": {
 			"enabled": true,
-			"lineWidth":120,
-			"arrowParentheses":"asNeeded",
+			"lineWidth": 120,
+			"arrowParentheses": "asNeeded",
 			"jsxQuoteStyle": "double",
 			"semicolons": "always",
 			"trailingComma": "es5",
 			"quoteProperties": "asNeeded",
 			"bracketSameLine": true
 		}
-	  }
+	}
 }

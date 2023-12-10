@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "node:path";
-import { configs } from "./configs.cjs";
 import { makeAngularComponent } from "../stubs/angular/make-angular-component.mjs";
+import { configs } from "./configs.cjs";
 
 import advancedVueBuilder, { vueApi } from "./frameworks/vue/helper.mjs";
 
@@ -16,7 +16,7 @@ const createComponent = (
 	componentName: string,
 	framework: string,
 	template: string,
-	customFolder: string = "",
+	customFolder: string,
 	api: vueApi,
 	advancedOpts: string[] | undefined
 ) => {
@@ -42,21 +42,21 @@ const createComponent = (
 			customFolder,
 			compFileName
 		);
-
+		let output = data;
 		if (framework === "angular") {
-			makeAngularComponent(filePathDestination, data, componentName);
+			makeAngularComponent(filePathDestination, output, componentName);
 		} else {
 			if (template.indexOf("advanced") !== -1) {
 				switch (framework) {
 					case "vue":
-						data = advancedVueBuilder(data, api, advancedOpts);
+						output = advancedVueBuilder(output, api, advancedOpts);
 						break;
 					default:
 						break;
 				}
 			}
-			data = data.replaceAll("ComponentName", capitalizeFirstLetter(componentName));
-			writeFile(filePathDestination, data);
+			output = output.replaceAll("ComponentName", capitalizeFirstLetter(componentName));
+			writeFile(filePathDestination, output);
 		}
 		if (path.parse(template).name === "function-component-css-module") {
 			const styleFileName: string = `${componentName}.module.css`;
@@ -81,7 +81,7 @@ export function writeFile(filePathDestination: string, data: string): void {
 		if (err) {
 			console.error(err);
 		} else {
-			console.log("✅ CREATE Component: " + filePathDestination);
+			console.log(`✅ CREATE Component: ${filePathDestination}`);
 		}
 	});
 }
