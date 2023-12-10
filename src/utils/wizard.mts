@@ -35,10 +35,7 @@ const wizard = async () => {
 
 	program
 		.option("--name <value>", "Specify a name")
-		.option(
-			"-f, --framework <value>",
-			`Specify framework [${frameworks.join("|")}]`
-		)
+		.option("-f, --framework <value>", `Specify framework [${frameworks.join("|")}]`)
 		.option("--folder <value>", "Specify the subfolder")
 		.parse(process.argv);
 
@@ -62,9 +59,7 @@ const wizard = async () => {
 				}
 				// Use a regular expression to check for only alphanumeric characters
 				const isValid = /^[A-Za-z0-9]+(-[A-Za-z0-9]+)*$/.test(trimmedInput);
-				return (
-					isValid || "Component name can only contain alphanumeric characters"
-				);
+				return isValid || "Component name can only contain alphanumeric characters";
 			},
 		});
 	}
@@ -96,8 +91,7 @@ const wizard = async () => {
 				framework: string;
 			}) => {
 				const folder = answers.folder || folderFromFlag;
-				const framework =
-					answers.framework || capitalizeFirstLetter(frameworkFromFlag);
+				const framework = answers.framework || capitalizeFirstLetter(frameworkFromFlag);
 				const componentName = answers.componentName || componentNameFromFlag;
 				switch (framework) {
 					case "Vue":

@@ -22,10 +22,7 @@ export default function advancedVueBuilder(
 		};
 		const importsFunctions: string[] = [];
 		for (const key in replacable) {
-			const codeInject =
-				advancedOpts.indexOf(key) !== -1
-					? replacable[key as keyof typeof replacable]
-					: "";
+			const codeInject = advancedOpts.indexOf(key) !== -1 ? replacable[key as keyof typeof replacable] : "";
 			const replacePattern = `__${key}__`;
 			data = data.replaceAll(replacePattern, codeInject);
 			if (key === "refs") {
@@ -50,10 +47,7 @@ export default function advancedVueBuilder(
 			components: "components: {},",
 		};
 		for (const key in replacable) {
-			const codeInject =
-				advancedOpts.indexOf(key) !== -1
-					? replacable[key as keyof typeof replacable]
-					: "";
+			const codeInject = advancedOpts.indexOf(key) !== -1 ? replacable[key as keyof typeof replacable] : "";
 			const replacePattern = `__${key}__`;
 			data = data.replaceAll(replacePattern, codeInject);
 		}
@@ -64,14 +58,10 @@ export default function advancedVueBuilder(
 }
 
 function cleanVueData(data: string, api: vueApi): string {
-	const apiStart =
-		api == vueApi.Composition ? "__compositionstart__" : "__optionsstart__";
-	const apiEnd =
-		api == vueApi.Composition ? "__compositionend__" : "__optionsend__";
-	const deleteStart =
-		api == vueApi.Composition ? "__optionsstart__" : "__compositionstart__";
-	const deleteEnd =
-		api == vueApi.Composition ? "__optionsend__" : "__compositionend__";
+	const apiStart = api == vueApi.Composition ? "__compositionstart__" : "__optionsstart__";
+	const apiEnd = api == vueApi.Composition ? "__compositionend__" : "__optionsend__";
+	const deleteStart = api == vueApi.Composition ? "__optionsstart__" : "__compositionstart__";
+	const deleteEnd = api == vueApi.Composition ? "__optionsend__" : "__compositionend__";
 
 	data = data.replace(apiStart, "").replace(apiEnd, "");
 

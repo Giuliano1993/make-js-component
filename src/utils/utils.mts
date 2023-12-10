@@ -26,69 +26,52 @@ const createComponent = (
 		fs.mkdirSync(destinationFolder);
 	}
 
-	const templateFilePath: string = path.join(
-		configs.INIT_PATH,
-		"src",
-		configs.STUBS_DIR,
-		framework,
-		template
-	);
-	fs.readFile(
-		templateFilePath,
-		"utf8",
-		(err: ErrnoException | null, data: string) => {
-			const customDestinationFolder: string = path.join(
-				configs.BASE_DIR,
-				configs.COMPONENT_FOLDER,
-				customFolder
-			);
-			const extension = template.substring(template.indexOf("."));
-			const compFileName = `${componentName}${extension}`;
+	const templateFilePath: string = path.join(configs.INIT_PATH, "src", configs.STUBS_DIR, framework, template);
+	fs.readFile(templateFilePath, "utf8", (err: ErrnoException | null, data: string) => {
+		const customDestinationFolder: string = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder);
+		const extension = template.substring(template.indexOf("."));
+		const compFileName = `${componentName}${extension}`;
 
-			if (!fs.existsSync(customDestinationFolder)) {
-				fs.mkdirSync(customDestinationFolder, {recursive: true});
+		if (!fs.existsSync(customDestinationFolder)) {
+			fs.mkdirSync(customDestinationFolder, {recursive: true});
+		}
+
+		const filePathDestination: string = path.join(
+			configs.BASE_DIR,
+			configs.COMPONENT_FOLDER,
+			customFolder,
+			compFileName
+		);
+
+		if (framework === "angular") {
+			makeAngularComponent(filePathDestination, data, componentName);
+		} else {
+			if (template.indexOf("advanced") !== -1) {
+				switch (framework) {
+					case "vue":
+						data = advancedVueBuilder(data, api, advancedOpts);
+						break;
+					default:
+						break;
+				}
 			}
-
-			const filePathDestination: string = path.join(
+			data = data.replaceAll("ComponentName", capitalizeFirstLetter(componentName));
+			writeFile(filePathDestination, data);
+		}
+		if (path.parse(template).name === "function-component-css-module") {
+			const styleFileName: string = `${componentName}.module.css`;
+			const styleFilePathDestination: string = path.join(
 				configs.BASE_DIR,
 				configs.COMPONENT_FOLDER,
 				customFolder,
-				compFileName
+				styleFileName
 			);
-
-			if (framework === "angular") {
-				makeAngularComponent(filePathDestination, data, componentName);
-			} else {
-				if (template.indexOf("advanced") !== -1) {
-					switch (framework) {
-						case "vue":
-							data = advancedVueBuilder(data, api, advancedOpts);
-							break;
-						default:
-							break;
-					}
-				}
-				data = data.replaceAll(
-					"ComponentName",
-					capitalizeFirstLetter(componentName)
-				);
-				writeFile(filePathDestination, data);
-			}
-			if (path.parse(template).name === "function-component-css-module") {
-				const styleFileName: string = `${componentName}.module.css`;
-				const styleFilePathDestination: string = path.join(
-					configs.BASE_DIR,
-					configs.COMPONENT_FOLDER,
-					customFolder,
-					styleFileName
-				);
-				writeFile(
-					styleFilePathDestination,
-					`.${componentName} {\n\tfont-size: 1.125rem; /* 18px */\n\tline-height: 1.75rem; /* 28px */\n\tfont-weight: bold;\n}\n`
-				);
-			}
+			writeFile(
+				styleFilePathDestination,
+				`.${componentName} {\n\tfont-size: 1.125rem; /* 18px */\n\tline-height: 1.75rem; /* 28px */\n\tfont-weight: bold;\n}\n`
+			);
 		}
-	);
+	});
 };
 
 export default createComponent;

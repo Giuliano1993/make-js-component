@@ -11,14 +11,15 @@
 	},
 	"javascript": {
 		"formatter": {
-		"enabled": true,
-		  "arrowParentheses":"asNeeded",
-		  "jsxQuoteStyle": "double",
-		  "semicolons": "always",
-		  "trailingComma": "es5",
-		  "quoteProperties": "asNeeded",
-		  "bracketSpacing": false,
-		  "bracketSameLine": true
+			"enabled": true,
+			"lineWidth":120,
+			"arrowParentheses":"asNeeded",
+			"jsxQuoteStyle": "double",
+			"semicolons": "always",
+			"trailingComma": "es5",
+			"quoteProperties": "asNeeded",
+			"bracketSpacing": false,
+			"bracketSameLine": true
 		}
 	  }
 }

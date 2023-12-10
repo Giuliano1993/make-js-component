@@ -24,8 +24,6 @@ describe("ComponentName", () => {
 		const fixture = TestBed.createComponent(ComponentName);
 		fixture.detectChanges();
 		const compiled = fixture.nativeElement as HTMLElement;
-		expect(compiled.querySelector("h2")?.textContent).toContain(
-			"Hello, ComponentName"
-		);
+		expect(compiled.querySelector("h2")?.textContent).toContain("Hello, ComponentName");
 	});
 });
