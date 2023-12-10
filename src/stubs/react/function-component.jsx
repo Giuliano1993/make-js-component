@@ -1,3 +1,3 @@
 export default function ComponentName({}) {
-  return <div>Hello ComponentName</div>;
+	return <div>Hello ComponentName</div>;
 }

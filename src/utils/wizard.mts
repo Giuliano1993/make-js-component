@@ -1,6 +1,6 @@
-import { Command } from "commander";
+import {Command} from "commander";
 import inquirer from "inquirer";
-import { capitalizeFirstLetter } from "./utils.mjs";
+import {capitalizeFirstLetter} from "./utils.mjs";
 import angularWizard from "./frameworks/angular/angular.mjs";
 import astroWizard from "./frameworks/astro/astro.mjs";
 import qwikWizard from "./frameworks/qwik/qwik.mjs";
@@ -11,22 +11,22 @@ import vueWizard from "./frameworks/vue/vue.mjs";
 const program = new Command();
 
 enum advancedOptsEnum {
-	props = 'props',
-	data = 'data',
-	refs = 'refs',
-	mounted = 'mounted',
-	emits = 'emits',
-  components = 'components'
+	props = "props",
+	data = "data",
+	refs = "refs",
+	mounted = "mounted",
+	emits = "emits",
+	components = "components",
 }
 
 export type Answers = {
-    componentName: string,
-    framework: string,
-    template: string,
-    folder: string,
-    advanced ?: boolean,
-    advancedOpts ?: string[],
-    api ?: string
+	componentName: string;
+	framework: string;
+	template: string;
+	folder: string;
+	advanced?: boolean;
+	advancedOpts?: string[];
+	api?: string;
 };
 
 const wizard = async () => {
