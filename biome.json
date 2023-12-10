@@ -5,12 +5,13 @@
 	},
 	"linter": {
 		"enabled": true,
+		"ignore": ["*.js","*.mjs","*.cjs"],
 		"rules": {
 			"recommended": true
 		}
 	},
 	"formatter":{
-		"ignore": ["*.*js"]
+		"ignore": ["*.js","*.cjs","*.mjs"]
 	},
 	"javascript": {
 		"formatter": {
