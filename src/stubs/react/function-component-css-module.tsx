@@ -1,8 +1,7 @@
 import styles from "./ComponentName.module.css";
 
-interface ComponentNameProps {
-}
+interface ComponentNameProps {}
 
 export default function ComponentName({}: ComponentNameProps) {
-  return <div className={styles.ComponentName}>Hello ComponentName</div>;
+	return <div className={styles.ComponentName}>Hello ComponentName</div>;
 }

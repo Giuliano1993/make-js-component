@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Title = styled.div`
   font-size: x-large;
@@ -6,5 +6,5 @@ const Title = styled.div`
 `;
 
 export default function ComponentName({}) {
-  return <Title>Hello ComponentName</Title>;
+	return <Title>Hello ComponentName</Title>;
 }

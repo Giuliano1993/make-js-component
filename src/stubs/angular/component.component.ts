@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule } from "@angular/common";
 
 Component({
-	selector: 'SelectorName',
+	selector: "SelectorName",
 	standalone: true,
 	imports: [CommonModule],
 
@@ -9,15 +9,11 @@ Component({
 		<h2>Hello, {{ title }}</h2>
 		<p>Congratulations! Your component has been created. 🎉</p>
 	`,
-	
-	styleUrls: ` `
-})
+
+	styleUrls: ` `,
+});
 export class ComponentName {
+	public title: string = "ComponentName";
 
-
-	public title: string = 'ComponentName';
-
-
-	constructor() { }
-
+	constructor() {}
 }

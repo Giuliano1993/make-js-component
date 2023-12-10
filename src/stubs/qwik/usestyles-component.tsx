@@ -1,8 +1,8 @@
-import { component$, useStyles$ } from '@builder.io/qwik';
+import { component$, useStyles$ } from "@builder.io/qwik";
 
 export default component$(() => {
-  // useStyles$ hook to apply styles to your component
-  useStyles$(`
+	// useStyles$ hook to apply styles to your component
+	useStyles$(`
     .custom-style {
       color: blue;
       font-size: 20px;
@@ -12,9 +12,9 @@ export default component$(() => {
     }
   `);
 
-  return (
-    <div>
-      <p className="custom-style">ComponentName</p>
-    </div>
-  );
+	return (
+		<div>
+			<p className="custom-style">ComponentName</p>
+		</div>
+	);
 });
