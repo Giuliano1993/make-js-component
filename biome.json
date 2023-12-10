@@ -9,6 +9,9 @@
 			"recommended": true
 		}
 	},
+	"formatter":{
+		"ignore": ["*.*js"]
+	},
 	"javascript": {
 		"formatter": {
 			"enabled": true,
@@ -18,7 +21,6 @@
 			"semicolons": "always",
 			"trailingComma": "es5",
 			"quoteProperties": "asNeeded",
-			"bracketSpacing": false,
 			"bracketSameLine": true
 		}
 	  }

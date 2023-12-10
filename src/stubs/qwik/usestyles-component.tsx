@@ -1,4 +1,4 @@
-import {component$, useStyles$} from "@builder.io/qwik";
+import { component$, useStyles$ } from "@builder.io/qwik";
 
 export default component$(() => {
 	// useStyles$ hook to apply styles to your component

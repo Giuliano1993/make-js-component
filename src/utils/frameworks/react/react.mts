@@ -12,8 +12,8 @@ export default function (componentName: string, folder: string) {
 				default: true,
 			},
 		])
-		.then((answers: {typescript: boolean}) => {
-			const {typescript} = answers;
+		.then((answers: { typescript: boolean }) => {
+			const { typescript } = answers;
 
 			return inquirer
 				.prompt([
@@ -24,8 +24,8 @@ export default function (componentName: string, folder: string) {
 						choices: ["Tailwind", "Styled Components", "CSS Module", "No"],
 					},
 				])
-				.then((answers: {css: string}) => {
-					const {css} = answers;
+				.then((answers: { css: string }) => {
+					const { css } = answers;
 					const extension = typescript ? "tsx" : "jsx";
 					let templateBase = "function-component";
 					switch (css) {

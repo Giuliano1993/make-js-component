@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import path from "path";
-import {ErrnoException, writeFile} from "../../utils/utils.mjs";
-import {configs} from "../../utils/configs.cjs";
+import { ErrnoException, writeFile } from "../../utils/utils.mjs";
+import { configs } from "../../utils/configs.cjs";
 
 export function makeAngularComponent(filePathDestination: string, component: string, componentName: string): void {
 	component = component.replace(/selector: 'SelectorName'/, `selector: 'app-${convertFromCamelCase(componentName)}'`);

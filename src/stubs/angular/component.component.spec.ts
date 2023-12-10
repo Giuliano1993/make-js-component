@@ -1,5 +1,5 @@
-import {TestBed} from "@angular/core/testing";
-import {ComponentName} from "./component.component";
+import { TestBed } from "@angular/core/testing";
+import { ComponentName } from "./component.component";
 
 describe("ComponentName", () => {
 	beforeEach(async () => {

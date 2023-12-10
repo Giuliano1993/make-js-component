@@ -1,9 +1,9 @@
 import * as fs from "fs";
 import * as path from "node:path";
-import {configs} from "./configs.cjs";
-import {makeAngularComponent} from "../stubs/angular/make-angular-component.mjs";
+import { configs } from "./configs.cjs";
+import { makeAngularComponent } from "../stubs/angular/make-angular-component.mjs";
 
-import advancedVueBuilder, {vueApi} from "./frameworks/vue/helper.mjs";
+import advancedVueBuilder, { vueApi } from "./frameworks/vue/helper.mjs";
 
 export interface ErrnoException extends Error {
 	errno?: number | undefined;
@@ -33,7 +33,7 @@ const createComponent = (
 		const compFileName = `${componentName}${extension}`;
 
 		if (!fs.existsSync(customDestinationFolder)) {
-			fs.mkdirSync(customDestinationFolder, {recursive: true});
+			fs.mkdirSync(customDestinationFolder, { recursive: true });
 		}
 
 		const filePathDestination: string = path.join(
@@ -103,7 +103,7 @@ export function prepareAdvanced(options: string[]) {
 			name: "advancedOpts",
 			message: "Pick the parts you want in your component?",
 			choices: options,
-			when: (answers: {api: string; advanced: boolean}) => {
+			when: (answers: { api: string; advanced: boolean }) => {
 				return answers.advanced;
 			},
 			default: false,

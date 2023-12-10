@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import {prepareAdvanced} from "../../utils.mjs";
+import { prepareAdvanced } from "../../utils.mjs";
 
 const framework = "vue";
 export default function (componentName: string, folder: string) {

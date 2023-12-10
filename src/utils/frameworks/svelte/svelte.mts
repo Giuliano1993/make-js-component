@@ -11,7 +11,7 @@ export default function (componentName: string, folder: string) {
 				default: true,
 			},
 		])
-		.then((answers: {typescript: boolean}) => {
+		.then((answers: { typescript: boolean }) => {
 			return {
 				componentName: componentName,
 				framework: framework.toLowerCase(),
