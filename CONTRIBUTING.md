@@ -29,8 +29,9 @@ Before working on an existing Issue please follow these steps:
 2. after the Issue is assigned to you, you can start working on it
 3. **only** start working on this Issue (and open a Pull Request) when it has been assigned to you.
 4. when forking the issue, create a branch for your edits
-5. reference the Issue in your Pull Request (for example `closes #123`)
-6. please do **not** force push to your PR branch, this makes it very difficult to re-review - commits will be squashed when merged
+5. before pushing run `npx @biomejs/biome ci .` to be sure that code formatting is correct and it will pass the PR workflow
+6. reference the Issue in your Pull Request (for example `closes #123`)
+7. please do **not** force push to your PR branch, this makes it very difficult to re-review - commits will be squashed when merged
 
 ### Pull requests
 
