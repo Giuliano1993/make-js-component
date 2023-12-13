@@ -10,15 +10,6 @@ import { capitalizeFirstLetter } from "./utils.mjs";
 
 const program = new Command();
 
-enum advancedOptsEnum {
-	props = "props",
-	data = "data",
-	refs = "refs",
-	mounted = "mounted",
-	emits = "emits",
-	components = "components",
-}
-
 export type Answers = {
 	componentName: string;
 	framework: string;

@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "node:path";
-import { makeAngularComponent } from "../stubs/angular/make-angular-component.mjs";
 import { configs } from "./configs.cjs";
+import { makeAngularComponent } from "./frameworks/angular/make-angular-component.mjs";
 
 import advancedVueBuilder, { vueApi } from "./frameworks/vue/helper.mjs";
 

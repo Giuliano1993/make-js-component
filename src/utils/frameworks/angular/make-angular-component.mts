@@ -1,13 +1,16 @@
 import * as fs from "fs";
 import path from "path";
-import { ErrnoException, writeFile } from "../../utils/utils.mjs";
-import { configs } from "../../utils/configs.cjs";
+import { configs } from "../../configs.cjs";
+import { ErrnoException, writeFile } from "../../utils.mjs";
 
 export function makeAngularComponent(filePathDestination: string, component: string, componentName: string): void {
-	component = component.replace(/selector: 'SelectorName'/, `selector: 'app-${convertFromCamelCase(componentName)}'`);
-	component = replaceComponentName(component, componentName);
+	let componentContent = component.replace(
+		/selector: 'SelectorName'/,
+		`selector: 'app-${convertFromCamelCase(componentName)}'`
+	);
+	componentContent = replaceComponentName(componentContent, componentName);
 
-	writeFile(filePathDestination, component);
+	writeFile(filePathDestination, componentContent);
 	makeAngularComponentTest(componentName);
 }
 
@@ -20,13 +23,13 @@ function makeAngularComponentTest(componentName: string): void {
 		"component.component.spec.ts"
 	);
 	fs.readFile(templateFileTestPath, "utf8", (err: ErrnoException | null, component: string) => {
-		component = replaceComponentName(component, componentName);
+		const componentContent = replaceComponentName(component, componentName);
 		const filePathDestination: string = path.join(
 			configs.BASE_DIR,
 			configs.COMPONENT_FOLDER,
 			`${componentName}.component.spec.ts`
 		);
-		writeFile(filePathDestination, component);
+		writeFile(filePathDestination, componentContent);
 	});
 }
 
