@@ -109,7 +109,10 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "exclude": [
-		"src/**/*.tsx",
+		"./src/**/*.tsx",
+    "./src/components/**/*",
+		"./src/stubs/angular/component.component.ts",
+		"./src/stubs/angular/component.component.spec.ts"
 	],
   "include": [
     "./src/**/*.ts",
