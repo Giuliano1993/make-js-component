@@ -118,8 +118,9 @@
     "./src/**/*.ts",
     "./src/**/*.mts",
     "./src/**/*.cts",
-    "./utils/*.ts",
-    "./utils/*.mts",
+    "./src/utils/*.ts",
+    "./src/utils/*.mts",
+    "./src/utils/*.cts",
     "./cmd/*.mts",
     ]
 }
