@@ -110,15 +110,13 @@
   },
   "exclude": [
 		"src/**/*.tsx",
-    "src/components/*",
-		"src/stubs/angular/component.component.ts",
-		"src/stubs/angular/component.component.spec.ts"
 	],
   "include": [
-    "src/**/*.ts",
-    "src/**/*.mts",
-    "src/**/*.cts",
-    "utils/*.ts",
-    "utils/*.mts",
+    "./src/**/*.ts",
+    "./src/**/*.mts",
+    "./src/**/*.cts",
+    "./utils/*.ts",
+    "./utils/*.mts",
+    "./cmd/*.mts",
     ]
 }

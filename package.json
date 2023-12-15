@@ -1,6 +1,6 @@
 {
   "name": "make-js-component",
-  "version": "0.2.6alpha",
+  "version": "0.2.6beta",
   "description": "Easily create your js framework component in one command",
   "repository": "https://github.com/Giuliano1993/make-js-component",
   "bin": "./cmd/make-js-component.mjs",
