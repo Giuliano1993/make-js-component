@@ -110,6 +110,7 @@
   },
   "exclude": [
 		"./src/**/*.tsx",
-    "./src/components/**/*"
+    "./src/components/**/*",
+    "./src/stubs/**/*",
 	],
 }
