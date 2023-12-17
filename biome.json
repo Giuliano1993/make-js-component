@@ -4,7 +4,7 @@
 		"enabled": true
 	},
 	"files": {
-		"ignore": ["src/stubs/*", "*.js", "*.cjs", "*.mjs"]
+		"ignore": ["src/stubs/*", "*.js", "*.cjs", "*.mjs", "src/components"]
 	},
 	"linter": {
 		"enabled": true,

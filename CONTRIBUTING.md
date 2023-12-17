@@ -29,7 +29,11 @@ Before working on an existing Issue please follow these steps:
 2. after the Issue is assigned to you, you can start working on it
 3. **only** start working on this Issue (and open a Pull Request) when it has been assigned to you.
 4. when forking the issue, create a branch for your edits
-5. before pushing run `npx @biomejs/biome ci .` to be sure that code formatting is correct and it will pass the PR workflow
+5. before pushing run `npx @biomejs/biome ci .` to be sure that code formatting is correct and it will pass the PR workflow.
+   1. If some errors are highlighted, you can fix them by running the following commands:
+      1. `npx @biomejs/biome check . --apply`
+      2. `npx @biomejs/biome linter . --apply` ( in this case, some errors may remain, so you may need to address them individually)
+      3. `npx @biomejs/biome format . --write`
 6. reference the Issue in your Pull Request (for example `closes #123`)
 7. please do **not** force push to your PR branch, this makes it very difficult to re-review - commits will be squashed when merged
 
