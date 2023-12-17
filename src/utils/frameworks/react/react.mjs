@@ -6,7 +6,7 @@ export default function (componentName, folder) {
       {
         type: "confirm",
         name: "typescript",
-        message: "Do you want to use Typescript?",
+        message: "Do you want to use Typescript? (default: Yes)",
         default: true,
       },
     ])
@@ -19,6 +19,7 @@ export default function (componentName, folder) {
             name: "css",
             message: "Do you want to use any CSS framework?",
             choices: ["Tailwind", "Styled Components", "CSS Module", "No"],
+            default: "No",
           },
         ])
         .then((answers) => {
