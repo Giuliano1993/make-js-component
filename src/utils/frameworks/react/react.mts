@@ -8,7 +8,7 @@ export default function (componentName: string, folder: string) {
 			{
 				type: "confirm",
 				name: "typescript",
-				message: "Do you want to use Typescript? (default: Yes)",
+				message: "Do you want to use Typescript?",
 				default: true,
 			},
 		])
