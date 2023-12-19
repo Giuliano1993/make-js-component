@@ -19,6 +19,7 @@ export default function (componentName, folder) {
             name: "css",
             message: "Do you want to use any CSS framework?",
             choices: ["Tailwind", "Styled Components", "CSS Module", "No"],
+            default: "No",
           },
         ])
         .then((answers) => {
