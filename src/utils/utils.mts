@@ -110,7 +110,7 @@ export function checkFileExists(filePathDestination: string, data: string) {
 				},
 			])
 			.then((answer: { duplicateFile: boolean }) => {
-				if (answer.duplicateFile == true) writeFile(filePathDestination, data);
+				if (answer.duplicateFile === true) writeFile(filePathDestination, data);
 				else return console.log("❌ File not created");
 			});
 	} else writeFile(filePathDestination, data);
