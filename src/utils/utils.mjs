@@ -62,8 +62,7 @@ export function checkFileExists(filePathDestination, data) {
                 return console.log("❌ File not created");
         });
     }
-    else
-        writeFile(filePathDestination, data);
+    return writeFile(filePathDestination, data);
 }
 export function writeFile(filePathDestination, data) {
     fs.writeFile(filePathDestination, data, (err) => {
