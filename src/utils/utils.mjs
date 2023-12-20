@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as path from "node:path";
 import { configs } from "./configs.cjs";
 import { makeAngularComponent } from "./frameworks/angular/make-angular-component.mjs";
+import inquirer from "inquirer";
 import advancedVueBuilder from "./frameworks/vue/helper.mjs";
 const createComponent = (componentName, framework, template, customFolder, api, advancedOpts) => {
     const destinationFolder = `${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`;
@@ -32,16 +33,38 @@ const createComponent = (componentName, framework, template, customFolder, api, 
                 }
             }
             output = output.replaceAll("ComponentName", capitalizeFirstLetter(componentName));
-            writeFile(filePathDestination, output);
+            checkFileExists(filePathDestination, output);
         }
         if (path.parse(template).name === "function-component-css-module") {
             const styleFileName = `${componentName}.module.css`;
             const styleFilePathDestination = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder, styleFileName);
-            writeFile(styleFilePathDestination, `.${componentName} {\n\tfont-size: 1.125rem; /* 18px */\n\tline-height: 1.75rem; /* 28px */\n\tfont-weight: bold;\n}\n`);
+            checkFileExists(styleFilePathDestination, `.${componentName} {\n\tfont-size: 1.125rem; /* 18px */\n\tline-height: 1.75rem; /* 28px */\n\tfont-weight: bold;\n}\n`);
         }
     });
 };
 export default createComponent;
+export function checkFileExists(filePathDestination, data) {
+    if (fs.existsSync(filePathDestination)) {
+        console.log(`⚠️  A component with this name and extension already exists in ${filePathDestination}`);
+        return inquirer
+            .prompt([
+            {
+                type: "confirm",
+                name: "duplicateFile",
+                message: "Do you want to continue with component creation? NOTE: this action will override the existing file",
+                default: true,
+            },
+        ])
+            .then((answer) => {
+            if (answer.duplicateFile == true)
+                writeFile(filePathDestination, data);
+            else
+                return console.log("❌ File not created");
+        });
+    }
+    else
+        writeFile(filePathDestination, data);
+}
 export function writeFile(filePathDestination, data) {
     fs.writeFile(filePathDestination, data, (err) => {
         if (err) {

@@ -1,11 +1,11 @@
 import * as fs from "fs";
 import path from "path";
 import { configs } from "../../configs.cjs";
-import { writeFile } from "../../utils.mjs";
+import { checkFileExists } from "../../utils.mjs";
 export function makeAngularComponent(filePathDestination, component, componentName) {
     let componentContent = component.replace(/selector: 'SelectorName'/, `selector: 'app-${convertFromCamelCase(componentName)}'`);
     componentContent = replaceComponentName(componentContent, componentName);
-    writeFile(filePathDestination, componentContent);
+    checkFileExists(filePathDestination, componentContent);
     makeAngularComponentTest(componentName);
 }
 function makeAngularComponentTest(componentName) {
@@ -13,7 +13,7 @@ function makeAngularComponentTest(componentName) {
     fs.readFile(templateFileTestPath, "utf8", (err, component) => {
         const componentContent = replaceComponentName(component, componentName);
         const filePathDestination = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, `${componentName}.component.spec.ts`);
-        writeFile(filePathDestination, componentContent);
+        checkFileExists(filePathDestination, componentContent);
     });
 }
 function convertToCamelCase(string) {
@@ -21,7 +21,7 @@ function convertToCamelCase(string) {
         .replace(/-([a-z])/g, (s) => {
         return s.toUpperCase();
     })
-        .replace(/^[a-z]/, s => {
+        .replace(/^[a-z]/, (s) => {
         return s.toUpperCase();
     });
 }
