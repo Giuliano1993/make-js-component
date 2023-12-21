@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import path from "path";
 import { configs } from "../../configs.cjs";
-import { ErrnoException, writeFile } from "../../utils.mjs";
+import { ErrnoException, checkFileExists } from "../../utils.mjs";
 
 export function makeAngularComponent(filePathDestination: string, component: string, componentName: string): void {
 	let componentContent = component.replace(
@@ -10,7 +10,7 @@ export function makeAngularComponent(filePathDestination: string, component: str
 	);
 	componentContent = replaceComponentName(componentContent, componentName);
 
-	writeFile(filePathDestination, componentContent);
+	checkFileExists(filePathDestination, componentContent);
 	makeAngularComponentTest(componentName);
 }
 
@@ -29,7 +29,7 @@ function makeAngularComponentTest(componentName: string): void {
 			configs.COMPONENT_FOLDER,
 			`${componentName}.component.spec.ts`
 		);
-		writeFile(filePathDestination, componentContent);
+		checkFileExists(filePathDestination, componentContent);
 	});
 }
 
