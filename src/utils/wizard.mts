@@ -27,12 +27,31 @@ const wizard = async () => {
 	program
 		.option("--name <value>", "Specify a name")
 		.option("-f, --framework <value>", `Specify framework [${frameworks.join("|")}]`)
+		.option("--vue", "Create a Vue component")
+		.option("--angular", "Create an Angular component")
+		.option("--react", "Create a React component")
+		.option("--svelte", "Create a Svelte component")
+		.option("--qwik", "Create a Qwik component")
+		.option("--astro", "Create an Astro component")
 		.option("--folder <value>", "Specify the subfolder")
 		.parse(process.argv);
 
 	const options = program.opts();
 	const componentNameFromFlag = options.name || "";
-	const frameworkFromFlag = options.framework || "";
+	const frameworkFromFlag =
+		options.framework || options.vue
+			? "vue"
+			: null || options.angular
+			  ? "angular"
+			  : null || options.react
+				  ? "react"
+				  : null || options.svelte
+					  ? "svelte"
+					  : null || options.qwik
+						  ? "qwik"
+						  : null || options.astro
+							  ? "astro"
+							  : null || "";
 	const folderFromFlag = options.folder || "";
 
 	const prompts = [];
