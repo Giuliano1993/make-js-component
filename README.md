@@ -14,6 +14,11 @@ You can't find the framework or the options you need? Checkout the [Contributing
 
 - [Make Js Component](#make-js-component)
   - [Basic Usage](#basic-usage)
+    - [Options](#options)
+      - [--name](#--name)
+      - [--folder](#--folder)
+      - [--framework](#--framework)
+      - [--\[framework\]](#--framework-1)
   - [Available Frameworks](#available-frameworks)
     - [Vue](#vue)
     - [React](#react)
@@ -30,13 +35,42 @@ You can't find the framework or the options you need? Checkout the [Contributing
 npx make-js-component
 ```
 
-OR
+This will run a short wizard so you can easily create your component in few steps
+
+### Options
+
+#### --name
+
+Specify the component name
 
 ```bash
 npx make-js-component --name <NAME>
 ```
 
-This will run a short wizard so you can easily create your component in few steps
+#### --folder
+
+Set the /components subfolder in which create the new component
+
+```bash
+npx make-js-component --folder <PATH>
+```
+
+#### --framework
+
+Set which framework is your component for:
+
+```bash
+npx make-js-component --framework [vue|angular|react|svelte|qwik|astro]
+```
+
+#### --[framework]
+
+More briefly you can specify directly the desired framework as a flag. The available flags are the same as the options for --framework flag
+
+```bash
+#this will create a vue component
+npx make-js-component --vue
+```
 
 ## Available Frameworks
 
