@@ -38,14 +38,20 @@ const wizard = async () => {
 
 	const options = program.opts();
 	const componentNameFromFlag = options.name || "";
-	const frameworkFromFlag = options.framework || 
-		options.vue ? "vue" : null || 
-		options.angular ? "angular" : null || 
-		options.react ? "react" : null || 
-		options.svelte ? "svelte" : null|| 
-		options.qwik ? "qwik" : null|| 
-		options.astro ? "astro" : null|| 
-		"";
+	const frameworkFromFlag =
+		options.framework || options.vue
+			? "vue"
+			: null || options.angular
+			  ? "angular"
+			  : null || options.react
+				  ? "react"
+				  : null || options.svelte
+					  ? "svelte"
+					  : null || options.qwik
+						  ? "qwik"
+						  : null || options.astro
+							  ? "astro"
+							  : null || "";
 	const folderFromFlag = options.folder || "";
 
 	const prompts = [];
