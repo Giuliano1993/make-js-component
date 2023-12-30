@@ -15,7 +15,7 @@ export default function (componentName: string, folder: string) {
 			{
 				type: "list",
 				name: "api",
-				message: `Choose wich api to use`,
+				message: "Choose wich api to use",
 				choices: ["Composition", "Options"],
 			},
 			...prepareAdvanced(["props", "refs", "data", "mounted", "emits", "components"]),
