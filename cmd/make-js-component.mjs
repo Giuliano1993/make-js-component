@@ -3,16 +3,42 @@ import createComponent from "../src/utils/utils.mjs";
 import wizard from "../src/utils/wizard.mjs";
 var vueApi;
 (function (vueApi) {
-    vueApi["Composition"] = "composition";
-    vueApi["Option"] = "option";
+  vueApi["Composition"] = "composition";
+  vueApi["Option"] = "option";
 })(vueApi || (vueApi = {}));
 wizard()
-    .then((answers) => {
-    const { componentName, framework, template, folder, advancedOpts, advanced } = answers;
-    const api = template.indexOf("composition") !== -1 ? vueApi.Composition : vueApi.Option;
+  .then((answers) => {
+    const {
+      componentName,
+      framework,
+      template,
+      folder,
+      advancedOpts,
+      advanced,
+      nuxt,
+    } = answers;
+
+    const destinationFolder =
+      nuxt === "yes"
+        ? folder === ""
+          ? "../../components"
+          : `../../components/${folder}`
+        : folder;
+
+    const api =
+      template.indexOf("composition") !== -1
+        ? vueApi.Composition
+        : vueApi.Option;
     const t = advanced ? "advanced-component.vue" : template;
-    createComponent(componentName, framework, t, folder, api, advancedOpts);
-})
-    .catch((e) => {
+    createComponent(
+      componentName,
+      framework,
+      t,
+      destinationFolder,
+      api,
+      advancedOpts
+    );
+  })
+  .catch((e) => {
     console.error(e.message);
-});
+  });
