@@ -15,29 +15,13 @@ wizard()
       folder,
       advancedOpts,
       advanced,
-      nuxt,
     } = answers;
-
-    const destinationFolder =
-      nuxt === "yes"
-        ? folder === ""
-          ? "../../components"
-          : `../../components/${folder}`
-        : folder;
-
     const api =
       template.indexOf("composition") !== -1
         ? vueApi.Composition
         : vueApi.Option;
     const t = advanced ? "advanced-component.vue" : template;
-    createComponent(
-      componentName,
-      framework,
-      t,
-      destinationFolder,
-      api,
-      advancedOpts
-    );
+    createComponent(componentName, framework, t, folder, api, advancedOpts);
   })
   .catch((e) => {
     console.error(e.message);

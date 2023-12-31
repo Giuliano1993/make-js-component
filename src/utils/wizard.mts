@@ -18,7 +18,6 @@ export type Answers = {
 	advanced?: boolean;
 	advancedOpts?: string[];
 	api?: string;
-	nuxt?: string;
 };
 
 const wizard = async () => {

@@ -31,11 +31,10 @@ export default function (componentName: string, folder: string) {
 					componentName: componentName,
 					framework: framework,
 					template: answers.api === "Composition" ? "component-composition.vue" : "component-options.vue",
-					folder: folder,
+					folder: answers.nuxt === "yes" ? (folder === "" ? "../../components" : `../../components/${folder}`) : folder,
 					advanced: answers.advanced,
 					api: answers.api.toLocaleLowerCase(),
 					advancedOpts: answers.advancedOpts || [],
-					nuxt: answers.nuxt,
 				};
 			}
 		);

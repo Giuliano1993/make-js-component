@@ -35,11 +35,15 @@ export default function (componentName, folder) {
           answers.api === "Composition"
             ? "component-composition.vue"
             : "component-options.vue",
-        folder: folder,
+        folder:
+          answers.nuxt === "yes"
+            ? folder === ""
+              ? "../../components"
+              : `../../components/${folder}`
+            : folder,
         advanced: answers.advanced,
         api: answers.api.toLocaleLowerCase(),
         advancedOpts: answers.advancedOpts || [],
-        nuxt: answers.nuxt,
       };
     });
 }
