@@ -54,7 +54,7 @@ const wizard = async () => {
                 }
                 // Use a regular expression to check for only alphanumeric characters
                 const isValid = /^[A-Za-z0-9]+(-[A-Za-z0-9]+)*$/.test(trimmedInput);
-                return (isValid || "Component name can only contain alphanumeric characters");
+                return isValid || "Component name can only contain alphanumeric characters";
             },
         });
     }

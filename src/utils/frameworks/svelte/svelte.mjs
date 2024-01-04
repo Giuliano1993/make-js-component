@@ -14,9 +14,7 @@ export default function (componentName, folder, anotherComponent) {
         return {
             componentName: componentName,
             framework: framework.toLowerCase(),
-            template: answers.typescript
-                ? "component-ts.svelte"
-                : "component-js.svelte",
+            template: answers.typescript ? "component-ts.svelte" : "component-js.svelte",
             folder: folder,
             anotherComponent: anotherComponent,
         };

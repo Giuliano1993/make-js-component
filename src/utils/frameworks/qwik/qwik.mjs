@@ -10,7 +10,7 @@ export default function (componentName, folder, anotherComponent) {
             choices: ["Hello World", "useStore", "useStyles"],
         },
     ])
-        .then((answers) => {
+        .then(answers => {
         return {
             componentName: componentName,
             framework: framework.toLowerCase(),

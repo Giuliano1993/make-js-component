@@ -2,11 +2,7 @@ import { Answers } from "../../wizard.mjs";
 
 const framework = "angular";
 
-export default function (
-	componentName: string,
-	folder: string,
-	anotherComponent: boolean
-): Answers {
+export default function (componentName: string, folder: string, anotherComponent: boolean): Answers {
 	return {
 		componentName: componentName,
 		framework: framework.toLowerCase(),

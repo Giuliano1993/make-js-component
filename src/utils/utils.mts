@@ -3,8 +3,8 @@ import * as path from "node:path";
 import { configs } from "./configs.cjs";
 import { makeAngularComponent } from "./frameworks/angular/make-angular-component.mjs";
 
-import inquirer from "inquirer";
 import { resolve } from "path";
+import inquirer from "inquirer";
 import advancedVueBuilder, { vueApi } from "./frameworks/vue/helper.mjs";
 import wizard, { Answers } from "./wizard.mjs";
 
@@ -28,88 +28,65 @@ export default async function createComponent(
 		fs.mkdirSync(destinationFolder);
 	}
 
-	const templateFilePath: string = path.join(
-		configs.INIT_PATH,
-		"src",
-		configs.STUBS_DIR,
-		framework,
-		template
-	);
-	fs.readFile(
-		templateFilePath,
-		"utf8",
-		async (err: ErrnoException | null, data: string) => {
-			const customDestinationFolder: string = path.join(
-				configs.BASE_DIR,
-				configs.COMPONENT_FOLDER,
-				customFolder
-			);
-			const extension = template.substring(template.indexOf("."));
-			const compFileName = `${componentName}${extension}`;
+	const templateFilePath: string = path.join(configs.INIT_PATH, "src", configs.STUBS_DIR, framework, template);
+	fs.readFile(templateFilePath, "utf8", async (err: ErrnoException | null, data: string) => {
+		const customDestinationFolder: string = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder);
+		const extension = template.substring(template.indexOf("."));
+		const compFileName = `${componentName}${extension}`;
 
-			if (!fs.existsSync(customDestinationFolder)) {
-				fs.mkdirSync(customDestinationFolder, { recursive: true });
+		if (!fs.existsSync(customDestinationFolder)) {
+			fs.mkdirSync(customDestinationFolder, { recursive: true });
+		}
+
+		const filePathDestination: string = path.join(
+			configs.BASE_DIR,
+			configs.COMPONENT_FOLDER,
+			customFolder,
+			compFileName
+		);
+		let output = data;
+		if (framework === "angular") {
+			makeAngularComponent(filePathDestination, output, componentName);
+		} else {
+			if (template.indexOf("advanced") !== -1) {
+				switch (framework) {
+					case "vue":
+						output = advancedVueBuilder(output, api, advancedOpts);
+						break;
+					default:
+						break;
+				}
 			}
-
-			const filePathDestination: string = path.join(
+			output = output.replaceAll("ComponentName", capitalizeFirstLetter(componentName));
+			await checkFileExists(filePathDestination, output);
+			return filePathDestination;
+		}
+		if (path.parse(template).name === "function-component-css-module") {
+			const styleFileName: string = `${componentName}.module.css`;
+			const styleFilePathDestination: string = path.join(
 				configs.BASE_DIR,
 				configs.COMPONENT_FOLDER,
 				customFolder,
-				compFileName
+				styleFileName
 			);
-			let output = data;
-			if (framework === "angular") {
-				makeAngularComponent(filePathDestination, output, componentName);
-			} else {
-				if (template.indexOf("advanced") !== -1) {
-					switch (framework) {
-						case "vue":
-							output = advancedVueBuilder(output, api, advancedOpts);
-							break;
-						default:
-							break;
-					}
-				}
-				output = output.replaceAll(
-					"ComponentName",
-					capitalizeFirstLetter(componentName)
-				);
-				await checkFileExists(filePathDestination, output);
-				return filePathDestination;
-			}
-			if (path.parse(template).name === "function-component-css-module") {
-				const styleFileName: string = `${componentName}.module.css`;
-				const styleFilePathDestination: string = path.join(
-					configs.BASE_DIR,
-					configs.COMPONENT_FOLDER,
-					customFolder,
-					styleFileName
-				);
-				await checkFileExists(
-					styleFilePathDestination,
-					`.${componentName} {\n\tfont-size: 1.125rem; /* 18px */\n\tline-height: 1.75rem; /* 28px */\n\tfont-weight: bold;\n}\n`
-				);
-				return filePathDestination;
-			}
+			await checkFileExists(
+				styleFilePathDestination,
+				`.${componentName} {\n\tfont-size: 1.125rem; /* 18px */\n\tline-height: 1.75rem; /* 28px */\n\tfont-weight: bold;\n}\n`
+			);
+			return filePathDestination;
 		}
-	);
+	});
 }
 
-export async function checkFileExists(
-	filePathDestination: string,
-	data: string
-) {
+export async function checkFileExists(filePathDestination: string, data: string) {
 	if (fs.existsSync(filePathDestination)) {
-		console.log(
-			`⚠️  A component with this name and extension already exists in ${filePathDestination}`
-		);
+		console.log(`⚠️  A component with this name and extension already exists in ${filePathDestination}`);
 		inquirer
 			.prompt([
 				{
 					type: "confirm",
 					name: "duplicateFile",
-					message:
-						"Do you want to continue with component creation? NOTE: this action will override the existing file",
+					message: "Do you want to continue with component creation? NOTE: this action will override the existing file",
 					default: false,
 				},
 			])
@@ -143,19 +120,8 @@ export function createAnotherComponent() {
 
 	wizard()
 		.then((answers: Answers) => {
-			const {
-				componentName,
-				framework,
-				template,
-				folder,
-				anotherComponent,
-				advancedOpts,
-				advanced,
-			} = answers;
-			const api =
-				template.indexOf("composition") !== -1
-					? vueApi.Composition
-					: vueApi.Option;
+			const { componentName, framework, template, folder, anotherComponent, advancedOpts, advanced } = answers;
+			const api = template.indexOf("composition") !== -1 ? vueApi.Composition : vueApi.Option;
 			const t = advanced ? "advanced-component.vue" : template;
 			createComponent(componentName, framework, t, folder, api, advancedOpts);
 			if (anotherComponent) {

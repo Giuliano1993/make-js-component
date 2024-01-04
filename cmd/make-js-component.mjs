@@ -15,12 +15,12 @@ wizard()
     const t = advanced ? "advanced-component.vue" : template;
     if (anotherComponent) {
         createComponent(componentName, framework, t, folder, api, advancedOpts).then(() => {
-            console.log(`✅ Component created`);
+            console.log("✅ Component created");
             createAnotherComponent();
         });
     }
     else
-        createComponent(componentName, framework, t, folder, api, advancedOpts).then(() => console.log(`✅ Component created`));
+        createComponent(componentName, framework, t, folder, api, advancedOpts).then(() => console.log("✅ Component created"));
 })
     .catch((e) => {
     console.error(e.message);

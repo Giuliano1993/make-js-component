@@ -87,10 +87,8 @@ export function createAnotherComponent() {
     })(vueApi || (vueApi = {}));
     wizard()
         .then((answers) => {
-        const { componentName, framework, template, folder, anotherComponent, advancedOpts, advanced, } = answers;
-        const api = template.indexOf("composition") !== -1
-            ? vueApi.Composition
-            : vueApi.Option;
+        const { componentName, framework, template, folder, anotherComponent, advancedOpts, advanced } = answers;
+        const api = template.indexOf("composition") !== -1 ? vueApi.Composition : vueApi.Option;
         const t = advanced ? "advanced-component.vue" : template;
         createComponent(componentName, framework, t, folder, api, advancedOpts);
         if (anotherComponent) {

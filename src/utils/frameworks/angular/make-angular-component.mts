@@ -3,11 +3,7 @@ import path from "path";
 import { configs } from "../../configs.cjs";
 import { ErrnoException, checkFileExists } from "../../utils.mjs";
 
-export function makeAngularComponent(
-	filePathDestination: string,
-	component: string,
-	componentName: string
-): void {
+export function makeAngularComponent(filePathDestination: string, component: string, componentName: string): void {
 	let componentContent = component.replace(
 		/selector: 'SelectorName'/,
 		`selector: 'app-${convertFromCamelCase(componentName)}'`
@@ -26,19 +22,15 @@ function makeAngularComponentTest(componentName: string): void {
 		"angular",
 		"component.component.spec.ts"
 	);
-	fs.readFile(
-		templateFileTestPath,
-		"utf8",
-		(err: ErrnoException | null, component: string) => {
-			const componentContent = replaceComponentName(component, componentName);
-			const filePathDestination: string = path.join(
-				configs.BASE_DIR,
-				configs.COMPONENT_FOLDER,
-				`${componentName}.component.spec.ts`
-			);
-			checkFileExists(filePathDestination, componentContent);
-		}
-	);
+	fs.readFile(templateFileTestPath, "utf8", (err: ErrnoException | null, component: string) => {
+		const componentContent = replaceComponentName(component, componentName);
+		const filePathDestination: string = path.join(
+			configs.BASE_DIR,
+			configs.COMPONENT_FOLDER,
+			`${componentName}.component.spec.ts`
+		);
+		checkFileExists(filePathDestination, componentContent);
+	});
 }
 
 function convertToCamelCase(string: string): string {
@@ -46,7 +38,7 @@ function convertToCamelCase(string: string): string {
 		.replace(/-([a-z])/g, (s: string) => {
 			return s.toUpperCase();
 		})
-		.replace(/^[a-z]/, (s) => {
+		.replace(/^[a-z]/, s => {
 			return s.toUpperCase();
 		});
 }
@@ -56,8 +48,5 @@ function convertFromCamelCase(string: string): string {
 }
 
 function replaceComponentName(data: string, componentName: string): string {
-	return data.replace(
-		/ComponentName/g,
-		`${convertToCamelCase(componentName)}Component`
-	);
+	return data.replace(/ComponentName/g, `${convertToCamelCase(componentName)}Component`);
 }

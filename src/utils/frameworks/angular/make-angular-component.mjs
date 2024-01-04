@@ -21,7 +21,7 @@ function convertToCamelCase(string) {
         .replace(/-([a-z])/g, (s) => {
         return s.toUpperCase();
     })
-        .replace(/^[a-z]/, (s) => {
+        .replace(/^[a-z]/, s => {
         return s.toUpperCase();
     });
 }

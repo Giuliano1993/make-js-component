@@ -2,11 +2,7 @@ import inquirer from "inquirer";
 
 const framework = "react";
 
-export default function (
-	componentName: string,
-	folder: string,
-	anotherComponent: boolean
-) {
+export default function (componentName: string, folder: string, anotherComponent: boolean) {
 	return inquirer
 		.prompt([
 			{

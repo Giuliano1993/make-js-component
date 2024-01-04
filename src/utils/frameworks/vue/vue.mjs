@@ -10,22 +10,13 @@ export default function (componentName, folder, anotherComponent) {
             message: "Choose wich api to use",
             choices: ["Composition", "Options"],
         },
-        ...prepareAdvanced([
-            "props",
-            "refs",
-            "data",
-            "mounted",
-            "emits",
-            "components",
-        ]),
+        ...prepareAdvanced(["props", "refs", "data", "mounted", "emits", "components"]),
     ])
         .then((answers) => {
         return {
             componentName: componentName,
             framework: framework,
-            template: answers.api === "Composition"
-                ? "component-composition.vue"
-                : "component-options.vue",
+            template: answers.api === "Composition" ? "component-composition.vue" : "component-options.vue",
             folder: folder,
             anotherComponent: anotherComponent,
             advanced: answers.advanced,
