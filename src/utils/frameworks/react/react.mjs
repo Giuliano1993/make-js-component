@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
 const framework = "react";
-export default function (componentName, folder) {
+export default function (componentName, folder, anotherComponent) {
     return inquirer
         .prompt([
         {
@@ -45,6 +45,7 @@ export default function (componentName, folder) {
                 framework: framework.toLowerCase(),
                 template: template,
                 folder: folder,
+                anotherComponent: anotherComponent,
             };
         });
     });

@@ -2,7 +2,7 @@ import inquirer from "inquirer";
 import { prepareAdvanced } from "../../utils.mjs";
 
 const framework = "vue";
-export default function (componentName: string, folder: string) {
+export default function (componentName: string, folder: string, anotherComponent: boolean) {
 	return inquirer
 		.prompt([
 			{
@@ -24,6 +24,7 @@ export default function (componentName: string, folder: string) {
 					framework: framework,
 					template: answers.api === "Composition" ? "component-composition.vue" : "component-options.vue",
 					folder: folder,
+					anotherComponent: anotherComponent,
 					advanced: answers.advanced,
 					api: answers.api.toLocaleLowerCase(),
 					advancedOpts: answers.advancedOpts || [],

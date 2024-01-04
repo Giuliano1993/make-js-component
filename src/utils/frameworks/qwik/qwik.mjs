@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
 const framework = "qwik";
-export default function (componentName, folder) {
+export default function (componentName, folder, anotherComponent) {
     return inquirer
         .prompt([
         {
@@ -22,6 +22,7 @@ export default function (componentName, folder) {
                         ? "usestyles-component.tsx"
                         : "hello-world-component.tsx",
             folder: folder,
+            anotherComponent: anotherComponent,
         };
     });
 }
