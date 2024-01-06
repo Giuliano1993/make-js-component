@@ -1,3 +1,5 @@
+[![RepoRater](https://repo-rater.eddiehub.io/api/badge?owner=Giuliano1993&name=make-js-component)](https://repo-rater.eddiehub.io/rate?owner=Giuliano1993&name=make-js-component)
+
 <p align="center">
    <img src="https://github.com/Giuliano1993/make-js-component/assets/12759050/bedcd81f-431b-4699-9771-ba5c237ec68f" />
 </p>
