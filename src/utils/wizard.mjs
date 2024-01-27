@@ -39,7 +39,7 @@ const wizard = async () => {
                             ? "astro"
                             : null || "";
     const folderFromFlag = options.folder || "";
-    const multipleFromFlag = options.multiple || "";
+    const multipleFromFlag = options.multiple || false;
     const prompts = [];
     // Only ask for componentName if --name argument is not provided
     if (!componentNameFromFlag) {

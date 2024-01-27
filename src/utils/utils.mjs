@@ -99,29 +99,28 @@ export function createAnotherComponent() {
         console.error(e.message);
     });
     return;
-
 }
 export function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 export function prepareAdvanced(options) {
-  const arr = [
-    {
-      type: "confirm",
-      name: "advanced",
-      message: "Do you want to check for advanced options?",
-      default: false,
-    },
-    {
-      type: "checkbox",
-      name: "advancedOpts",
-      message: "Pick the parts you want in your component?",
-      choices: options,
-      when: (answers) => {
-        return answers.advanced;
-      },
-      default: false,
-    },
-  ];
-  return [...arr];
+    const arr = [
+        {
+            type: "confirm",
+            name: "advanced",
+            message: "Do you want to check for advanced options?",
+            default: false,
+        },
+        {
+            type: "checkbox",
+            name: "advancedOpts",
+            message: "Pick the parts you want in your component?",
+            choices: options,
+            when: (answers) => {
+                return answers.advanced;
+            },
+            default: false,
+        },
+    ];
+    return [...arr];
 }

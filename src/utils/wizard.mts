@@ -30,7 +30,7 @@ interface PromptProps {
 	readonly name: string;
 	readonly message: string;
 	readonly validate?: (input: string) => boolean | string;
-	readonly default?: string;
+	readonly default?: string | boolean;
 	readonly choices?: FrameworksType[];
 }
 
@@ -70,8 +70,7 @@ const wizard: () => Promise<Answers> = async () => {
 							  : null || "";
 
 	const folderFromFlag: string = options.folder || "";
-  const multipleFromFlag: string = options.multiple || "";
-
+	const multipleFromFlag: boolean = options.multiple || false;
 
 	const prompts: PromptProps[] = [];
 
@@ -129,11 +128,10 @@ const wizard: () => Promise<Answers> = async () => {
 				framework: string;
 				anotherComponent: boolean;
 			}) => {
-
 				const folder: string = answers.folder || folderFromFlag;
 				const framework: string = answers.framework || capitalizeFirstLetter(frameworkFromFlag);
 				const componentName: string = answers.componentName || componentNameFromFlag;
-        const anotherComponent: boolean = answers.anotherComponent || multipleFromFlag;
+				const anotherComponent: boolean = answers.anotherComponent || multipleFromFlag;
 
 				switch (framework) {
 					case "Vue":
