@@ -6,7 +6,12 @@
   "bin": "./cmd/make-js-component.mjs",
   "scripts": {
     "dev": "npx tsc -w",
-    "test": "jest"
+    "test": "jest",
+    "biome-ci": "npx @biomejs/biome ci .",
+    "biome-check": "npx @biomejs/biome check . --apply",
+    "biome-lint": "npx @biomejs/biome lint . --apply",
+    "biome-format": "npx @biomejs/biome format . --write"
+
   },
   "keywords": [
     "node",
