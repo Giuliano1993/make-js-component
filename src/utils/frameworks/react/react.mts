@@ -2,7 +2,7 @@ import inquirer from "inquirer";
 
 const framework = "react";
 
-export default function (componentName: string, folder: string) {
+export default function (componentName: string, folder: string, anotherComponent: boolean) {
 	return inquirer
 		.prompt([
 			{
@@ -49,6 +49,7 @@ export default function (componentName: string, folder: string) {
 						framework: framework.toLowerCase(),
 						template: template,
 						folder: folder,
+						anotherComponent: anotherComponent,
 					};
 				});
 		});

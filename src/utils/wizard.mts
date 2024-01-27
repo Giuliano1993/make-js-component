@@ -15,6 +15,7 @@ export type Answers = {
 	framework: string;
 	template: string;
 	folder: string;
+	anotherComponent: boolean;
 	advanced?: boolean;
 	advancedOpts?: string[];
 	api?: string;
@@ -34,6 +35,7 @@ const wizard = async () => {
 		.option("--qwik", "Create a Qwik component")
 		.option("--astro", "Create an Astro component")
 		.option("--folder <value>", "Specify the subfolder")
+		.option("--multiple", "Creating multiple components at once")
 		.parse(process.argv);
 
 	const options = program.opts();
@@ -53,6 +55,7 @@ const wizard = async () => {
 							  ? "astro"
 							  : null || "";
 	const folderFromFlag = options.folder || "";
+	const multipleFromFlag = options.multiple || "";
 
 	const prompts = [];
 
@@ -92,6 +95,15 @@ const wizard = async () => {
 		});
 	}
 
+	if (!multipleFromFlag) {
+		prompts.push({
+			type: "confirm",
+			name: "anotherComponent",
+			message: "Do you want to create another component?",
+			default: false,
+		});
+	}
+
 	return inquirer
 		.prompt(prompts)
 		.then(
@@ -99,23 +111,25 @@ const wizard = async () => {
 				componentName: string;
 				folder: string;
 				framework: string;
+				anotherComponent: boolean;
 			}) => {
 				const folder = answers.folder || folderFromFlag;
 				const framework = answers.framework || capitalizeFirstLetter(frameworkFromFlag);
 				const componentName = answers.componentName || componentNameFromFlag;
+				const anotherComponent = answers.anotherComponent || multipleFromFlag;
 				switch (framework) {
 					case "Vue":
-						return vueWizard(componentName, folder);
+						return vueWizard(componentName, folder, anotherComponent);
 					case "Angular":
-						return angularWizard(componentName, folder);
+						return angularWizard(componentName, folder, anotherComponent);
 					case "React":
-						return reactWizard(componentName, folder);
+						return reactWizard(componentName, folder, anotherComponent);
 					case "Svelte":
-						return svelteWizard(componentName, folder);
+						return svelteWizard(componentName, folder, anotherComponent);
 					case "Qwik":
-						return qwikWizard(componentName, folder);
+						return qwikWizard(componentName, folder, anotherComponent);
 					case "Astro":
-						return astroWizard(componentName, folder);
+						return astroWizard(componentName, folder, anotherComponent);
 					default:
 						throw new Error("A valid framework must be selected");
 				}
