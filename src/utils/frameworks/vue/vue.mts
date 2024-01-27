@@ -7,6 +7,13 @@ export default function (componentName: string, folder: string, anotherComponent
 		.prompt([
 			{
 				type: "list",
+				name: "nuxt",
+				message: "Do you use Nuxt? The destination folder will be (./components)",
+				choices: ["yes", "No"],
+				default: "No",
+			},
+			{
+				type: "list",
 				name: "api",
 				message: "Choose wich api to use",
 				choices: ["Composition", "Options"],
@@ -15,6 +22,7 @@ export default function (componentName: string, folder: string, anotherComponent
 		])
 		.then(
 			(answers: {
+				nuxt: string;
 				api: string;
 				advanced: boolean;
 				advancedOpts?: string[];
@@ -23,7 +31,7 @@ export default function (componentName: string, folder: string, anotherComponent
 					componentName: componentName,
 					framework: framework,
 					template: answers.api === "Composition" ? "component-composition.vue" : "component-options.vue",
-					folder: folder,
+					folder: answers.nuxt === "yes" ? (folder === "" ? "../../components" : `../../components/${folder}`) : folder,
 					anotherComponent: anotherComponent,
 					advanced: answers.advanced,
 					api: answers.api.toLocaleLowerCase(),

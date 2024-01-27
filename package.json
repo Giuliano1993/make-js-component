@@ -6,7 +6,7 @@
   "bin": "./cmd/make-js-component.mjs",
   "scripts": {
     "dev": "npx tsc -w",
-    "test": "echo \"Error: no  test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "node",
@@ -26,6 +26,9 @@
     "@biomejs/biome": "1.4.1",
     "@types/inquirer": "^9.0.7",
     "@types/node": "^20.9.0",
+    "cli-testing-library": "^2.0.2",
+    "jest": "^29.7.0",
+    "jest-extended": "^4.0.2",
     "typescript": "^5.3.2"
   },
   "dependencies": {

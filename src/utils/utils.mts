@@ -143,7 +143,7 @@ export function prepareAdvanced(options: string[]) {
 		{
 			type: "confirm",
 			name: "advanced",
-			message: "Do you want to check for advanced otpions?",
+			message: "Do you want to check for advanced options?",
 			default: false,
 		},
 		{
@@ -151,7 +151,7 @@ export function prepareAdvanced(options: string[]) {
 			name: "advancedOpts",
 			message: "Pick the parts you want in your component?",
 			choices: options,
-			when: (answers: { api: string; advanced: boolean }) => {
+			when: (answers: { nuxt: string; api: string; advanced: boolean }) => {
 				return answers.advanced;
 			},
 			default: false,
