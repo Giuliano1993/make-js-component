@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-import createComponent from "../src/utils/utils.mjs";
+import createComponent, { createAnotherComponent, } from "../src/utils/utils.mjs";
 import wizard from "../src/utils/wizard.mjs";
 var vueApi;
 (function (vueApi) {
@@ -7,22 +7,29 @@ var vueApi;
   vueApi["Option"] = "option";
 })(vueApi || (vueApi = {}));
 wizard()
-  .then((answers) => {
-    const {
-      componentName,
-      framework,
-      template,
-      folder,
-      advancedOpts,
-      advanced,
-    } = answers;
-    const api =
-      template.indexOf("composition") !== -1
+    .then((answers) => {
+    const { componentName, 
+           framework, 
+           template, 
+           folder, 
+           anotherComponent, 
+           advancedOpts, 
+           advanced, 
+          } = answers;
+    const api = 
+          template.indexOf("composition") !== -1
         ? vueApi.Composition
         : vueApi.Option;
     const t = advanced ? "advanced-component.vue" : template;
-    createComponent(componentName, framework, t, folder, api, advancedOpts);
-  })
-  .catch((e) => {
+    if (anotherComponent) {
+        createComponent(componentName, framework, t, folder, api, advancedOpts).then(() => {
+            console.log("✅ Component created");
+            createAnotherComponent();
+        });
+    }
+    else
+        createComponent(componentName, framework, t, folder, api, advancedOpts).then(() => console.log("✅ Component created"));
+})
+    .catch((e) => {
     console.error(e.message);
   });

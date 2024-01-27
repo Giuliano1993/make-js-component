@@ -11,7 +11,7 @@
 
 1. Clone the repo
 2. In the repo folder run `npm run dev`; this will start watching ts files and transpile them to js
-3. Now you can run locally the command: just type `npx .` in your terminal to execut it
+3. Now you can run locally the command: just type `npx .` in your terminal to execute it
 
 ### Creating an Issue
 

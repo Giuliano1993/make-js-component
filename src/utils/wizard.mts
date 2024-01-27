@@ -15,6 +15,7 @@ export type Answers = {
 	framework: string;
 	template: string;
 	folder: string;
+	anotherComponent: boolean;
 	advanced?: boolean;
 	advancedOpts?: string[];
 	api?: string;
@@ -47,6 +48,7 @@ const wizard: () => Promise<Answers> = async () => {
 		.option("--qwik", "Create a Qwik component")
 		.option("--astro", "Create an Astro component")
 		.option("--folder <value>", "Specify the subfolder")
+		.option("--multiple", "Creating multiple components at once")
 		.parse(process.argv);
 
 	const options: OptionValues = program.opts();
@@ -66,7 +68,10 @@ const wizard: () => Promise<Answers> = async () => {
 						  : null || options.astro
 							  ? "astro"
 							  : null || "";
+
 	const folderFromFlag: string = options.folder || "";
+  const multipleFromFlag: string = options.multiple || "";
+
 
 	const prompts: PromptProps[] = [];
 
@@ -106,6 +111,15 @@ const wizard: () => Promise<Answers> = async () => {
 		});
 	}
 
+	if (!multipleFromFlag) {
+		prompts.push({
+			type: "confirm",
+			name: "anotherComponent",
+			message: "Do you want to create another component?",
+			default: false,
+		});
+	}
+
 	return inquirer
 		.prompt(prompts)
 		.then(
@@ -113,23 +127,27 @@ const wizard: () => Promise<Answers> = async () => {
 				componentName: string;
 				folder: string;
 				framework: string;
+				anotherComponent: boolean;
 			}) => {
+
 				const folder: string = answers.folder || folderFromFlag;
 				const framework: string = answers.framework || capitalizeFirstLetter(frameworkFromFlag);
 				const componentName: string = answers.componentName || componentNameFromFlag;
+        const anotherComponent: boolean = answers.anotherComponent || multipleFromFlag;
+
 				switch (framework) {
 					case "Vue":
-						return vueWizard(componentName, folder);
+						return vueWizard(componentName, folder, anotherComponent);
 					case "Angular":
-						return angularWizard(componentName, folder);
+						return angularWizard(componentName, folder, anotherComponent);
 					case "React":
-						return reactWizard(componentName, folder);
+						return reactWizard(componentName, folder, anotherComponent);
 					case "Svelte":
-						return svelteWizard(componentName, folder);
+						return svelteWizard(componentName, folder, anotherComponent);
 					case "Qwik":
-						return qwikWizard(componentName, folder);
+						return qwikWizard(componentName, folder, anotherComponent);
 					case "Astro":
-						return astroWizard(componentName, folder);
+						return astroWizard(componentName, folder, anotherComponent);
 					default:
 						throw new Error("A valid framework must be selected");
 				}
