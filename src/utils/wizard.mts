@@ -1,4 +1,4 @@
-import { Command } from "commander";
+import { Command, OptionValues } from "commander";
 import inquirer from "inquirer";
 import angularWizard from "./frameworks/angular/angular.mjs";
 import astroWizard from "./frameworks/astro/astro.mjs";
@@ -21,9 +21,22 @@ export type Answers = {
 	api?: string;
 };
 
-const wizard = async () => {
+type FrameworkFromFlagType = "vue" | "angular" | "react" | "svelte" | "qwik" | "astro" | "";
+
+type FrameworksType = "Vue" | "Angular" | "React" | "Svelte" | "Qwik" | "Astro";
+
+interface PromptProps {
+	readonly type: string;
+	readonly name: string;
+	readonly message: string;
+	readonly validate?: (input: string) => boolean | string;
+	readonly default?: string;
+	readonly choices?: FrameworksType[];
+}
+
+const wizard: () => Promise<Answers> = async () => {
 	// Parse command line arguments using commander
-	const frameworks = ["Vue", "Angular", "React", "Svelte", "Qwik", "Astro"];
+	const frameworks: FrameworksType[] = ["Vue", "Angular", "React", "Svelte", "Qwik", "Astro"];
 
 	program
 		.option("--name <value>", "Specify a name")
@@ -38,9 +51,10 @@ const wizard = async () => {
 		.option("--multiple", "Creating multiple components at once")
 		.parse(process.argv);
 
-	const options = program.opts();
-	const componentNameFromFlag = options.name || "";
-	const frameworkFromFlag =
+	const options: OptionValues = program.opts();
+	const componentNameFromFlag: string = options.name || "";
+
+	const frameworkFromFlag: FrameworkFromFlagType =
 		options.framework || options.vue
 			? "vue"
 			: null || options.angular
@@ -54,10 +68,12 @@ const wizard = async () => {
 						  : null || options.astro
 							  ? "astro"
 							  : null || "";
-	const folderFromFlag = options.folder || "";
-	const multipleFromFlag = options.multiple || "";
 
-	const prompts = [];
+	const folderFromFlag: string = options.folder || "";
+  const multipleFromFlag: string = options.multiple || "";
+
+
+	const prompts: PromptProps[] = [];
 
 	// Only ask for componentName if --name argument is not provided
 	if (!componentNameFromFlag) {
@@ -66,12 +82,12 @@ const wizard = async () => {
 			name: "componentName",
 			message: "Give a name to your component",
 			validate: (input: string) => {
-				const trimmedInput = input.trim();
+				const trimmedInput: string = input.trim();
 				if (trimmedInput === "") {
 					return "Component name cannot be empty";
 				}
 				// Use a regular expression to check for only alphanumeric characters
-				const isValid = /^[A-Za-z0-9]+(-[A-Za-z0-9]+)*$/.test(trimmedInput);
+				const isValid: boolean = /^[A-Za-z0-9]+(-[A-Za-z0-9]+)*$/.test(trimmedInput);
 				return isValid || "Component name can only contain alphanumeric characters";
 			},
 		});
@@ -113,10 +129,12 @@ const wizard = async () => {
 				framework: string;
 				anotherComponent: boolean;
 			}) => {
-				const folder = answers.folder || folderFromFlag;
-				const framework = answers.framework || capitalizeFirstLetter(frameworkFromFlag);
-				const componentName = answers.componentName || componentNameFromFlag;
-				const anotherComponent = answers.anotherComponent || multipleFromFlag;
+
+				const folder: string = answers.folder || folderFromFlag;
+				const framework: string = answers.framework || capitalizeFirstLetter(frameworkFromFlag);
+				const componentName: string = answers.componentName || componentNameFromFlag;
+        const anotherComponent: boolean = answers.anotherComponent || multipleFromFlag;
+
 				switch (framework) {
 					case "Vue":
 						return vueWizard(componentName, folder, anotherComponent);
