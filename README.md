@@ -12,7 +12,7 @@ Since some frameworks have standard commands, some had them, some really don't, 
 
 MJC allows you to just call a command and have your JS component ready to use, and edit, with also a bunch of options available in order to start with the perfect boilerplate.
 
-You can't find the framework or the options you need? Checkout the [Contributing guide](./CONTRIBUTING.md) and open an issue to let us know and, if you wish, you can open a PR to have the feature inclued in the command!
+Can't find the framework or the options you need? Checkout the [Contributing guide](./CONTRIBUTING.md) and open an issue to let us know and, if you wish, you can open a PR to have the feature inclued in the command!
 
 - [Make Js Component](#make-js-component)
   - [Basic Usage](#basic-usage)
@@ -21,6 +21,7 @@ You can't find the framework or the options you need? Checkout the [Contributing
       - [--folder](#--folder)
       - [--framework](#--framework)
       - [--\[framework\]](#--framework-1)
+      - [--multiple](#--multiple)
   - [Available Frameworks](#available-frameworks)
     - [Vue](#vue)
     - [React](#react)
@@ -36,8 +37,7 @@ You can't find the framework or the options you need? Checkout the [Contributing
 ```bash
 npx make-js-component
 ```
-
-This will run a short wizard so you can easily create your component in few steps
+This command will start a short wizard that will create your component in a few steps.
 
 ### Options
 
@@ -51,7 +51,7 @@ npx make-js-component --name <NAME>
 
 #### --folder
 
-Set the /components subfolder in which create the new component
+Set the /components subfolder in which to create the new component/s.
 
 ```bash
 npx make-js-component --folder <PATH>
@@ -59,7 +59,7 @@ npx make-js-component --folder <PATH>
 
 #### --framework
 
-Set which framework is your component for:
+Set which framework your component is for.
 
 ```bash
 npx make-js-component --framework [vue|angular|react|svelte|qwik|astro]
@@ -67,11 +67,19 @@ npx make-js-component --framework [vue|angular|react|svelte|qwik|astro]
 
 #### --[framework]
 
-More briefly you can specify directly the desired framework as a flag. The available flags are the same as the options for --framework flag
+You can specify the desired framework directly by adding a flag. The available flags are the same as the options for --framework flag.
 
 ```bash
 #this will create a vue component
 npx make-js-component --vue
+```
+
+#### --multiple
+
+Using this flag allows you to create multiple components in succession. If you type “exit” while in the naming your component phase, it will exit the prompt.
+
+```bash
+npx make-js-component --multiple
 ```
 
 ## Available Frameworks
