@@ -35,11 +35,11 @@ function makeAngularComponentTest(componentName: string): void {
 
 function convertToCamelCase(string: string): string {
 	return string
-		.replace(/-([a-z])/g, (s: string) => {
-			return s.toUpperCase();
+		.replace(/-(\w)/g, (_, match: string) => {
+			return match.toUpperCase();
 		})
-		.replace(/^[a-z]/, s => {
-			return s.toUpperCase();
+		.replace(/^\w/, (match: string) => {
+			return match.toUpperCase();
 		});
 }
 
@@ -48,5 +48,6 @@ function convertFromCamelCase(string: string): string {
 }
 
 function replaceComponentName(data: string, componentName: string): string {
+	console.log('componentName', componentName)
 	return data.replace(/ComponentName/g, `${convertToCamelCase(componentName)}Component`);
 }

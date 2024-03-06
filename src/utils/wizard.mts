@@ -14,6 +14,7 @@ export type Answers = {
 	componentName: string;
 	framework: string;
 	template: string;
+	isTestFile?: boolean;
 	folder: string;
 	anotherComponent: boolean;
 	advanced?: boolean;
@@ -58,19 +59,20 @@ const wizard: () => Promise<Answers> = async () => {
 		options.framework || options.vue
 			? "vue"
 			: null || options.angular
-			  ? "angular"
-			  : null || options.react
-				  ? "react"
-				  : null || options.svelte
-					  ? "svelte"
-					  : null || options.qwik
-						  ? "qwik"
-						  : null || options.astro
-							  ? "astro"
-							  : null || "";
+				? "angular"
+				: null || options.react
+					? "react"
+					: null || options.svelte
+						? "svelte"
+						: null || options.qwik
+							? "qwik"
+							: null || options.astro
+								? "astro"
+								: null || "";
 
 	const folderFromFlag: string = options.folder || "";
 	const multipleFromFlag: boolean = options.multiple || false;
+	const testFileFromFlag: boolean = options.multiple || false;
 
 	const prompts: PromptProps[] = [];
 
@@ -113,6 +115,15 @@ const wizard: () => Promise<Answers> = async () => {
 		});
 	}
 
+	if (!testFileFromFlag) {
+		prompts.push({
+			type: "confirm",
+			name: "testFile",
+			message: "Do you want to add .spec file to test component?",
+			default: false,
+		});
+	}
+
 	if (!multipleFromFlag) {
 		prompts.push({
 			type: "confirm",
@@ -128,19 +139,21 @@ const wizard: () => Promise<Answers> = async () => {
 			(answers: {
 				componentName: string;
 				folder: string;
+				testFile: boolean;
 				framework: string;
 				anotherComponent: boolean;
 			}) => {
 				const folder: string = answers.folder || folderFromFlag;
 				const framework: string = answers.framework || capitalizeFirstLetter(frameworkFromFlag);
 				const componentName: string = answers.componentName || componentNameFromFlag;
+				const testFile: boolean = answers.testFile || testFileFromFlag;
 				const anotherComponent: boolean = answers.anotherComponent || multipleFromFlag;
 
 				switch (framework) {
 					case "Vue":
 						return vueWizard(componentName, folder, anotherComponent);
 					case "Angular":
-						return angularWizard(componentName, folder, anotherComponent);
+						return angularWizard(componentName, folder, anotherComponent, testFile);
 					case "React":
 						return reactWizard(componentName, folder, anotherComponent);
 					case "Svelte":
@@ -155,6 +168,7 @@ const wizard: () => Promise<Answers> = async () => {
 			}
 		)
 		.then<Answers>((values: Answers | PromiseLike<Answers>) => {
+			console.log('values', values);
 			return values;
 		})
 		.catch((e: Error) => {

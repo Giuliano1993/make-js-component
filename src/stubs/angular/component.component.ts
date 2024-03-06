@@ -1,6 +1,7 @@
+import { Component } from '@angular/core';
 import { CommonModule } from "@angular/common";
 
-Component({
+@Component({
 	selector: "SelectorName",
 	standalone: true,
 	imports: [CommonModule],
@@ -11,7 +12,7 @@ Component({
 	`,
 
 	styleUrls: ` `,
-});
+})
 export class ComponentName {
 	public title: string = "ComponentName";
 

@@ -18,16 +18,17 @@ function makeAngularComponentTest(componentName) {
 }
 function convertToCamelCase(string) {
     return string
-        .replace(/-([a-z])/g, (s) => {
-        return s.toUpperCase();
+        .replace(/-(\w)/g, (_, match) => {
+        return match.toUpperCase();
     })
-        .replace(/^[a-z]/, s => {
-        return s.toUpperCase();
+        .replace(/^\w/, (match) => {
+        return match.toUpperCase();
     });
 }
 function convertFromCamelCase(string) {
     return string.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
 }
 function replaceComponentName(data, componentName) {
+    console.log('componentName', componentName);
     return data.replace(/ComponentName/g, `${convertToCamelCase(componentName)}Component`);
 }

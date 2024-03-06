@@ -40,6 +40,7 @@ const wizard = async () => {
                             : null || "";
     const folderFromFlag = options.folder || "";
     const multipleFromFlag = options.multiple || false;
+    const testFileFromFlag = options.multiple || false;
     const prompts = [];
     // Only ask for componentName if --name argument is not provided
     if (!componentNameFromFlag) {
@@ -77,6 +78,14 @@ const wizard = async () => {
             choices: frameworks,
         });
     }
+    if (!testFileFromFlag) {
+        prompts.push({
+            type: "confirm",
+            name: "testFile",
+            message: "Do you want to add .spec file to test component?",
+            default: false,
+        });
+    }
     if (!multipleFromFlag) {
         prompts.push({
             type: "confirm",
@@ -91,12 +100,13 @@ const wizard = async () => {
         const folder = answers.folder || folderFromFlag;
         const framework = answers.framework || capitalizeFirstLetter(frameworkFromFlag);
         const componentName = answers.componentName || componentNameFromFlag;
+        const testFile = answers.testFile || testFileFromFlag;
         const anotherComponent = answers.anotherComponent || multipleFromFlag;
         switch (framework) {
             case "Vue":
                 return vueWizard(componentName, folder, anotherComponent);
             case "Angular":
-                return angularWizard(componentName, folder, anotherComponent);
+                return angularWizard(componentName, folder, anotherComponent, testFile);
             case "React":
                 return reactWizard(componentName, folder, anotherComponent);
             case "Svelte":
@@ -110,6 +120,7 @@ const wizard = async () => {
         }
     })
         .then((values) => {
+        console.log('values', values);
         return values;
     })
         .catch((e) => {
