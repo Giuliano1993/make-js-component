@@ -15,7 +15,7 @@ export type Answers = {
 	framework: string;
 	template: string;
 	folder: string;
-	anotherComponent: boolean;
+	anotherComponent?: boolean;
 	advanced?: boolean;
 	advancedOpts?: string[];
 	api?: string;
@@ -113,15 +113,6 @@ const wizard: () => Promise<Answers> = async () => {
 		});
 	}
 
-	if (!multipleFromFlag) {
-		prompts.push({
-			type: "confirm",
-			name: "anotherComponent",
-			message: "Do you want to create another component?",
-			default: false,
-		});
-	}
-
 	return inquirer
 		.prompt(prompts)
 		.then(
@@ -129,33 +120,47 @@ const wizard: () => Promise<Answers> = async () => {
 				componentName: string;
 				folder: string;
 				framework: string;
-				anotherComponent: boolean;
 			}) => {
 				const folder: string = answers.folder || folderFromFlag;
 				const framework: string = answers.framework || capitalizeFirstLetter(frameworkFromFlag);
 				const componentName: string = answers.componentName || componentNameFromFlag;
-				const anotherComponent: boolean = answers.anotherComponent || multipleFromFlag;
 
 				switch (framework) {
 					case "Vue":
-						return vueWizard(componentName, folder, anotherComponent);
+						return vueWizard(componentName, folder);
 					case "Angular":
-						return angularWizard(componentName, folder, anotherComponent);
+						return angularWizard(componentName, folder);
 					case "React":
-						return reactWizard(componentName, folder, anotherComponent);
+						return reactWizard(componentName, folder);
 					case "Svelte":
-						return svelteWizard(componentName, folder, anotherComponent);
+						return svelteWizard(componentName, folder);
 					case "Qwik":
-						return qwikWizard(componentName, folder, anotherComponent);
+						return qwikWizard(componentName, folder);
 					case "Astro":
-						return astroWizard(componentName, folder, anotherComponent);
+						return astroWizard(componentName, folder);
 					default:
 						throw new Error("A valid framework must be selected");
 				}
 			}
 		)
-		.then<Answers>((values: Answers | PromiseLike<Answers>) => {
-			return values;
+		.then((values: Answers) => {
+			return inquirer
+				.prompt([
+					{
+						type: "confirm",
+						name: "anotherComponent",
+						message: "Do you want to create another component?",
+						default: false,
+					},
+				])
+				.then((answers: { values: Answers; anotherComponent: boolean }) => {
+					const { anotherComponent } = answers;
+					const completeValues = {
+						...values,
+						anotherComponent: anotherComponent,
+					};
+					return completeValues;
+				});
 		})
 		.catch((e: Error) => {
 			throw new Error(e.message);

@@ -3,7 +3,6 @@ import * as path from "node:path";
 import { configs } from "./configs.cjs";
 import { makeAngularComponent } from "./frameworks/angular/make-angular-component.mjs";
 
-import { resolve } from "path";
 import inquirer from "inquirer";
 import advancedVueBuilder, { vueApi } from "./frameworks/vue/helper.mjs";
 import wizard, { Answers } from "./wizard.mjs";
@@ -120,13 +119,10 @@ export function createAnotherComponent() {
 
 	wizard()
 		.then((answers: Answers) => {
-			const { componentName, framework, template, folder, anotherComponent, advancedOpts, advanced } = answers;
+			const { componentName, framework, template, folder, advancedOpts, advanced } = answers;
 			const api = template.indexOf("composition") !== -1 ? vueApi.Composition : vueApi.Option;
 			const t = advanced ? "advanced-component.vue" : template;
 			createComponent(componentName, framework, t, folder, api, advancedOpts);
-			if (anotherComponent) {
-				createAnotherComponent();
-			}
 		})
 		.catch((e: Error) => {
 			console.error(e.message);
@@ -151,7 +147,12 @@ export function prepareAdvanced(options: string[]) {
 			name: "advancedOpts",
 			message: "Pick the parts you want in your component?",
 			choices: options,
-			when: (answers: { nuxt: string; api: string; advanced: boolean }) => {
+			when: (answers: {
+				nuxt: string;
+				api: string;
+				advanced: boolean;
+				anotherComponent: boolean;
+			}) => {
 				return answers.advanced;
 			},
 			default: false,
