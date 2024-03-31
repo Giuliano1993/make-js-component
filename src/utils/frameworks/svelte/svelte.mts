@@ -1,7 +1,7 @@
 import inquirer from "inquirer";
 
 const framework = "svelte";
-export default function (componentName: string, folder: string, anotherComponent: boolean) {
+export default function (componentName: string, folder: string) {
 	return inquirer
 		.prompt([
 			{
@@ -17,7 +17,6 @@ export default function (componentName: string, folder: string, anotherComponent
 				framework: framework.toLowerCase(),
 				template: answers.typescript ? "component-ts.svelte" : "component-js.svelte",
 				folder: folder,
-				anotherComponent: anotherComponent,
 			};
 		});
 }
