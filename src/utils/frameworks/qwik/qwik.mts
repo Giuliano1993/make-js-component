@@ -11,7 +11,7 @@ export default function (componentName: string, folder: string) {
 				choices: ["Hello World", "useStore", "useStyles"],
 			},
 		])
-		.then((answers: { type: string; anotherComponent: boolean }) => {
+		.then((answers: { type: string }) => {
 			return {
 				componentName: componentName,
 				framework: framework.toLowerCase(),
