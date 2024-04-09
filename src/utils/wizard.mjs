@@ -44,6 +44,7 @@ const wizard = async () => {
       : null || "";
   const folderFromFlag = options.folder || "";
   const multipleFromFlag = options.multiple || false;
+
   const prompts = [];
   // Only ask for componentName if --name argument is not provided
   if (!componentNameFromFlag) {
@@ -109,20 +110,26 @@ const wizard = async () => {
       }
     })
     .then((values) => {
-      return inquirer
-        .prompt([
-          {
-            type: "confirm",
-            name: "anotherComponent",
-            message: "Do you want to create another component?",
-            default: false,
-          },
-        ])
-        .then((answers) => {
-          const { anotherComponent } = answers;
-          values = { ...values, anotherComponent };
-          return values;
-        });
+      if (!multipleFromFlag) {
+        return inquirer
+          .prompt([
+            {
+              type: "confirm",
+              name: "anotherComponent",
+              message: "Do you want to create another component?",
+              default: false,
+            },
+          ])
+          .then((answers) => {
+            const { anotherComponent } = answers;
+            const completeValues = {
+              ...values,
+              anotherComponent: anotherComponent,
+            };
+            return completeValues;
+          });
+      }
+      return { ...values, anotherComponent: true };
     })
     .catch((e) => {
       throw new Error(e.message);

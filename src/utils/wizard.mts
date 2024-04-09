@@ -144,23 +144,26 @@ const wizard: () => Promise<Answers> = async () => {
 			}
 		)
 		.then((values: Answers) => {
-			return inquirer
-				.prompt([
-					{
-						type: "confirm",
-						name: "anotherComponent",
-						message: "Do you want to create another component?",
-						default: false,
-					},
-				])
-				.then((answers: { values: Answers; anotherComponent: boolean }) => {
-					const { anotherComponent } = answers;
-					const completeValues = {
-						...values,
-						anotherComponent: anotherComponent,
-					};
-					return completeValues;
-				});
+			if (!multipleFromFlag) {
+				return inquirer
+					.prompt([
+						{
+							type: "confirm",
+							name: "anotherComponent",
+							message: "Do you want to create another component?",
+							default: false,
+						},
+					])
+					.then((answers: { values: Answers; anotherComponent: boolean }) => {
+						const { anotherComponent } = answers;
+						const completeValues = {
+							...values,
+							anotherComponent: anotherComponent,
+						};
+						return completeValues;
+					});
+			}
+			return { ...values, anotherComponent: true };
 		})
 		.catch((e: Error) => {
 			throw new Error(e.message);
