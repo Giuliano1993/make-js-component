@@ -3,7 +3,6 @@ import * as path from "node:path";
 import { configs } from "./configs.cjs";
 import { makeAngularComponent } from "./frameworks/angular/make-angular-component.mjs";
 
-import { resolve } from "path";
 import inquirer from "inquirer";
 import advancedVueBuilder, { vueApi } from "./frameworks/vue/helper.mjs";
 import wizard, { Answers } from "./wizard.mjs";

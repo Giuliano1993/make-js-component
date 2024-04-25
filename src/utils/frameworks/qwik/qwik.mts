@@ -1,7 +1,7 @@
 import inquirer from "inquirer";
 
 const framework = "qwik";
-export default function (componentName: string, folder: string, anotherComponent: boolean) {
+export default function (componentName: string, folder: string) {
 	return inquirer
 		.prompt([
 			{
@@ -11,7 +11,7 @@ export default function (componentName: string, folder: string, anotherComponent
 				choices: ["Hello World", "useStore", "useStyles"],
 			},
 		])
-		.then(answers => {
+		.then((answers: { type: string }) => {
 			return {
 				componentName: componentName,
 				framework: framework.toLowerCase(),
@@ -24,7 +24,6 @@ export default function (componentName: string, folder: string, anotherComponent
 							  ? "usestyles-component.tsx"
 							  : "hello-world-component.tsx",
 				folder: folder,
-				anotherComponent: anotherComponent,
 			};
 		});
 }
