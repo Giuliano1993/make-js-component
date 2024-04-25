@@ -150,12 +150,7 @@ export function prepareAdvanced(options: string[]) {
 			name: "advancedOpts",
 			message: "Pick the parts you want in your component?",
 			choices: options,
-			when: (answers: {
-				nuxt: string;
-				api: string;
-				advanced: boolean;
-				anotherComponent: boolean;
-			}) => {
+			when: (answers: { nuxt: string; api: string; advanced: boolean }) => {
 				return answers.advanced;
 			},
 			default: false,
