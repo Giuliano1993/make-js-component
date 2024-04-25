@@ -125,6 +125,7 @@ export function createAnotherComponent() {
         framework,
         template,
         folder,
+        anotherComponent,
         advancedOpts,
         advanced,
       } = answers;
@@ -134,6 +135,9 @@ export function createAnotherComponent() {
           : vueApi.Option;
       const t = advanced ? "advanced-component.vue" : template;
       createComponent(componentName, framework, t, folder, api, advancedOpts);
+      if (anotherComponent) {
+        createAnotherComponent();
+      }
     })
     .catch((e) => {
       console.error(e.message);
