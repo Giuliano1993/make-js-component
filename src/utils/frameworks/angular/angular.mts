@@ -1,6 +1,6 @@
 const framework = "angular";
 
-export default function (componentName: string, folder: string, anotherComponent: boolean, testFile: boolean): Answers {
+export default function (componentName: string, folder: string, anotherComponent: boolean, testFile: boolean) {
 	return {
 		componentName,
 		framework: framework.toLowerCase(),
