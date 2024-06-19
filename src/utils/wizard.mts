@@ -14,9 +14,9 @@ export type Answers = {
 	componentName: string;
 	framework: string;
 	template: string;
-	testFile?: boolean;
 	folder: string;
-	anotherComponent: boolean;
+	anotherComponent?: boolean;
+	testFile?: boolean;
 	advanced?: boolean;
 	advancedOpts?: string[];
 	api?: string;
@@ -147,21 +147,20 @@ const wizard: () => Promise<Answers> = async () => {
 				const framework: string = answers.framework || capitalizeFirstLetter(frameworkFromFlag);
 				const componentName: string = answers.componentName || componentNameFromFlag;
 				const testFile: boolean = answers.testFile || testFileFromFlag;
-				const anotherComponent: boolean = answers.anotherComponent || multipleFromFlag;
 
 				switch (framework) {
 					case "Vue":
-						return vueWizard(componentName, folder, anotherComponent);
+						return vueWizard(componentName, folder);
 					case "Angular":
-						return angularWizard(componentName, folder, anotherComponent, testFile);
+						return angularWizard(componentName, folder, testFile);
 					case "React":
-						return reactWizard(componentName, folder, anotherComponent);
+						return reactWizard(componentName, folder);
 					case "Svelte":
-						return svelteWizard(componentName, folder, anotherComponent);
+						return svelteWizard(componentName, folder);
 					case "Qwik":
-						return qwikWizard(componentName, folder, anotherComponent);
+						return qwikWizard(componentName, folder);
 					case "Astro":
-						return astroWizard(componentName, folder, anotherComponent);
+						return astroWizard(componentName, folder);
 					default:
 						throw new Error("A valid framework must be selected");
 				}

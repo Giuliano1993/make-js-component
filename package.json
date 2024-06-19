@@ -6,6 +6,7 @@
   "bin": "./cmd/make-js-component.mjs",
   "scripts": {
     "dev": "npx tsc -w",
+    "build": "npx tsc",
     "test": "jest",
     "biome-ci": "npx @biomejs/biome ci .",
     "biome-check": "npx @biomejs/biome check . --apply",

@@ -101,26 +101,25 @@ const wizard = async () => {
         const framework = answers.framework || capitalizeFirstLetter(frameworkFromFlag);
         const componentName = answers.componentName || componentNameFromFlag;
         const testFile = answers.testFile || testFileFromFlag;
-        const anotherComponent = answers.anotherComponent || multipleFromFlag;
         switch (framework) {
             case "Vue":
-                return vueWizard(componentName, folder, anotherComponent);
+                return vueWizard(componentName, folder);
             case "Angular":
-                return angularWizard(componentName, folder, anotherComponent, testFile);
+                return angularWizard(componentName, folder, testFile);
             case "React":
-                return reactWizard(componentName, folder, anotherComponent);
+                return reactWizard(componentName, folder);
             case "Svelte":
-                return svelteWizard(componentName, folder, anotherComponent);
+                return svelteWizard(componentName, folder);
             case "Qwik":
-                return qwikWizard(componentName, folder, anotherComponent);
+                return qwikWizard(componentName, folder);
             case "Astro":
-                return astroWizard(componentName, folder, anotherComponent);
+                return astroWizard(componentName, folder);
             default:
                 throw new Error("A valid framework must be selected");
         }
     })
         .then((values) => {
-        console.log('values', values);
+        console.log("values", values);
         return values;
     })
         .catch((e) => {
