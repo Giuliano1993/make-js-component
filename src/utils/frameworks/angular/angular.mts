@@ -4,8 +4,8 @@ export default function (componentName: string, folder: string, testFile: boolea
 	return {
 		componentName: componentName,
 		framework: framework.toLowerCase(),
-		template: "component.component.ts",
 		testFile: testFile,
+		template: "component.component.ts",
 		folder: folder,
 	};
 }
