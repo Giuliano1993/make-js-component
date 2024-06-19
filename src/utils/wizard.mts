@@ -59,16 +59,16 @@ const wizard: () => Promise<Answers> = async () => {
 		options.framework || options.vue
 			? "vue"
 			: null || options.angular
-				? "angular"
-				: null || options.react
-					? "react"
-					: null || options.svelte
-						? "svelte"
-						: null || options.qwik
-							? "qwik"
-							: null || options.astro
-								? "astro"
-								: null || "";
+			  ? "angular"
+			  : null || options.react
+				  ? "react"
+				  : null || options.svelte
+					  ? "svelte"
+					  : null || options.qwik
+						  ? "qwik"
+						  : null || options.astro
+							  ? "astro"
+							  : null || "";
 
 	const folderFromFlag: string = options.folder || "";
 	const multipleFromFlag: boolean = options.multiple || false;
@@ -168,7 +168,7 @@ const wizard: () => Promise<Answers> = async () => {
 			}
 		)
 		.then<Answers>((values: Answers | PromiseLike<Answers>) => {
-			console.log('values', values);
+			console.log("values", values);
 			return values;
 		})
 		.catch((e: Error) => {
