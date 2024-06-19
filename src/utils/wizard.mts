@@ -14,7 +14,7 @@ export type Answers = {
 	componentName: string;
 	framework: string;
 	template: string;
-	isTestFile?: boolean;
+	testFile?: boolean;
 	folder: string;
 	anotherComponent: boolean;
 	advanced?: boolean;

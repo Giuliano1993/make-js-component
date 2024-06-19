@@ -3,7 +3,7 @@ import path from "path";
 import { configs } from "../../configs.cjs";
 import { ErrnoException, checkFileExists } from "../../utils.mjs";
 
-export function makeAngularComponent(filePathDestination: string, component: string, componentName: string): void {
+export function makeAngularComponent(filePathDestination: string, component: string, componentName: string, testFile?: boolean): void {
 	let componentContent = component.replace(
 		/selector: 'SelectorName'/,
 		`selector: 'app-${convertFromCamelCase(componentName)}'`
@@ -11,7 +11,10 @@ export function makeAngularComponent(filePathDestination: string, component: str
 	componentContent = replaceComponentName(componentContent, componentName);
 
 	checkFileExists(filePathDestination, componentContent);
-	makeAngularComponentTest(componentName);
+
+	if (testFile) {
+		makeAngularComponentTest(componentName);
+	}
 }
 
 function makeAngularComponentTest(componentName: string): void {
