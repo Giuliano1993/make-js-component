@@ -72,7 +72,6 @@ const wizard: () => Promise<Answers> = async () => {
 
 	const folderFromFlag: string = options.folder || "";
 	const multipleFromFlag: boolean = options.multiple || false;
-	const testFileFromFlag: boolean = options.multiple || false;
 
 	const prompts: PromptProps[] = [];
 
@@ -115,15 +114,6 @@ const wizard: () => Promise<Answers> = async () => {
 		});
 	}
 
-	if (!testFileFromFlag) {
-		prompts.push({
-			type: "confirm",
-			name: "testFile",
-			message: "Do you want to add .spec file to test component?",
-			default: false,
-		});
-	}
-
 	if (!multipleFromFlag) {
 		prompts.push({
 			type: "confirm",
@@ -146,13 +136,13 @@ const wizard: () => Promise<Answers> = async () => {
 				const folder: string = answers.folder || folderFromFlag;
 				const framework: string = answers.framework || capitalizeFirstLetter(frameworkFromFlag);
 				const componentName: string = answers.componentName || componentNameFromFlag;
-				const testFile: boolean = answers.testFile || testFileFromFlag;
 
 				switch (framework) {
 					case "Vue":
 						return vueWizard(componentName, folder);
 					case "Angular":
-						return angularWizard(componentName, folder, testFile);
+						console.log("ans", answers);
+						return angularWizard(componentName, folder);
 					case "React":
 						return reactWizard(componentName, folder);
 					case "Svelte":
