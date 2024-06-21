@@ -1,9 +1,7 @@
 import inquirer from "inquirer";
 const framework = "qwik";
 export default function (componentName, folder) {
-    return inquirer
-        .prompt([
-        {
+    return inquirer.prompt([{
             type: "list",
             name: "type",
             message: "Choose wich type of component to create",

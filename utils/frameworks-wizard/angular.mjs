@@ -1,9 +1,9 @@
-const framework = "astro";
+const framework = "angular";
 export default function (componentName, folder) {
     return {
         componentName: componentName,
         framework: framework.toLowerCase(),
-        template: "component.astro",
+        template: "component.component.ts",
         folder: folder,
     };
 }

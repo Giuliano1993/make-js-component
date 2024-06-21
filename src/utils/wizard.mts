@@ -16,6 +16,7 @@ export type Answers = {
 	template: string;
 	folder: string;
 	anotherComponent?: boolean;
+	testFile?: boolean;
 	advanced?: boolean;
 	advancedOpts?: string[];
 	api?: string;
@@ -113,13 +114,24 @@ const wizard: () => Promise<Answers> = async () => {
 		});
 	}
 
+	if (!multipleFromFlag) {
+		prompts.push({
+			type: "confirm",
+			name: "anotherComponent",
+			message: "Do you want to create another component?",
+			default: false,
+		});
+	}
+
 	return inquirer
 		.prompt(prompts)
 		.then(
 			(answers: {
 				componentName: string;
 				folder: string;
+				testFile: boolean;
 				framework: string;
+				anotherComponent: boolean;
 			}) => {
 				const folder: string = answers.folder || folderFromFlag;
 				const framework: string = answers.framework || capitalizeFirstLetter(frameworkFromFlag);
@@ -129,6 +141,7 @@ const wizard: () => Promise<Answers> = async () => {
 					case "Vue":
 						return vueWizard(componentName, folder);
 					case "Angular":
+						console.log("ans", answers);
 						return angularWizard(componentName, folder);
 					case "React":
 						return reactWizard(componentName, folder);
@@ -143,27 +156,9 @@ const wizard: () => Promise<Answers> = async () => {
 				}
 			}
 		)
-		.then((values: Answers) => {
-			if (!multipleFromFlag) {
-				return inquirer
-					.prompt([
-						{
-							type: "confirm",
-							name: "anotherComponent",
-							message: "Do you want to create another component?",
-							default: false,
-						},
-					])
-					.then((answers: { values: Answers; anotherComponent: boolean }) => {
-						const { anotherComponent } = answers;
-						const completeValues = {
-							...values,
-							anotherComponent: anotherComponent,
-						};
-						return completeValues;
-					});
-			}
-			return { ...values, anotherComponent: true };
+		.then<Answers>((values: Answers | PromiseLike<Answers>) => {
+			console.log("values", values);
+			return values;
 		})
 		.catch((e: Error) => {
 			throw new Error(e.message);

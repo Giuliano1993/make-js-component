@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-const framework = "svelte";
+const framework = 'svelte';
 export default function (componentName, folder) {
     return inquirer
         .prompt([
@@ -14,7 +14,9 @@ export default function (componentName, folder) {
         return {
             componentName: componentName,
             framework: framework.toLowerCase(),
-            template: answers.typescript ? "component-ts.svelte" : "component-js.svelte",
+            template: answers.typescript
+                ? "component-ts.svelte"
+                : "component-js.svelte",
             folder: folder,
         };
     });

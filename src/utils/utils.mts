@@ -17,6 +17,7 @@ export interface ErrnoException extends Error {
 export default async function createComponent(
 	componentName: string,
 	framework: string,
+	testFile: boolean | undefined,
 	template: string,
 	customFolder: string,
 	api: vueApi,
@@ -45,7 +46,7 @@ export default async function createComponent(
 		);
 		let output = data;
 		if (framework === "angular") {
-			makeAngularComponent(filePathDestination, output, componentName);
+			makeAngularComponent(filePathDestination, output, componentName, testFile);
 		} else {
 			if (template.indexOf("advanced") !== -1) {
 				switch (framework) {
@@ -119,10 +120,11 @@ export function createAnotherComponent() {
 
 	wizard()
 		.then((answers: Answers) => {
-			const { componentName, framework, template, folder, anotherComponent, advancedOpts, advanced } = answers;
+			const { componentName, framework, testFile, template, folder, anotherComponent, advancedOpts, advanced } =
+				answers;
 			const api = template.indexOf("composition") !== -1 ? vueApi.Composition : vueApi.Option;
 			const t = advanced ? "advanced-component.vue" : template;
-			createComponent(componentName, framework, t, folder, api, advancedOpts);
+			createComponent(componentName, framework, testFile, t, folder, api, advancedOpts);
 			if (anotherComponent) {
 				createAnotherComponent();
 			}

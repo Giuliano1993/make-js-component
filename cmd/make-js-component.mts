@@ -10,16 +10,16 @@ enum vueApi {
 
 wizard()
 	.then((answers: Answers) => {
-		const { componentName, framework, template, folder, anotherComponent, advancedOpts, advanced } = answers;
+		const { componentName, framework, testFile, template, folder, anotherComponent, advancedOpts, advanced } = answers;
 		const api = template.indexOf("composition") !== -1 ? vueApi.Composition : vueApi.Option;
 		const t = advanced ? "advanced-component.vue" : template;
 		if (anotherComponent) {
-			createComponent(componentName, framework, t, folder, api, advancedOpts).then(() => {
+			createComponent(componentName, framework, testFile, t, folder, api, advancedOpts).then(() => {
 				console.log("✅ Component created");
 				createAnotherComponent();
 			});
 		} else
-			createComponent(componentName, framework, t, folder, api, advancedOpts).then(() =>
+			createComponent(componentName, framework, testFile, t, folder, api, advancedOpts).then(() =>
 				console.log("✅ Component created")
 			);
 	})

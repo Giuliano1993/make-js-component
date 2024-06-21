@@ -6,6 +6,7 @@
   "bin": "./cmd/make-js-component.mjs",
   "scripts": {
     "dev": "npx tsc -w",
+    "build": "npx tsc",
     "test": "jest",
     "biome-ci": "npx @biomejs/biome ci .",
     "biome-check": "npx @biomejs/biome check . --apply",
@@ -28,16 +29,16 @@
   "author": "Giuliano Gostinfini (Ghostylab)",
   "license": "ISC",
   "devDependencies": {
-    "@biomejs/biome": "1.4.1",
-    "@types/inquirer": "^9.0.7",
-    "@types/node": "^20.9.0",
-    "cli-testing-library": "^2.0.2",
-    "jest": "^29.7.0",
-    "jest-extended": "^4.0.2",
-    "typescript": "^5.3.2"
+    "@biomejs/biome": "1.5.3",
+    "@types/inquirer": "9.0.7",
+    "@types/node": "20.11.24",
+    "cli-testing-library": "2.0.2",
+    "jest": "29.7.0",
+    "jest-extended": "4.0.2",
+    "typescript": "5.3.3"
   },
   "dependencies": {
-    "commander": "^11.1.0",
-    "inquirer": "^9.2.12"
+    "commander": "12.0.0",
+    "inquirer": "9.2.15"
   }
 }

@@ -3,7 +3,12 @@ import path from "path";
 import { configs } from "../../configs.cjs";
 import { ErrnoException, checkFileExists } from "../../utils.mjs";
 
-export function makeAngularComponent(filePathDestination: string, component: string, componentName: string): void {
+export function makeAngularComponent(
+	filePathDestination: string,
+	component: string,
+	componentName: string,
+	testFile?: boolean
+): void {
 	let componentContent = component.replace(
 		/selector: 'SelectorName'/,
 		`selector: 'app-${convertFromCamelCase(componentName)}'`
@@ -11,7 +16,10 @@ export function makeAngularComponent(filePathDestination: string, component: str
 	componentContent = replaceComponentName(componentContent, componentName);
 
 	checkFileExists(filePathDestination, componentContent);
-	makeAngularComponentTest(componentName);
+
+	if (testFile) {
+		makeAngularComponentTest(componentName);
+	}
 }
 
 function makeAngularComponentTest(componentName: string): void {
@@ -35,11 +43,11 @@ function makeAngularComponentTest(componentName: string): void {
 
 function convertToCamelCase(string: string): string {
 	return string
-		.replace(/-([a-z])/g, (s: string) => {
-			return s.toUpperCase();
+		.replace(/-(\w)/g, (_, match: string) => {
+			return match.toUpperCase();
 		})
-		.replace(/^[a-z]/, s => {
-			return s.toUpperCase();
+		.replace(/^\w/, (match: string) => {
+			return match.toUpperCase();
 		});
 }
 
@@ -48,5 +56,6 @@ function convertFromCamelCase(string: string): string {
 }
 
 function replaceComponentName(data: string, componentName: string): string {
+	console.log("componentName", componentName);
 	return data.replace(/ComponentName/g, `${convertToCamelCase(componentName)}Component`);
 }
