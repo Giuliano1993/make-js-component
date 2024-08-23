@@ -9,6 +9,7 @@ export default function (componentName: string, folder: string) {
 				name: "type",
 				message: "Choose wich type of component to create",
 				choices: ["Hello World", "useStore", "useStyles"],
+				default: "Hello World",
 			},
 		])
 		.then((answers: { type: string }) => {
