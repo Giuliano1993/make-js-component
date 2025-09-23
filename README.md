@@ -1,18 +1,16 @@
 [![RepoRater](https://repo-rater.eddiehub.io/api/badge?owner=Giuliano1993&name=make-js-component)](https://repo-rater.eddiehub.io/rate?owner=Giuliano1993&name=make-js-component)
 
 <p align="center">
-   <img src="https://github.com/Giuliano1993/make-js-component/assets/12759050/bedcd81f-431b-4699-9771-ba5c237ec68f" />
+  <img src="https://github.com/Giuliano1993/make-js-component/assets/12759050/bedcd81f-431b-4699-9771-ba5c237ec68f" />
 </p>
 
 # Make Js Component
 
 Make Js Component is an NPX command born with the purpose of streamline the process for developers of creating components with the many FE frameworks around here.
-
 Since some frameworks have standard commands, some had them, some really don't, the quickest thing is usually copy pasting compononent after component and then edit it.
-
 MJC allows you to just call a command and have your JS component ready to use, and edit, with also a bunch of options available in order to start with the perfect boilerplate.
 
-Can't find the framework or the options you need? Checkout the [Contributing guide](./CONTRIBUTING.md) and open an issue to let us know and, if you wish, you can open a PR to have the feature inclued in the command!
+> Can't find the framework or the options you need? Checkout the [Contributing guide](./CONTRIBUTING.md) and open an issue to let us know and, if you wish, you can open a PR to have the feature inclued in the command!
 
 - [Make Js Component](#make-js-component)
   - [Basic Usage](#basic-usage)
@@ -20,7 +18,7 @@ Can't find the framework or the options you need? Checkout the [Contributing gui
       - [--name](#--name)
       - [--folder](#--folder)
       - [--framework](#--framework)
-      - [--\[framework\]](#--framework-1)
+      - [--[framework]](#--framework-1)
       - [--multiple](#--multiple)
   - [Available Frameworks](#available-frameworks)
     - [Vue](#vue)
@@ -37,6 +35,7 @@ Can't find the framework or the options you need? Checkout the [Contributing gui
 ```bash
 npx make-js-component
 ```
+
 This command will start a short wizard that will create your component in a few steps.
 
 ### Options
@@ -46,7 +45,7 @@ This command will start a short wizard that will create your component in a few 
 Specify the component name
 
 ```bash
-npx make-js-component --name <NAME>
+npx make-js-component --name <name>
 ```
 
 #### --folder
@@ -54,7 +53,7 @@ npx make-js-component --name <NAME>
 Set the /components subfolder in which to create the new component/s.
 
 ```bash
-npx make-js-component --folder <PATH>
+npx make-js-component --folder <path>
 ```
 
 #### --framework
@@ -70,13 +69,13 @@ npx make-js-component --framework [vue|angular|react|svelte|qwik|astro]
 You can specify the desired framework directly by adding a flag. The available flags are the same as the options for --framework flag.
 
 ```bash
-#this will create a vue component
+# this will create a vue component
 npx make-js-component --vue
 ```
 
 #### --multiple
 
-Using this flag allows you to create multiple components in succession. If you type “exit” while in the naming your component phase, it will exit the prompt.
+Using this flag allows you to create multiple components in succession. If you type "exit" while in the naming your component phase, it will exit the prompt.
 
 ```bash
 npx make-js-component --multiple
@@ -85,25 +84,33 @@ npx make-js-component --multiple
 ## Available Frameworks
 
 ### Vue
+
 > Want to help with vue components? Check out [Vue related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3AVue)
 
 When choosing Vue, the wizard will ask you whether you prefer to use the **Options API** or the **Composition API**, and you can make your selection using the arrow keys.
 
 ### React
+
 > Want to help with React components? Check out [React related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3AReact)
 
 When choosing React, the wizard will ask you if you want to use **TypeScript** or not, and you can make your selection using the arrow keys.
 
 ### Angular
+
 > Want to help with Angular components? Check out [Angular related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3AAngular)
 
 ### Qwik
+
 > Want to help with Qwik components? Check out [Qwik related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3AQwik)
 
 ### Svelte
+
 > Want to help with Svelte components? Check out [Svelte related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3ASvelte)
 
+When choosing Svelte, the wizard will ask you if you want to use **TypeScript** or not, and you can make your selection using the arrow keys.
+
 ### Astro
+
 > Want to help with Astro components? Check out [Astro related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3AAstro)
 
 ## Contributing
@@ -116,9 +123,9 @@ If you're cloning the repo, both for contributing or just to start taking confid
 
 1. clone the repo with `git clone https://github.com/Giuliano1993/make-js-component`
 2. inside the folder run `npm install`
-3. then to transpile ts files into js and watch them,  run `npm run dev`
+3. then to transpile ts files into js and watch them, run `npm run dev`
 
-To run your local version of the package and test it, run 
+To run your local version of the package and test it, run
 
 ```bash
 npx .
