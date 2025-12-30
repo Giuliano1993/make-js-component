@@ -1,4 +1,5 @@
-import { Command } from "commander";
+import { Command } from "commander";import solidWizard from "./frameworks/solid/solid.mjs";
+
 import inquirer from "inquirer";
 import angularWizard from "./frameworks/angular/angular.mjs";
 import astroWizard from "./frameworks/astro/astro.mjs";
@@ -10,7 +11,7 @@ import { capitalizeFirstLetter } from "./utils.mjs";
 const program = new Command();
 const wizard = async () => {
   // Parse command line arguments using commander
-  const frameworks = ["Vue", "Angular", "React", "Svelte", "Qwik", "Astro"];
+const frameworks = ["Vue", "Angular", "React", "Svelte", "Qwik", "Astro", "Solid"];
   program
     .option("--name <value>", "Specify a name")
     .option(
@@ -92,7 +93,9 @@ const wizard = async () => {
       const framework =
         answers.framework || capitalizeFirstLetter(frameworkFromFlag);
       const componentName = answers.componentName || componentNameFromFlag;
-      switch (framework) {
+      switch (framework) {case "Solid":
+  return solidWizard(componentName, folder);
+
         case "Vue":
           return vueWizard(componentName, folder);
         case "Angular":
