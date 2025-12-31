@@ -123,3 +123,11 @@ To run your local version of the package and test it, run
 ```bash
 npx .
 ```
+### Supported Frameworks
+- Vue
+- React
+- Angular
+- Svelte
+- Qwik
+- Astro
+- Solid ✅
