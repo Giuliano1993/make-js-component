@@ -113,4 +113,16 @@
     "./src/components/*",
     "./src/stubs/angular/*",
 	],
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ES2022",
+    "outDir": "dist",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true
+  },
+  "include": ["cmd/**/*.mts", "src/**/*.ts", "src/**/*.mts"]
+}
 }

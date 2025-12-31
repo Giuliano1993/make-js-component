@@ -4,13 +4,15 @@ import angularWizard from "./frameworks/angular/angular.mjs";
 import astroWizard from "./frameworks/astro/astro.mjs";
 import qwikWizard from "./frameworks/qwik/qwik.mjs";
 import reactWizard from "./frameworks/react/react.mjs";
-import svelteWizard from "./frameworks/svelte/svelte.mjs";
+import svelteWizard from "./frameworks/svelte/svelte.mjs";import solidWizard from "./frameworks/solid/solid.mjs";
+
 import vueWizard from "./frameworks/vue/vue.mjs";
 import { capitalizeFirstLetter } from "./utils.mjs";
 const program = new Command();
 const wizard = async () => {
   // Parse command line arguments using commander
-  const frameworks = ["Vue", "Angular", "React", "Svelte", "Qwik", "Astro"];
+  const frameworks = ["Vue", "Angular", "React", "Svelte", "Qwik", "Astro", "Solid"];
+
   program
     .option("--name <value>", "Specify a name")
     .option(
@@ -20,7 +22,8 @@ const wizard = async () => {
     .option("--vue", "Create a Vue component")
     .option("--angular", "Create an Angular component")
     .option("--react", "Create a React component")
-    .option("--svelte", "Create a Svelte component")
+    .option("--svelte", "Create a Svelte component").option("--solid", "Create a SolidJS component")
+
     .option("--qwik", "Create a Qwik component")
     .option("--astro", "Create an Astro component")
     .option("--folder <value>", "Specify the subfolder")
@@ -28,20 +31,17 @@ const wizard = async () => {
     .parse(process.argv);
   const options = program.opts();
   const componentNameFromFlag = options.name || "";
-  const frameworkFromFlag =
-    options.framework || options.vue
-      ? "vue"
-      : null || options.angular
-      ? "angular"
-      : null || options.react
-      ? "react"
-      : null || options.svelte
-      ? "svelte"
-      : null || options.qwik
-      ? "qwik"
-      : null || options.astro
-      ? "astro"
-      : null || "";
+  
+const frameworkFromFlag =
+  options.framework ||
+  (options.vue ? "vue" :
+  options.angular ? "angular" :
+  options.react ? "react" :
+  options.svelte ? "svelte" :
+  options.qwik ? "qwik" :
+  options.astro ? "astro" :
+  options.solid ? "solid" : "");
+
   const folderFromFlag = options.folder || "";
   const multipleFromFlag = options.multiple || false;
 
@@ -104,7 +104,9 @@ const wizard = async () => {
         case "Qwik":
           return qwikWizard(componentName, folder);
         case "Astro":
-          return astroWizard(componentName, folder);
+          return astroWizard(componentName, folder);case "Solid":
+  return solidWizard(componentName, folder);
+
         default:
           throw new Error("A valid framework must be selected");
       }
