@@ -1,16 +1,21 @@
 import { Command } from "commander";
 import inquirer from "inquirer";
+import alpineWizard from "./frameworks/alpine/alpine.mjs";
 import angularWizard from "./frameworks/angular/angular.mjs";
 import astroWizard from "./frameworks/astro/astro.mjs";
+import mitosisWizard from "./frameworks/mitosis/mitosis.mjs";
 import qwikWizard from "./frameworks/qwik/qwik.mjs";
+import preactWizard from "./frameworks/preact/preact.mjs";
 import reactWizard from "./frameworks/react/react.mjs";
+import solidWizard from "./frameworks/solid/solid.mjs";
+import stencilWizard from "./frameworks/stencil/stencil.mjs";
 import svelteWizard from "./frameworks/svelte/svelte.mjs";
 import vueWizard from "./frameworks/vue/vue.mjs";
 import { capitalizeFirstLetter } from "./utils.mjs";
 const program = new Command();
 const wizard = async () => {
   // Parse command line arguments using commander
-  const frameworks = ["Vue", "Angular", "React", "Svelte", "Qwik", "Astro"];
+  const frameworks = ["Vue", "Angular", "React", "Preact", "Solid", "Svelte", "Qwik", "Astro", "Alpine", "Stencil", "Mitosis"];
   program
     .option("--name <value>", "Specify a name")
     .option(
@@ -20,28 +25,43 @@ const wizard = async () => {
     .option("--vue", "Create a Vue component")
     .option("--angular", "Create an Angular component")
     .option("--react", "Create a React component")
+    .option("--preact", "Create a Preact component")
+    .option("--solid", "Create a Solid component")
     .option("--svelte", "Create a Svelte component")
     .option("--qwik", "Create a Qwik component")
     .option("--astro", "Create an Astro component")
+    .option("--alpine", "Create an Alpine component")
+    .option("--stencil", "Create a Stencil component")
+    .option("--mitosis", "Create a Mitosis component")
     .option("--folder <value>", "Specify the subfolder")
     .option("--multiple", "Creating multiple components at once")
     .parse(process.argv);
   const options = program.opts();
   const componentNameFromFlag = options.name || "";
   const frameworkFromFlag =
-    options.framework || options.vue
+    options.vue
       ? "vue"
-      : null || options.angular
+      : options.angular
       ? "angular"
-      : null || options.react
+      : options.react
       ? "react"
-      : null || options.svelte
+      : options.preact
+      ? "preact"
+      : options.solid
+      ? "solid"
+      : options.svelte
       ? "svelte"
-      : null || options.qwik
+      : options.qwik
       ? "qwik"
-      : null || options.astro
+      : options.astro
       ? "astro"
-      : null || "";
+      : options.alpine
+      ? "alpine"
+      : options.stencil
+      ? "stencil"
+      : options.mitosis
+      ? "mitosis"
+      : options.framework || "";
   const folderFromFlag = options.folder || "";
   const multipleFromFlag = options.multiple || false;
 
@@ -99,12 +119,22 @@ const wizard = async () => {
           return angularWizard(componentName, folder);
         case "React":
           return reactWizard(componentName, folder);
+        case "Preact":
+          return preactWizard(componentName, folder);
+        case "Solid":
+          return solidWizard(componentName, folder);
         case "Svelte":
           return svelteWizard(componentName, folder);
         case "Qwik":
           return qwikWizard(componentName, folder);
         case "Astro":
           return astroWizard(componentName, folder);
+        case "Alpine":
+          return alpineWizard(componentName, folder);
+        case "Stencil":
+          return stencilWizard(componentName, folder);
+        case "Mitosis":
+          return mitosisWizard(componentName, folder);
         default:
           throw new Error("A valid framework must be selected");
       }

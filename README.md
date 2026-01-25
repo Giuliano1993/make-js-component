@@ -62,7 +62,7 @@ npx make-js-component --folder <PATH>
 Set which framework your component is for.
 
 ```bash
-npx make-js-component --framework [vue|angular|react|svelte|qwik|astro]
+npx make-js-component --framework [vue|angular|react|preact|solid|svelte|qwik|astro|alpine|stencil|mitosis]
 ```
 
 #### --[framework]
@@ -94,6 +94,16 @@ When choosing Vue, the wizard will ask you whether you prefer to use the **Optio
 
 When choosing React, the wizard will ask you if you want to use **TypeScript** or not, and you can make your selection using the arrow keys.
 
+### Preact
+> Want to help with Preact components? Check out [Preact related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3APreact)
+
+When choosing Preact, the wizard will ask you if you want to use **TypeScript** or not, and you can make your selection using the arrow keys.
+
+### Solid
+> Want to help with Solid components? Check out [Solid related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3ASolid)
+
+When choosing Solid, the wizard will ask you if you want to use **TypeScript** or not, and you can make your selection using the arrow keys.
+
 ### Angular
 > Want to help with Angular components? Check out [Angular related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3AAngular)
 
@@ -105,6 +115,21 @@ When choosing React, the wizard will ask you if you want to use **TypeScript** o
 
 ### Astro
 > Want to help with Astro components? Check out [Astro related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3AAstro)
+
+### Alpine
+> Want to help with Alpine components? Check out [Alpine related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3AAlpine)
+
+When choosing Alpine, the wizard will ask you if you want to use **TypeScript** or not, and you can make your selection using the arrow keys.
+
+### Stencil
+> Want to help with Stencil components? Check out [Stencil related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3AStencil)
+
+When choosing Stencil, the wizard will ask you if you want to use **Shadow DOM** or not, and you can make your selection using the arrow keys.
+
+### Mitosis
+> Want to help with Mitosis components? Check out [Mitosis related issues](https://github.com/Giuliano1993/make-js-component/issues?q=is%3Aissue+is%3Aopen+label%3AMitosis)
+
+When choosing Mitosis, the wizard will ask you if you want to use **TypeScript** or not, and you can make your selection using the arrow keys.
 
 ## Contributing
 

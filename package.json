@@ -20,8 +20,13 @@
     "vue",
     "svelte",
     "react",
+    "preact",
+    "solid",
     "qwik",
     "astro",
+    "alpine",
+    "stencil",
+    "mitosis",
     "command",
     "npx"
   ],
