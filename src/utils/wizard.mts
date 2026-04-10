@@ -8,8 +8,6 @@ import svelteWizard from "./frameworks/svelte/svelte.mjs";
 import vueWizard from "./frameworks/vue/vue.mjs";
 import { capitalizeFirstLetter } from "./utils.mjs";
 
-const program = new Command();
-
 export type Answers = {
 	componentName: string;
 	framework: string;
@@ -34,9 +32,23 @@ interface PromptProps {
 	readonly choices?: FrameworksType[];
 }
 
-const wizard: () => Promise<Answers> = async () => {
+export function resolveFrameworkFromFlags(options: OptionValues): FrameworkFromFlagType {
+	if (typeof options.framework === "string" && options.framework.trim() !== "") {
+		return options.framework.toLowerCase() as FrameworkFromFlagType;
+	}
+	if (options.vue) return "vue";
+	if (options.angular) return "angular";
+	if (options.react) return "react";
+	if (options.svelte) return "svelte";
+	if (options.qwik) return "qwik";
+	if (options.astro) return "astro";
+	return "";
+}
+
+const wizard = async (argv: string[] = process.argv): Promise<Answers> => {
 	// Parse command line arguments using commander
 	const frameworks: FrameworksType[] = ["Vue", "Angular", "React", "Svelte", "Qwik", "Astro"];
+	const program = new Command();
 
 	program
 		.option("--name <value>", "Specify a name")
@@ -49,25 +61,11 @@ const wizard: () => Promise<Answers> = async () => {
 		.option("--astro", "Create an Astro component")
 		.option("--folder <value>", "Specify the subfolder")
 		.option("--multiple", "Creating multiple components at once")
-		.parse(process.argv);
+		.parse(argv);
 
 	const options: OptionValues = program.opts();
 	const componentNameFromFlag: string = options.name || "";
-
-	const frameworkFromFlag: FrameworkFromFlagType =
-		options.framework || options.vue
-			? "vue"
-			: null || options.angular
-			  ? "angular"
-			  : null || options.react
-				  ? "react"
-				  : null || options.svelte
-					  ? "svelte"
-					  : null || options.qwik
-						  ? "qwik"
-						  : null || options.astro
-							  ? "astro"
-							  : null || "";
+	const frameworkFromFlag = resolveFrameworkFromFlags(options);
 
 	const folderFromFlag: string = options.folder || "";
 	const multipleFromFlag: boolean = options.multiple || false;

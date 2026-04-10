@@ -29,7 +29,7 @@ Before working on an existing Issue please follow these steps:
 2. after the Issue is assigned to you, you can start working on it
 3. **only** start working on this Issue (and open a Pull Request) when it has been assigned to you.
 4. when forking the issue, create a branch for your edits
-5. before pushing run `npm run biome-ci` to be sure that code formatting is correct and it will pass the PR workflow.
+5. before pushing run `npm run biome-ci` and `npm test` to be sure that code formatting and tests are correct and they will pass the PR workflow.
    1. If some errors are highlighted, you can fix them by running the following commands:
       1. `npm run biome-check`
       2. `npm run biome-lint` ( in this case, some errors may remain, so you may need to address them individually)

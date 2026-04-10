@@ -117,6 +117,7 @@ If you're cloning the repo, both for contributing or just to start taking confid
 1. clone the repo with `git clone https://github.com/Giuliano1993/make-js-component`
 2. inside the folder run `npm install`
 3. then to transpile ts files into js and watch them,  run `npm run dev`
+4. run `npm test` to verify the generators and templates locally
 
 To run your local version of the package and test it, run 
 
