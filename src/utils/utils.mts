@@ -1,9 +1,8 @@
 import * as fs from "fs";
 import * as path from "node:path";
+import inquirer from "inquirer";
 import { configs } from "./configs.cjs";
 import { makeAngularComponent } from "./frameworks/angular/make-angular-component.mjs";
-
-import inquirer from "inquirer";
 import advancedVueBuilder, { vueApi } from "./frameworks/vue/helper.mjs";
 import wizard, { Answers } from "./wizard.mjs";
 
@@ -23,92 +22,86 @@ export default async function createComponent(
 	advancedOpts: string[] | undefined
 ) {
 	const destinationFolder: string = `${configs.BASE_DIR}${configs.COMPONENT_FOLDER}`;
-	if (!fs.existsSync(destinationFolder)) {
-		fs.mkdirSync(destinationFolder);
-	}
+	await fs.promises.mkdir(destinationFolder, { recursive: true });
 
 	const templateFilePath: string = path.join(configs.INIT_PATH, "src", configs.STUBS_DIR, framework, template);
-	fs.readFile(templateFilePath, "utf8", async (err: ErrnoException | null, data: string) => {
-		const customDestinationFolder: string = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder);
-		const extension = template.substring(template.indexOf("."));
-		const compFileName = `${componentName}${extension}`;
+	const data = await fs.promises.readFile(templateFilePath, "utf8");
+	const customDestinationFolder: string = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder);
+	const extension = template.substring(template.indexOf("."));
+	const compFileName = `${componentName}${extension}`;
+	const formattedComponentName = toPascalCase(componentName);
 
-		if (!fs.existsSync(customDestinationFolder)) {
-			fs.mkdirSync(customDestinationFolder, { recursive: true });
+	await fs.promises.mkdir(customDestinationFolder, { recursive: true });
+
+	const filePathDestination: string = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder, compFileName);
+	let output = data;
+
+	if (framework === "angular") {
+		await makeAngularComponent(filePathDestination, output, componentName, customFolder);
+		return filePathDestination;
+	}
+
+	if (template.indexOf("advanced") !== -1) {
+		switch (framework) {
+			case "vue":
+				output = advancedVueBuilder(output, api, advancedOpts);
+				break;
+			default:
+				break;
 		}
+	}
 
-		const filePathDestination: string = path.join(
+	output = output.replaceAll("ComponentName", formattedComponentName);
+	if (path.parse(template).name === "function-component-css-module") {
+		output = output.replaceAll(`"./${formattedComponentName}.module.css"`, `"./${componentName}.module.css"`);
+	}
+
+	const componentWasCreated = await checkFileExists(filePathDestination, output);
+	if (componentWasCreated && path.parse(template).name === "function-component-css-module") {
+		const styleFileName: string = `${componentName}.module.css`;
+		const styleFilePathDestination: string = path.join(
 			configs.BASE_DIR,
 			configs.COMPONENT_FOLDER,
 			customFolder,
-			compFileName
+			styleFileName
 		);
-		let output = data;
-		if (framework === "angular") {
-			makeAngularComponent(filePathDestination, output, componentName);
-		} else {
-			if (template.indexOf("advanced") !== -1) {
-				switch (framework) {
-					case "vue":
-						output = advancedVueBuilder(output, api, advancedOpts);
-						break;
-					default:
-						break;
-				}
-			}
-			output = output.replaceAll("ComponentName", capitalizeFirstLetter(componentName));
-			await checkFileExists(filePathDestination, output);
-			return filePathDestination;
-		}
-		if (path.parse(template).name === "function-component-css-module") {
-			const styleFileName: string = `${componentName}.module.css`;
-			const styleFilePathDestination: string = path.join(
-				configs.BASE_DIR,
-				configs.COMPONENT_FOLDER,
-				customFolder,
-				styleFileName
-			);
-			await checkFileExists(
-				styleFilePathDestination,
-				`.${componentName} {\n\tfont-size: 1.125rem; /* 18px */\n\tline-height: 1.75rem; /* 28px */\n\tfont-weight: bold;\n}\n`
-			);
-			return filePathDestination;
-		}
-	});
+		await checkFileExists(
+			styleFilePathDestination,
+			`.${formattedComponentName} {\n\tfont-size: 1.125rem; /* 18px */\n\tline-height: 1.75rem; /* 28px */\n\tfont-weight: bold;\n}\n`
+		);
+	}
+
+	return componentWasCreated ? filePathDestination : undefined;
 }
 
-export async function checkFileExists(filePathDestination: string, data: string) {
+export async function checkFileExists(filePathDestination: string, data: string): Promise<boolean> {
 	if (fs.existsSync(filePathDestination)) {
-		console.log(`⚠️  A component with this name and extension already exists in ${filePathDestination}`);
-		inquirer
-			.prompt([
-				{
-					type: "confirm",
-					name: "duplicateFile",
-					message: "Do you want to continue with component creation? NOTE: this action will override the existing file",
-					default: false,
-				},
-			])
-			.then((answer: { duplicateFile: boolean }) => {
-				if (answer.duplicateFile) {
-					(async () => {
-						await writeFile(filePathDestination, data);
-					})();
-				} else {
-					return console.log("❌ File not created");
-				}
-			});
-	} else {
-		await writeFile(filePathDestination, data);
+		console.log(`Warning: A component with this name and extension already exists in ${filePathDestination}`);
+		const answer = await inquirer.prompt([
+			{
+				type: "confirm",
+				name: "duplicateFile",
+				message: "Do you want to continue with component creation? NOTE: this action will override the existing file",
+				default: false,
+			},
+		]);
+
+		if (!answer.duplicateFile) {
+			console.log("File not created");
+			return false;
+		}
 	}
+
+	await writeFile(filePathDestination, data);
+	return true;
 }
 
 async function writeFile(filePathDestination: string, data: string) {
-	fs.writeFile(filePathDestination, data, (err: ErrnoException | null) => {
-		if (err) {
-			console.error(err);
-		}
-	});
+	try {
+		await fs.promises.writeFile(filePathDestination, data);
+	} catch (err) {
+		console.error(err as ErrnoException);
+	}
 }
 
 export function createAnotherComponent() {
@@ -134,7 +127,15 @@ export function createAnotherComponent() {
 }
 
 export function capitalizeFirstLetter(string: string): string {
-	return string.charAt(0).toUpperCase() + string.slice(1);
+	return toPascalCase(string);
+}
+
+export function toPascalCase(value: string): string {
+	return value
+		.split(/[-_\s]+/)
+		.filter(Boolean)
+		.map(part => part.charAt(0).toUpperCase() + part.slice(1))
+		.join("");
 }
 
 export function prepareAdvanced(options: string[]) {

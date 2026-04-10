@@ -1,20 +1,25 @@
 import * as fs from "fs";
 import path from "path";
 import { configs } from "../../configs.cjs";
-import { ErrnoException, checkFileExists } from "../../utils.mjs";
+import { checkFileExists } from "../../utils.mjs";
 
-export function makeAngularComponent(filePathDestination: string, component: string, componentName: string): void {
+export async function makeAngularComponent(
+	filePathDestination: string,
+	component: string,
+	componentName: string,
+	customFolder: string
+): Promise<void> {
 	let componentContent = component.replace(
-		/selector: 'SelectorName'/,
-		`selector: 'app-${convertFromCamelCase(componentName)}'`
+		/selector:\s*["']SelectorName["']/,
+		`selector: "app-${convertFromCamelCase(componentName)}"`
 	);
 	componentContent = replaceComponentName(componentContent, componentName);
 
-	checkFileExists(filePathDestination, componentContent);
-	makeAngularComponentTest(componentName);
+	await checkFileExists(filePathDestination, componentContent);
+	await makeAngularComponentTest(componentName, customFolder);
 }
 
-function makeAngularComponentTest(componentName: string): void {
+async function makeAngularComponentTest(componentName: string, customFolder: string): Promise<void> {
 	const templateFileTestPath: string = path.join(
 		configs.INIT_PATH,
 		"src",
@@ -22,25 +27,23 @@ function makeAngularComponentTest(componentName: string): void {
 		"angular",
 		"component.component.spec.ts"
 	);
-	fs.readFile(templateFileTestPath, "utf8", (err: ErrnoException | null, component: string) => {
-		const componentContent = replaceComponentName(component, componentName);
-		const filePathDestination: string = path.join(
-			configs.BASE_DIR,
-			configs.COMPONENT_FOLDER,
-			`${componentName}.component.spec.ts`
-		);
-		checkFileExists(filePathDestination, componentContent);
-	});
+	const component = await fs.promises.readFile(templateFileTestPath, "utf8");
+	const componentContent = replaceComponentName(component, componentName);
+	const filePathDestination: string = path.join(
+		configs.BASE_DIR,
+		configs.COMPONENT_FOLDER,
+		customFolder,
+		`${componentName}.component.spec.ts`
+	);
+	await checkFileExists(filePathDestination, componentContent);
 }
 
 function convertToCamelCase(string: string): string {
 	return string
-		.replace(/-([a-z])/g, (s: string) => {
-			return s.toUpperCase();
-		})
-		.replace(/^[a-z]/, s => {
-			return s.toUpperCase();
-		});
+		.split("-")
+		.filter(Boolean)
+		.map(part => part.charAt(0).toUpperCase() + part.slice(1))
+		.join("");
 }
 
 function convertFromCamelCase(string: string): string {

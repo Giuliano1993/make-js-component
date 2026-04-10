@@ -2,28 +2,25 @@ import * as fs from "fs";
 import path from "path";
 import { configs } from "../../configs.cjs";
 import { checkFileExists } from "../../utils.mjs";
-export function makeAngularComponent(filePathDestination, component, componentName) {
-    let componentContent = component.replace(/selector: 'SelectorName'/, `selector: 'app-${convertFromCamelCase(componentName)}'`);
+export async function makeAngularComponent(filePathDestination, component, componentName, customFolder) {
+    let componentContent = component.replace(/selector:\s*["']SelectorName["']/, `selector: "app-${convertFromCamelCase(componentName)}"`);
     componentContent = replaceComponentName(componentContent, componentName);
-    checkFileExists(filePathDestination, componentContent);
-    makeAngularComponentTest(componentName);
+    await checkFileExists(filePathDestination, componentContent);
+    await makeAngularComponentTest(componentName, customFolder);
 }
-function makeAngularComponentTest(componentName) {
+async function makeAngularComponentTest(componentName, customFolder) {
     const templateFileTestPath = path.join(configs.INIT_PATH, "src", configs.STUBS_DIR, "angular", "component.component.spec.ts");
-    fs.readFile(templateFileTestPath, "utf8", (err, component) => {
-        const componentContent = replaceComponentName(component, componentName);
-        const filePathDestination = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, `${componentName}.component.spec.ts`);
-        checkFileExists(filePathDestination, componentContent);
-    });
+    const component = await fs.promises.readFile(templateFileTestPath, "utf8");
+    const componentContent = replaceComponentName(component, componentName);
+    const filePathDestination = path.join(configs.BASE_DIR, configs.COMPONENT_FOLDER, customFolder, `${componentName}.component.spec.ts`);
+    await checkFileExists(filePathDestination, componentContent);
 }
 function convertToCamelCase(string) {
     return string
-        .replace(/-([a-z])/g, (s) => {
-        return s.toUpperCase();
-    })
-        .replace(/^[a-z]/, s => {
-        return s.toUpperCase();
-    });
+        .split("-")
+        .filter(Boolean)
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+        .join("");
 }
 function convertFromCamelCase(string) {
     return string.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();

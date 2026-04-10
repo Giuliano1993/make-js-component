@@ -5,13 +5,13 @@
   "repository": "https://github.com/Giuliano1993/make-js-component",
   "bin": "./cmd/make-js-component.mjs",
   "scripts": {
+    "build": "tsc",
     "dev": "npx tsc -w",
-    "test": "jest",
+    "test": "npm run build && node --experimental-vm-modules ./node_modules/jest/bin/jest.js --runInBand",
     "biome-ci": "npx @biomejs/biome ci .",
     "biome-check": "npx @biomejs/biome check . --apply",
     "biome-lint": "npx @biomejs/biome lint . --apply",
     "biome-format": "npx @biomejs/biome format . --write"
-
   },
   "keywords": [
     "node",
